@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: ultima-unify
+    runtime: python
+    plan: free
+    region: frankfurt
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app
+    healthCheckPath: /health
+    envVars:
+      - key: SECRET_KEY
+        generateValue: true
+      - key: SUPERADMIN_EMAIL
+        value: gaussa72@gmail.com
