@@ -10,9 +10,6 @@
     },
     "android": {
       "package": "com.ultima.unify"
-    },
-    "plugins": [
-      "react-native-webview"
-    ]
+    }
   }
 }
