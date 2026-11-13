@@ -1,7 +1,6 @@
 services:
-  - type: web
+  - type: static
     name: ultima-central
-    runtime: static
     branch: main
     buildCommand: ""
     staticPublishPath: .
