@@ -1,8 +1,9 @@
 services:
-  - type: static
+  - type: web
     name: ultima-central
+    runtime: static
     branch: main
-    buildCommand: ""
+    buildCommand: echo "Publishing ULTIMA Central static portal"
     staticPublishPath: .
     headers:
       - path: /*
