@@ -1,15 +1,15 @@
 {
   "expo": {
-    "name": "ULTIMA Unify",
-    "slug": "ultima-unify",
+    "name": "ULTIMA Central",
+    "slug": "ultima-central",
     "version": "1.0.0",
     "orientation": "portrait",
     "userInterfaceStyle": "dark",
     "ios": {
-      "bundleIdentifier": "com.ultima.unify"
+      "bundleIdentifier": "com.ultima.central"
     },
     "android": {
-      "package": "com.ultima.unify"
+      "package": "com.ultima.central"
     }
   }
 }
