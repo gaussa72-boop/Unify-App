@@ -1,14 +1,17 @@
 services:
   - type: web
-    name: ultima-unify
-    runtime: python
-    plan: free
-    region: frankfurt
-    buildCommand: pip install -r requirements.txt
-    startCommand: gunicorn app:app
-    healthCheckPath: /health
-    envVars:
-      - key: SECRET_KEY
-        generateValue: true
-      - key: SUPERADMIN_EMAIL
-        value: gaussa72@gmail.com
+    name: ultima-central
+    runtime: static
+    branch: main
+    buildCommand: ""
+    staticPublishPath: .
+    headers:
+      - path: /*
+        name: X-Content-Type-Options
+        value: nosniff
+      - path: /*
+        name: Referrer-Policy
+        value: strict-origin-when-cross-origin
+      - path: /*
+        name: X-Frame-Options
+        value: DENY
