@@ -1,0 +1,274 @@
+{
+  "version": 1,
+  "status": "staged_registry_not_yet_enforced",
+  "central_identity": "ULTIMA Central",
+  "trial": {
+    "duration_hours": 72,
+    "starts_at": "first_verified_activation_utc",
+    "global_once_per_user": true
+  },
+  "premium": {
+    "billing_enabled": false,
+    "until_provider_and_price_are_approved": "admin_managed_entitlement_only"
+  },
+  "default_app_standard": {
+    "dedicated_database": true,
+    "versioned_migrations": true,
+    "dedicated_admin_console": true,
+    "dedicated_telegram_support_bot": true,
+    "central_support_fallback": "@Ari_phenex",
+    "oidc_required": true,
+    "server_side_entitlement_check": true,
+    "audit_log_required": true
+  },
+  "eligible_apps": [
+    {
+      "id": "ultima-central",
+      "name": "ULTIMA Central",
+      "url": "https://ultima-central-bt56.onrender.com",
+      "trial_enabled": true,
+      "premium_required_after_trial": true,
+      "dedicated_database_required": true,
+      "admin_console_required": true,
+      "dedicated_support_bot_required": true,
+      "bot_username": null,
+      "rollout_status": "not_integrated"
+    },
+    {
+      "id": "novatube",
+      "name": "NovaTube",
+      "url": "https://novatube-studio-vli0.onrender.com",
+      "trial_enabled": true,
+      "premium_required_after_trial": true,
+      "dedicated_database_required": true,
+      "admin_console_required": true,
+      "dedicated_support_bot_required": true,
+      "bot_username": null,
+      "rollout_status": "not_integrated"
+    },
+    {
+      "id": "ionos-ki",
+      "name": "IONOS KI",
+      "url": "https://ionos-ki-v2-1oki.onrender.com",
+      "trial_enabled": true,
+      "premium_required_after_trial": true,
+      "dedicated_database_required": true,
+      "admin_console_required": true,
+      "dedicated_support_bot_required": true,
+      "bot_username": null,
+      "rollout_status": "not_integrated"
+    },
+    {
+      "id": "quantum-k",
+      "name": "Quantum.K",
+      "url": "https://quantum-k-app.onrender.com",
+      "trial_enabled": true,
+      "premium_required_after_trial": true,
+      "dedicated_database_required": true,
+      "admin_console_required": true,
+      "dedicated_support_bot_required": true,
+      "bot_username": null,
+      "rollout_status": "not_integrated"
+    },
+    {
+      "id": "quantum-ai",
+      "name": "Quantum.AI",
+      "url": "https://quantum-ai-app.onrender.com",
+      "trial_enabled": true,
+      "premium_required_after_trial": true,
+      "dedicated_database_required": true,
+      "admin_console_required": true,
+      "dedicated_support_bot_required": true,
+      "bot_username": null,
+      "rollout_status": "not_integrated"
+    },
+    {
+      "id": "quantum-ki-ultra-pro-v2",
+      "name": "Quantum KI Ultra Pro V2",
+      "url": "https://quantum-ki-ultra-pro-v2-9pvf.onrender.com",
+      "trial_enabled": true,
+      "premium_required_after_trial": true,
+      "dedicated_database_required": true,
+      "admin_console_required": true,
+      "dedicated_support_bot_required": true,
+      "bot_username": null,
+      "rollout_status": "not_integrated"
+    },
+    {
+      "id": "ultra-ki-v2",
+      "name": "Ultra KI V2",
+      "url": "https://ultra-ki-v2-app.onrender.com",
+      "trial_enabled": true,
+      "premium_required_after_trial": true,
+      "dedicated_database_required": true,
+      "admin_console_required": true,
+      "dedicated_support_bot_required": true,
+      "bot_username": null,
+      "rollout_status": "not_integrated"
+    },
+    {
+      "id": "ultraki-ai",
+      "name": "UltraKI.AI",
+      "url": "https://ultraki-ai-app.onrender.com",
+      "trial_enabled": true,
+      "premium_required_after_trial": true,
+      "dedicated_database_required": true,
+      "admin_console_required": true,
+      "dedicated_support_bot_required": true,
+      "bot_username": null,
+      "rollout_status": "not_integrated"
+    },
+    {
+      "id": "ionos-8",
+      "name": "IONOS 8",
+      "url": "https://ionos-8-platform.onrender.com",
+      "trial_enabled": true,
+      "premium_required_after_trial": true,
+      "dedicated_database_required": true,
+      "admin_console_required": true,
+      "dedicated_support_bot_required": true,
+      "bot_username": null,
+      "rollout_status": "not_integrated"
+    },
+    {
+      "id": "ai-quantumlight",
+      "name": "AI Quantumlight",
+      "url": "https://ai-quantumlight-k84q.onrender.com",
+      "trial_enabled": true,
+      "premium_required_after_trial": true,
+      "dedicated_database_required": true,
+      "admin_console_required": true,
+      "dedicated_support_bot_required": true,
+      "bot_username": null,
+      "rollout_status": "not_integrated"
+    },
+    {
+      "id": "quantum-ki-cat-chat",
+      "name": "Quantum KI CAT Chat",
+      "url": "https://quantum-ki-cat-chat-2t79.onrender.com",
+      "trial_enabled": true,
+      "premium_required_after_trial": true,
+      "dedicated_database_required": true,
+      "admin_console_required": true,
+      "dedicated_support_bot_required": true,
+      "bot_username": null,
+      "rollout_status": "not_integrated"
+    },
+    {
+      "id": "quantum-singularity",
+      "name": "Quantum Singularity",
+      "url": "https://quantum-singularity-8liw.onrender.com",
+      "trial_enabled": true,
+      "premium_required_after_trial": true,
+      "dedicated_database_required": true,
+      "admin_console_required": true,
+      "dedicated_support_bot_required": true,
+      "bot_username": null,
+      "rollout_status": "not_integrated"
+    },
+    {
+      "id": "galactic-ai-v3",
+      "name": "Galactic AI V3",
+      "url": "https://galactic-ai-v3-app.onrender.com",
+      "trial_enabled": true,
+      "premium_required_after_trial": true,
+      "dedicated_database_required": true,
+      "admin_console_required": true,
+      "dedicated_support_bot_required": true,
+      "bot_username": null,
+      "rollout_status": "not_integrated"
+    },
+    {
+      "id": "quantum-mirror-wonderland",
+      "name": "Quantum Mirror Wonderland",
+      "url": "https://quantum-mirror-wonderland-vibh.onrender.com",
+      "trial_enabled": true,
+      "premium_required_after_trial": true,
+      "dedicated_database_required": true,
+      "admin_console_required": true,
+      "dedicated_support_bot_required": true,
+      "bot_username": null,
+      "rollout_status": "not_integrated"
+    },
+    {
+      "id": "omega-aurealis",
+      "name": "Omega Aurealis",
+      "url": "https://omega-aurealis.onrender.com",
+      "trial_enabled": true,
+      "premium_required_after_trial": true,
+      "dedicated_database_required": true,
+      "admin_console_required": true,
+      "dedicated_support_bot_required": true,
+      "bot_username": null,
+      "rollout_status": "not_integrated"
+    },
+    {
+      "id": "lichtkrieger",
+      "name": "Lichtkrieger",
+      "url": "https://lichtkrieger-hub.onrender.com",
+      "trial_enabled": true,
+      "premium_required_after_trial": true,
+      "dedicated_database_required": true,
+      "admin_console_required": true,
+      "dedicated_support_bot_required": true,
+      "bot_username": null,
+      "rollout_status": "not_integrated"
+    },
+    {
+      "id": "ate-rea-library",
+      "name": "Ate Rea Library",
+      "url": "https://ate-rea-library.onrender.com",
+      "trial_enabled": true,
+      "premium_required_after_trial": true,
+      "dedicated_database_required": true,
+      "admin_console_required": true,
+      "dedicated_support_bot_required": true,
+      "bot_username": null,
+      "rollout_status": "not_integrated"
+    },
+    {
+      "id": "autokrypt-boerse",
+      "name": "Autokrypt Börse",
+      "url": "https://autokrypt-boerse.onrender.com",
+      "trial_enabled": true,
+      "premium_required_after_trial": true,
+      "dedicated_database_required": true,
+      "admin_console_required": true,
+      "dedicated_support_bot_required": true,
+      "bot_username": null,
+      "rollout_status": "not_integrated"
+    }
+  ],
+  "excluded_apps": [
+    {
+      "id": "lyca",
+      "name": "Lyca",
+      "reason": "separater Shop-/Servicebetrieb"
+    },
+    {
+      "id": "parfum",
+      "name": "Webshop Parfum",
+      "reason": "Webshop ausgeschlossen"
+    },
+    {
+      "id": "sneaker",
+      "name": "Sneaker",
+      "reason": "Webshop ausgeschlossen"
+    },
+    {
+      "id": "bullrun-apparel",
+      "name": "Bullrun Apparel",
+      "reason": "Webshop ausgeschlossen"
+    },
+    {
+      "id": "drop-shipping",
+      "name": "Drop-shipping",
+      "reason": "Webshop ausgeschlossen"
+    },
+    {
+      "id": "rothshild",
+      "name": "Rothshild",
+      "reason": "separater Betrieb, außerhalb des gemeinsamen KI-Netzwerks"
+    }
+  ]
+}
