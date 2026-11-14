@@ -315,6 +315,28 @@
       "Rothshild"
     ],
     "shop_integrations": false,
-    "autonomous_deployment": false
+    "autonomous_deployment": false,
+    "consumer_app_ids": [
+      "ultima-central",
+      "novatube",
+      "ionos-ki",
+      "quantum-k",
+      "quantum-ai",
+      "quantum-ki-ultra-pro-v2",
+      "ultra-ki-v2",
+      "ultraki-ai",
+      "ionos-8",
+      "ai-quantumlight",
+      "quantum-ki-cat-chat",
+      "quantum-singularity",
+      "galactic-ai-v3",
+      "quantum-mirror-wonderland",
+      "omega-aurealis",
+      "lichtkrieger",
+      "ate-rea-library",
+      "autokrypt-boerse"
+    ],
+    "default_access_mode": "registered-for-reuse; each app must explicitly import or query the shared project asset",
+    "rollout_status": "catalogued; NovaTube-to-Game-Engine JSON workflow implemented; other AI frontends require individual UI/API adoption"
   }
 }
