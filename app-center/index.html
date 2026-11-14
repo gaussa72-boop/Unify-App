@@ -19,6 +19,52 @@
 <article class="card"><div class="tag">macOS</div><h3>Mac-App</h3><p>In Chrome oder Edge über das Installieren-Symbol in der Adressleiste installieren. Eine signierte DMG-Datei ist noch nicht erstellt.</p></article>
 <article class="card"><div class="tag">Windows</div><h3>Windows-App</h3><p>In Edge oder Chrome über „App installieren“ installieren. Eine signierte EXE/MSIX-Datei ist noch nicht erstellt.</p></article>
 </section>
+
+<section class="section"><h2>Konto & Projektverwaltung</h2></section>
+<section class="card" style="margin-bottom:18px">
+  <div id="authArea">
+    <h3>Dein App-Center-Konto</h3>
+    <p>Registriere dich oder melde dich an, um dein Profil und deine Projekte zu verwalten.</p>
+    <div class="toolbar">
+      <input id="authName" placeholder="Anzeigename (nur Registrierung)">
+      <input id="authEmail" type="email" placeholder="E-Mail-Adresse">
+      <input id="authPassword" type="password" placeholder="Passwort (mindestens 12 Zeichen)">
+      <button class="btn" id="registerBtn">Konto erstellen</button>
+      <button class="btn secondary" id="loginBtn">Anmelden</button>
+    </div>
+    <p class="note">Dein Passwort wird serverseitig mit einem sicheren Hash gespeichert. Nutze ein einzigartiges Passwort.</p>
+  </div>
+  <div id="profileArea" hidden>
+    <div class="section"><div><div class="tag">ANGEMELDET</div><h3 id="profileTitle">Mein Profil</h3><p id="profileMeta"></p></div><button class="btn secondary" id="logoutBtn">Abmelden</button></div>
+    <div id="premiumStatus" class="note"></div>
+    <div id="premiumArea" style="margin-top:14px">
+      <h3>Premium dauerhaft freischalten · 80 € einmalig</h3>
+      <p>Kein Abo. Überweise den Gegenwert von 80 € in BTC oder BNB an eine der unten angezeigten Adressen. Danach reichst du die Transaktions-ID ein. Die Freischaltung erfolgt nach Prüfung.</p>
+      <div id="walletList" class="grid"></div>
+      <div class="toolbar" style="margin-top:14px">
+        <select id="paymentAsset"><option value="BTC">Bitcoin (BTC) · Bitcoin Mainnet</option><option value="BNB">BNB · BNB Smart Chain</option></select>
+        <input id="paymentTxid" placeholder="Transaktions-ID (TXID)">
+        <button class="btn" id="submitPaymentBtn">Zahlungsnachweis einreichen</button>
+      </div>
+      <p class="note">Wichtig: Netzwerk und Adresse exakt beachten. Die angezeigte Wallet wird vor der Überweisung nochmals geprüft. Eine TXID-Einreichung ist noch keine Zahlungsbestätigung.</p>
+    </div>
+    <div class="section"><h3>Meine Projekte</h3></div>
+    <div class="toolbar">
+      <input id="projectName" placeholder="Projektname">
+      <input id="projectUrl" placeholder="https://deine-website.de">
+      <input id="projectRepo" placeholder="GitHub-Repository (optional)">
+      <input id="projectDescription" placeholder="Beschreibung">
+      <button class="btn" id="addProjectBtn">Projekt hinzufügen</button>
+    </div>
+    <div id="myProjects" class="grid"></div>
+    <div id="adminArea" hidden style="margin-top:28px">
+      <div class="section"><h3>Superadministrator · Verwaltung</h3></div>
+      <div id="adminPayments" class="grid"></div>
+      <div id="adminUsers" class="grid" style="margin-top:14px"></div>
+    </div>
+  </div>
+  <div id="accountMessage" class="note" role="status"></div>
+</section>
 <div class="footer"><strong>Superadministrator:</strong> Das Portal ist als zentrale Projekt- und Installationsübersicht vorbereitet. Geschützte Admin-Anmeldung, Nutzerkonten, Website-Einreichung, Freigabeworkflow und echte native Build-Pipelines benötigen noch einen Backend- und Authentifizierungsdienst. Es werden keine APK-, EXE-, DMG- oder iOS-Downloads vorgetäuscht.</div>
 </main>
 <script>
@@ -51,5 +97,24 @@ const host=document.getElementById('apps');
 function render(){const q=document.getElementById('search').value.toLowerCase();const c=document.getElementById('category').value;const list=projects.filter(p=>(!c||p[1]===c)&&p.join(' ').toLowerCase().includes(q));host.innerHTML=list.map(p=>'<article class="card"><div class="tag">'+p[1]+'</div><h3>'+p[0]+'</h3><p>'+p[3]+'</p><a href="'+p[2]+'" target="_blank" rel="noopener">Website öffnen ↗</a></article>').join('');document.getElementById('count').textContent=list.length+' Projekte'}
 document.getElementById('search').addEventListener('input',render);document.getElementById('category').addEventListener('change',render);render();
 let promptEvent;window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();promptEvent=e;document.getElementById('installBtn').disabled=false});document.getElementById('installBtn').addEventListener('click',async()=>{if(promptEvent){promptEvent.prompt();await promptEvent.userChoice;promptEvent=null}else alert('Wenn kein Installationsdialog erscheint, nutze das Browser-Menü: „App installieren“ bzw. „Zum Startbildschirm hinzufügen“. Auf iPhone/iPad: Safari → Teilen → Zum Home-Bildschirm.')});document.getElementById('iosBtn').addEventListener('click',()=>alert('iPhone/iPad: Diese Website in Safari öffnen → Teilen → Zum Home-Bildschirm → Hinzufügen.'));
+
+const API='https://astralis-app-center-api.onrender.com';
+let sessionToken=localStorage.getItem('astralisToken')||'';
+const el=id=>document.getElementById(id);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+async function api(path,options={}){const r=await fetch(API+path,{...options,headers:{'Content-Type':'application/json',...(sessionToken?{Authorization:'Bearer '+sessionToken}:{}),...(options.headers||{})}});const data=await r.json().catch(()=>({}));if(!r.ok)throw new Error(data.error||'Anfrage fehlgeschlagen');return data}
+function message(t){el('accountMessage').textContent=t}
+function showLoggedIn(user){el('authArea').hidden=true;el('profileArea').hidden=false;el('profileTitle').textContent=user.displayName;el('profileMeta').textContent=user.email+' · '+user.role;el('premiumStatus').textContent='Premium-Status: '+user.premiumStatus;el('adminArea').hidden=user.role!=='superadmin';loadProjects();loadWallets();if(user.role==='superadmin')loadAdmin()}
+async function register(){try{const data=await api('/api/auth/register',{method:'POST',body:JSON.stringify({displayName:el('authName').value,email:el('authEmail').value,password:el('authPassword').value})});sessionToken=data.token;localStorage.setItem('astralisToken',sessionToken);showLoggedIn(data.user);message('Konto erstellt.')}catch(e){message(e.message)}}
+async function login(){try{const data=await api('/api/auth/login',{method:'POST',body:JSON.stringify({email:el('authEmail').value,password:el('authPassword').value})});sessionToken=data.token;localStorage.setItem('astralisToken',sessionToken);showLoggedIn(data.user);message('Angemeldet.')}catch(e){message(e.message)}}
+async function loadMe(){if(!sessionToken)return;try{const d=await api('/api/auth/me');showLoggedIn(d.user)}catch{sessionToken='';localStorage.removeItem('astralisToken')}}
+async function loadWallets(){try{const d=await api('/api/premium/wallets');el('walletList').innerHTML=Object.entries(d.wallets).map(([coin,w])=>'<article class="card"><div class="tag">'+esc(coin)+' · '+esc(w.network)+'</div><p style="word-break:break-all;color:#f0d9a2">'+esc(w.address)+'</p><button class="btn secondary" data-copy="'+esc(w.address)+'">Adresse kopieren</button></article>').join('');el('walletList').querySelectorAll('[data-copy]').forEach(b=>b.onclick=()=>navigator.clipboard.writeText(b.dataset.copy).then(()=>message('Wallet-Adresse kopiert.')))}catch(e){message(e.message)}}
+async function loadProjects(){try{const d=await api('/api/projects');el('myProjects').innerHTML=d.projects.length?d.projects.map(p=>'<article class="card"><div class="tag">'+esc(p.platform)+'</div><h3>'+esc(p.name)+'</h3><p>'+esc(p.description)+'</p><a href="'+esc(p.url)+'" target="_blank" rel="noopener">Website öffnen ↗</a><button class="btn secondary" data-delete="'+p.id+'">Projekt entfernen</button></article>').join(''):'<p class="note">Noch keine Projekte eingetragen.</p>';el('myProjects').querySelectorAll('[data-delete]').forEach(b=>b.onclick=async()=>{if(confirm('Projekt wirklich entfernen?')){try{await api('/api/projects/'+b.dataset.delete,{method:'DELETE'});loadProjects()}catch(e){message(e.message)}}})}catch(e){message(e.message)}}
+async function addProject(){try{await api('/api/projects',{method:'POST',body:JSON.stringify({name:el('projectName').value,url:el('projectUrl').value,repositoryUrl:el('projectRepo').value,description:el('projectDescription').value})});['projectName','projectUrl','projectRepo','projectDescription'].forEach(id=>el(id).value='');loadProjects();message('Projekt gespeichert.')}catch(e){message(e.message)}}
+async function submitPayment(){try{const d=await api('/api/premium/submit',{method:'POST',body:JSON.stringify({asset:el('paymentAsset').value,txid:el('paymentTxid').value})});message(d.message);el('paymentTxid').value=''}catch(e){message(e.message)}}
+async function loadAdmin(){try{const [p,u]=await Promise.all([api('/api/admin/payments'),api('/api/admin/users')]);el('adminPayments').innerHTML='<h3>Offene und geprüfte Zahlungen</h3>'+p.payments.map(x=>'<article class="card"><div class="tag">Zahlung #'+x.id+' · '+esc(x.status)+'</div><p>'+esc(x.display_name)+' · '+esc(x.email)+'</p><p>'+esc(x.asset)+' / '+esc(x.network)+' · 80 €</p><p style="word-break:break-all">'+esc(x.txid)+'</p>'+(x.status==='pending'?'<div class="toolbar"><button class="btn" data-approve="'+x.id+'">Bestätigen</button><button class="btn secondary" data-reject="'+x.id+'">Ablehnen</button></div>':'')+'</article>').join('');el('adminUsers').innerHTML='<h3>Konten</h3>'+u.users.map(x=>'<article class="card"><h3>'+esc(x.display_name)+'</h3><p>'+esc(x.email)+'</p><p>'+esc(x.role)+' · '+esc(x.premium_status)+'</p></article>').join('');el('adminPayments').querySelectorAll('[data-approve]').forEach(b=>b.onclick=()=>reviewPayment(b.dataset.approve,'approved'));el('adminPayments').querySelectorAll('[data-reject]').forEach(b=>b.onclick=()=>reviewPayment(b.dataset.reject,'rejected'))}catch(e){message(e.message)}}
+async function reviewPayment(id,status){try{await api('/api/admin/payments/'+id+'/review',{method:'POST',body:JSON.stringify({status})});message('Zahlungsstatus aktualisiert.');loadAdmin()}catch(e){message(e.message)}}
+el('registerBtn').addEventListener('click',register);el('loginBtn').addEventListener('click',login);el('logoutBtn').addEventListener('click',()=>{sessionToken='';localStorage.removeItem('astralisToken');el('authArea').hidden=false;el('profileArea').hidden=true;message('Abgemeldet.')});el('addProjectBtn').addEventListener('click',addProject);el('submitPaymentBtn').addEventListener('click',submitPayment);loadMe();
+
 if('serviceWorker' in navigator)navigator.serviceWorker.register('/sw.js').catch(()=>{});
 </script></body></html>
