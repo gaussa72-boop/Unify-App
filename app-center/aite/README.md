@@ -4,9 +4,12 @@ AITE's chat interface is self-contained in `aite.js` (styles are embedded). Each
 
 ## Local model tiers
 The setup scripts select a Qwen3.5 model based on installed system RAM:
-- 8–15 GB: `qwen3.5:4b` (about 3.3 GB download)
+- under 8 GB: `qwen3.5:2b`
+- 8–15 GB: `qwen3.5:4b` (about 3.3 GB)
 - 16–31 GB: `qwen3.5:9b` (about 6.6 GB)
-- 32 GB+: `qwen3.5:27b` (about 17 GB)
+- 32–63 GB: `qwen3.5:27b` (about 17 GB)
+- 64–127 GB: `qwen3.5:35b` (about 22 GB)
+- 128 GB+: `qwen3.5:122b` (about 81 GB)
 
 The model files and memory requirements vary by quantization and context length. Choose the largest tier that leaves memory for the OS and other applications. Ollama's official library lists these variants and sizes: https://ollama.com/library/qwen3.5
 
