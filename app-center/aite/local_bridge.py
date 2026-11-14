@@ -26,7 +26,7 @@ def allowed(origin):
 class Handler(BaseHTTPRequestHandler):
     def log_message(self, *_): pass
     def send_json(self, code, data, origin=None):
-        raw = json.dumps(data).encode()
+        raw = b"" if code == 204 else json.dumps(data).encode()
         self.send_response(code)
         self.send_header("Content-Type", "application/json; charset=utf-8")
         self.send_header("Content-Length", str(len(raw)))
