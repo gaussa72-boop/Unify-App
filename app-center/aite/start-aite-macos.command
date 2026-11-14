@@ -17,9 +17,12 @@ fi
 if ! command -v python3 >/dev/null 2>&1; then echo "Python 3 wird benötigt."; exit 1; fi
 RAM_BYTES="$(sysctl -n hw.memsize)"
 RAM_GB=$((RAM_BYTES / 1024 / 1024 / 1024))
-if [ "$RAM_GB" -ge 32 ]; then MODEL="qwen3.5:27b"
+if [ "$RAM_GB" -ge 128 ]; then MODEL="qwen3.5:122b"
+elif [ "$RAM_GB" -ge 64 ]; then MODEL="qwen3.5:35b"
+elif [ "$RAM_GB" -ge 32 ]; then MODEL="qwen3.5:27b"
 elif [ "$RAM_GB" -ge 16 ]; then MODEL="qwen3.5:9b"
-else MODEL="qwen3.5:4b"; fi
+elif [ "$RAM_GB" -ge 8 ]; then MODEL="qwen3.5:4b"
+else MODEL="qwen3.5:2b"; fi
 echo "Erkannter Arbeitsspeicher: $RAM_GB GB. Modell: $MODEL"
 ollama pull "$MODEL"
 export AITE_MODEL="$MODEL"
