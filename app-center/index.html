@@ -117,4 +117,5 @@ async function reviewPayment(id,status){try{await api('/api/admin/payments/'+id+
 el('registerBtn').addEventListener('click',register);el('loginBtn').addEventListener('click',login);el('logoutBtn').addEventListener('click',()=>{sessionToken='';localStorage.removeItem('astralisToken');el('authArea').hidden=false;el('profileArea').hidden=true;message('Abgemeldet.')});el('addProjectBtn').addEventListener('click',addProject);el('submitPaymentBtn').addEventListener('click',submitPayment);loadMe();
 
 if('serviceWorker' in navigator)navigator.serviceWorker.register('/sw.js').catch(()=>{});
-</script></body></html>
+</script><script>window.AITE_CONFIG={persona:"compass",ollamaModel:"qwen2.5:3b"};</script><script src="/aite/aite.js" defer></script>
+</body></html>
