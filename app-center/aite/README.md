@@ -1,21 +1,26 @@
-# AITE local-first assistant
+# AITE local-first assistant and installer
 
-This is a reusable, site-embeddable AITE assistant UI with a star-singularity visual treatment.
+AITE's chat interface is self-contained in `aite.js` (styles are embedded). For each website, copy it into `static/aite/aite.js` and reference that local copy. This avoids relying on the App Center CDN for the widget itself.
 
-## Embed
-Add before the closing body tag:
-```html
-<script>window.AITE_CONFIG={persona:"compass",ollamaModel:"qwen2.5:3b"};</script>
-<script src="https://astralis-app-center.onrender.com/aite/aite.js" defer></script>
-```
-
-The widget has six spiritual/creative/technical reflection modes. It stores chat history in localStorage on the current device. The default Local/Offline mode tries Ollama at http://localhost:11434 using qwen2.5:3b. Install Ollama and download the model once on the user's own computer:
+## One-time local AI setup
+Install Ollama on the device, then:
 ```bash
 ollama pull qwen2.5:3b
 ollama serve
+python3 local_bridge.py
 ```
-The model then runs on the user's device and does not require OpenAI credits. Hardware requirements vary. Mobile browser support for local Ollama is limited. If Ollama is not available, a small built-in offline reflection fallback is used; this fallback is not a generative LLM.
+Windows: run `start-aite-windows.ps1`. macOS: run `start-aite-macos.command`. The bridge is loopback-only on 127.0.0.1:8765 and forwards requests to Ollama at 127.0.0.1:11434. It allows HTTPS origins ending in `.onrender.com` by default. Other domains must be explicitly added to `AITE_ALLOWED_ORIGINS`.
 
-OpenAI remains optional. A site may provide window.AITE_CONFIG.openAIRequest(text, history, context), implemented through its own protected server endpoint. Never put an OpenAI API key in browser JavaScript.
+## Embed locally
+```html
+<script>window.AITE_CONFIG={persona:"compass",localModel:"qwen2.5:3b"};</script>
+<script src="/static/aite/aite.js" defer></script>
+```
+For Flask sites this path is served by Flask's default static folder. Static sites can serve the same path from a repository `static/aite` folder.
 
-The online assistant is not configured automatically. Existing site-specific AI and spiritual features must be preserved and integrated individually. Do not overwrite payment, checkout, authentication or existing assistant flows.
+## Honest offline behavior
+The page and local AITE script must have been loaded at least once and cached by the browser. The local model must already be downloaded and Ollama plus the bridge must be running on the same device. Then model inference runs without internet and without OpenAI credits. A remote Render server cannot start a model on a visitor's computer.
+
+If the bridge/model is not running, the UI still offers a short rule-based reflection fallback. That fallback is not a generative model. Qwen 2.5 3B is compact; response quality and speed depend on local hardware. Older Macs may not support current Ollama releases.
+
+OpenAI remains optional. Configure `window.AITE_CONFIG.openAIRequest` through a protected server endpoint only. Never expose API keys in browser JavaScript.
