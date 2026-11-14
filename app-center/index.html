@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#090b12"><meta name="description" content="ASTRALIS App Center – deine Websites als installierbare Web-Apps.">
+<link rel="manifest" href="/manifest.webmanifest"><title>ASTRALIS App Center</title>
+<style>
+:root{color-scheme:dark;--bg:#090b12;--panel:#121724;--line:#293449;--gold:#c8a96a;--muted:#a8b1c2}*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% -20%,#26324b 0,transparent 55%),var(--bg);color:#f4f1e9;font:16px system-ui,-apple-system,Segoe UI,sans-serif}header{padding:42px 5vw 24px;text-align:center}h1{letter-spacing:.13em;font-size:clamp(28px,5vw,48px);margin:0;color:var(--gold)}header p{color:var(--muted);max-width:760px;margin:14px auto}.wrap{max-width:1200px;margin:auto;padding:18px 5vw 60px}.toolbar{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:22px}.toolbar input,.toolbar select{background:#111827;color:#fff;border:1px solid var(--line);border-radius:12px;padding:12px}.toolbar input{flex:1;min-width:210px}.btn{border:1px solid var(--gold);background:linear-gradient(135deg,#d6bd83,#98783d);color:#10131b;border-radius:12px;padding:12px 17px;font-weight:700;cursor:pointer}.btn.secondary{background:#151d2b;color:#f5e8c8}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(245px,1fr));gap:15px}.card{background:linear-gradient(160deg,#171f30,#101521);border:1px solid var(--line);border-radius:17px;padding:18px;display:flex;flex-direction:column;gap:10px;min-height:175px}.card h3{margin:0;color:#f0d9a2}.card p{margin:0;color:var(--muted);font-size:14px;flex:1}.card a{color:#f4dba7;text-decoration:none;border-bottom:1px solid #806b42;width:max-content}.tag{font-size:11px;color:#b8c5d8;letter-spacing:.08em;text-transform:uppercase}.install{display:flex;gap:10px;flex-wrap:wrap;background:#111827;border:1px solid var(--line);border-radius:16px;padding:18px;margin:20px 0 28px}.install div{flex:1;min-width:230px}.install h2{font-size:19px;margin:0 0 6px;color:var(--gold)}.install p,.note{color:var(--muted);font-size:13px;line-height:1.6}.section{display:flex;align-items:end;justify-content:space-between;gap:12px;margin:28px 0 14px}.section h2{margin:0;font-size:22px}.footer{border-top:1px solid var(--line);margin-top:40px;padding-top:18px;color:var(--muted);font-size:13px}@media(max-width:600px){header{padding-top:30px}.install{display:block}.install .btn{margin-top:8px}}
+</style></head><body>
+<header><div class="tag">PERSONAL APP ECOSYSTEM</div><h1>ASTRALIS Ω</h1><p>APP CENTER · Deine Projekte an einem Ort. Öffne jede Website oder installiere sie als Web-App auf unterstützten Geräten.</p></header>
+<main class="wrap">
+<section class="install"><div><h2>Diese App installieren</h2><p>Auf Android, Windows und unterstützten Desktop-Browsern über die Installationsfunktion. Auf iPhone/iPad über Safari: Teilen → Zum Home-Bildschirm.</p></div><button class="btn" id="installBtn">App installieren</button><button class="btn secondary" id="iosBtn">iPhone / iPad Anleitung</button></section>
+<div class="toolbar"><input id="search" type="search" placeholder="Website oder Projekt suchen …" aria-label="Suchen"><select id="category" aria-label="Kategorie"><option value="">Alle Kategorien</option><option>KI & Technologie</option><option>Community & Medien</option><option>Shops & Handel</option><option>Gaming & Entertainment</option><option>Verwaltung</option></select></div>
+<div class="section"><h2>Deine Websites</h2><span class="tag" id="count">23 Projekte</span></div><section class="grid" id="apps"></section>
+<div class="section"><h2>Plattform-Downloads</h2></div>
+<section class="grid">
+<article class="card"><div class="tag">iOS / iPadOS</div><h3>iPhone & iPad</h3><p>Website in Safari öffnen, Teilen wählen und „Zum Home-Bildschirm“ antippen. Native App-Store-Pakete sind noch nicht erstellt oder signiert.</p></article>
+<article class="card"><div class="tag">Android</div><h3>Android-App</h3><p>Website in Chrome öffnen und „Installieren“ oder „Zum Startbildschirm hinzufügen“ wählen. APK/AAB wird erst nach separatem Android-Build bereitgestellt.</p></article>
+<article class="card"><div class="tag">macOS</div><h3>Mac-App</h3><p>In Chrome oder Edge über das Installieren-Symbol in der Adressleiste installieren. Eine signierte DMG-Datei ist noch nicht erstellt.</p></article>
+<article class="card"><div class="tag">Windows</div><h3>Windows-App</h3><p>In Edge oder Chrome über „App installieren“ installieren. Eine signierte EXE/MSIX-Datei ist noch nicht erstellt.</p></article>
+</section>
+<div class="footer"><strong>Superadministrator:</strong> Das Portal ist als zentrale Projekt- und Installationsübersicht vorbereitet. Geschützte Admin-Anmeldung, Nutzerkonten, Website-Einreichung, Freigabeworkflow und echte native Build-Pipelines benötigen noch einen Backend- und Authentifizierungsdienst. Es werden keine APK-, EXE-, DMG- oder iOS-Downloads vorgetäuscht.</div>
+</main>
+<script>
+const projects=[
+["ULTIMA Central","Verwaltung","https://ultima-central-bt56.onrender.com","Zentrale Plattform- und Projektverwaltung."],
+["ULTIMA Central Portal","Verwaltung","https://ultima-central-5zeh.onrender.com","Alternative zentrale Portal-Instanz."],
+["ULTIMA Central Portal 2","Verwaltung","https://ultima-central-r88g.onrender.com","Weitere Portal-Instanz."],
+["Sneaker Store","Shops & Handel","https://sneaker-store-27cn.onrender.com","Sneaker-Shop."],
+["Aktiv Lyca","Shops & Handel","https://aktiv-lyca-standalone.onrender.com","Lyca-Webprojekt."],
+["Drop Shipping Store","Shops & Handel","https://drop-shipping-store.onrender.com","Dropshipping-Shop."],
+["Autokrypt Börse","KI & Technologie","https://autokrypt-boerse.onrender.com","Krypto- und Börsenprojekt."],
+["Ate Rea Library","Community & Medien","https://ate-rea-library.onrender.com","Bibliothek und Romanwelt."],
+["Lichtkrieger Hub","Gaming & Entertainment","https://lichtkrieger-hub.onrender.com","Lichtkrieger-Projektportal."],
+["Omega Aurealis","KI & Technologie","https://omega-aurealis.onrender.com","Astralis-/Omega-Projekt."],
+["Quantum Mirror Wonderland","Gaming & Entertainment","https://quantum-mirror-wonderland-vibh.onrender.com","Interaktive Spiegelwelt."],
+["Galactic AI V3","KI & Technologie","https://galactic-ai-v3-app.onrender.com","KI-Plattform."],
+["Quantum Singularity","KI & Technologie","https://quantum-singularity-8liw.onrender.com","Singularity-KI-Projekt."],
+["Quantum KI CAT Chat","KI & Technologie","https://quantum-ki-cat-chat-2t79.onrender.com","KI-Chat-Projekt."],
+["AI Quantumlight","KI & Technologie","https://ai-quantumlight-k84q.onrender.com","Quantumlight-KI."],
+["IONOS 8 Platform","KI & Technologie","https://ionos-8-platform.onrender.com","IONOS-Plattform."],
+["UltraKI AI","KI & Technologie","https://ultraki-ai-app.onrender.com","KI-Anwendung."],
+["Ultra-KI V2","KI & Technologie","https://ultra-ki-v2-app.onrender.com","Zweite KI-Version."],
+["Quantum KI Ultra Pro V2","KI & Technologie","https://quantum-ki-ultra-pro-v2-9pvf.onrender.com","Erweiterte KI-Plattform."],
+["Quantum AI App","KI & Technologie","https://quantum-ai-app.onrender.com","Quantum-AI-Anwendung."],
+["Quantum K App","KI & Technologie","https://quantum-k-app.onrender.com","Quantum-K-Projekt."],
+["NovaTube Studio","Community & Medien","https://novatube-studio-vli0.onrender.com","Video- und Medienprojekt."],
+["IONOS KI V2","KI & Technologie","https://ionos-ki-v2-1oki.onrender.com","IONOS-KI-Instanz."]
+];
+const host=document.getElementById('apps');
+function render(){const q=document.getElementById('search').value.toLowerCase();const c=document.getElementById('category').value;const list=projects.filter(p=>(!c||p[1]===c)&&p.join(' ').toLowerCase().includes(q));host.innerHTML=list.map(p=>'<article class="card"><div class="tag">'+p[1]+'</div><h3>'+p[0]+'</h3><p>'+p[3]+'</p><a href="'+p[2]+'" target="_blank" rel="noopener">Website öffnen ↗</a></article>').join('');document.getElementById('count').textContent=list.length+' Projekte'}
+document.getElementById('search').addEventListener('input',render);document.getElementById('category').addEventListener('change',render);render();
+let promptEvent;window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();promptEvent=e;document.getElementById('installBtn').disabled=false});document.getElementById('installBtn').addEventListener('click',async()=>{if(promptEvent){promptEvent.prompt();await promptEvent.userChoice;promptEvent=null}else alert('Wenn kein Installationsdialog erscheint, nutze das Browser-Menü: „App installieren“ bzw. „Zum Startbildschirm hinzufügen“. Auf iPhone/iPad: Safari → Teilen → Zum Home-Bildschirm.')});document.getElementById('iosBtn').addEventListener('click',()=>alert('iPhone/iPad: Diese Website in Safari öffnen → Teilen → Zum Home-Bildschirm → Hinzufügen.'));
+if('serviceWorker' in navigator)navigator.serviceWorker.register('/sw.js').catch(()=>{});
+</script></body></html>
