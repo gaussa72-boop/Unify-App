@@ -6,7 +6,7 @@ if (-not (Get-Command ollama -ErrorAction SilentlyContinue)) {
 }
 if (-not (Get-Command python -ErrorAction SilentlyContinue) -and -not (Get-Command py -ErrorAction SilentlyContinue)) { throw "Python 3 wird benötigt." }
 $ramGB = [math]::Floor((Get-CimInstance Win32_ComputerSystem).TotalPhysicalMemory / 1GB)
-if ($ramGB -ge 32) { $model = "gpt-oss:20b" }
+if ($ramGB -ge 32) { $model = "qwen3.5:27b" }
 elseif ($ramGB -ge 16) { $model = "qwen3.5:9b" }
 else { $model = "qwen3.5:4b" }
 Write-Host "Erkannter Arbeitsspeicher: $ramGB GB. Modell: $model" -ForegroundColor Yellow
