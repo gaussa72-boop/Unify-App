@@ -40,7 +40,7 @@ return answer+'\n\n[Lokale Reflexionsantwort · Für ausführliche generative An
 async function ollama(text){
 const base=(cfg.ollamaUrl||'http://localhost:11434').replace(/\/$/,'');
 const model=cfg.ollamaModel||'qwen2.5:3b';
-const res=await fetch(base+'/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model,messages:[{role:'system',content:'Du bist AITE, ein respektvoller deutschsprachiger Assistent. Bewahre den spirituellen Modus '+persona.value+' als symbolische Reflexionshilfe, nicht als übernatürliche Gewissheit. Nutze Website-Kontext: '+siteTitle+'. '+siteDesc+' Antworte klar, praktisch und verantwortungsvoll.'},...history.slice(-12),{role:'user',content:text}],stream:false,options:{temperature:0.65}})});
+const res=await fetch(base+'/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model,messages:[{role:'system',content:'Du bist AITE, ein respektvoller deutschsprachiger Assistent. Bewahre den spirituellen Modus '+persona.value+' als symbolische Reflexionshilfe, nicht als übernatürliche Gewissheit. Nutze Website-Kontext: '+siteTitle+'. '+siteDesc+' Antworte klar, praktisch und verantwortungsvoll.'},...history.slice(0,-1).slice(-12),{role:'user',content:text}],stream:false,options:{temperature:0.65}})});
 if(!res.ok)throw new Error('Ollama nicht erreichbar');const data=await res.json();return data.message?.content||'Das lokale Modell hat keine Antwort geliefert.';
 }
 async function openai(text){
