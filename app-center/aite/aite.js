@@ -1,58 +1,36 @@
 (function(){
-'use strict';
-if(window.__AITE_ASSISTANT_LOADED__)return;window.__AITE_ASSISTANT_LOADED__=true;
-const cfg=window.AITE_CONFIG||{};
-const siteTitle=document.querySelector('meta[property="og:site_name"]')?.content||document.title||location.hostname;
-const siteDesc=document.querySelector('meta[name="description"]')?.content||'';
-const key='aite-chat-'+location.hostname;
-const style=document.createElement('link');style.rel='stylesheet';style.href=(cfg.assetBase||'https://astralis-app-center.onrender.com/aite/')+'aite.css';document.head.appendChild(style);
-const personaOptions=[
-['compass','AITE · Bewusstseinskompass'],['dharma','Dharma · Achtsamkeit'],['light','Lichtpfad · Sinn & Werte'],['archetypes','Archetypen · Symbolische Reflexion'],['creator','Schöpfergeist · Kreativität'],['tech','Technologie · Projektassistent']
-];
-const launch=document.createElement('button');launch.id='aite-launch';launch.type='button';launch.setAttribute('aria-label','AITE Assistent öffnen');launch.textContent='A';
+'use strict';if(window.__AITE_V2__)return;window.__AITE_V2__=true;
+const cfg=window.AITE_CONFIG||{},site=document.title||location.hostname,key='aite-v2-'+location.hostname;
+const css=`
+#aite-launch{position:fixed;right:22px;bottom:22px;z-index:2147483000;width:62px;height:62px;border:1px solid #d9c58b;border-radius:50%;color:#fff;background:radial-gradient(circle,#fff0c2 0 2%,#c5a75f 5%,#302a48 23%,#10182a 57%,#050811 76%);box-shadow:0 0 24px #d0ae6755,0 0 70px #8a8dff22;cursor:pointer;font:700 19px Georgia,serif}
+#aite-launch:before,#aite-launch:after{content:"";position:absolute;inset:-7px;border:1px solid #c8b07866;border-radius:50%;animation:aite-spin 14s linear infinite}#aite-launch:after{inset:7px;border-style:dotted;animation-duration:9s;animation-direction:reverse}@keyframes aite-spin{to{transform:rotate(360deg)}}
+#aite-panel{position:fixed;right:22px;bottom:96px;z-index:2147483000;width:min(420px,calc(100vw - 24px));height:min(650px,calc(100vh - 125px));display:none;flex-direction:column;overflow:hidden;border:1px solid #ffffff25;border-radius:22px;background:linear-gradient(155deg,#121c30fa,#070b14fa);color:#f5f1e8;box-shadow:0 24px 90px #000c,0 0 38px #a88a4930;font:14px/1.5 system-ui,sans-serif;backdrop-filter:blur(22px)}
+#aite-panel.open{display:flex}#aite-head{display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid #ffffff1c;background:radial-gradient(ellipse at 12% 0,#b69a5b30,transparent 65%)}
+#aite-sigil{width:42px;height:42px;display:grid;place-items:center;border:1px solid #d6bf82;border-radius:50%;background:radial-gradient(circle,#fff0c5 0 2%,#d0b46c 5%,#33304a 28%,#090e1c 72%);box-shadow:0 0 18px #d2b46c55}
+#aite-title{font:600 16px Georgia,serif;letter-spacing:.08em;color:#efdbac}#aite-sub{font-size:11px;color:#aeb9ca}#aite-close{margin-left:auto;background:none;border:0;color:#d7dce7;font-size:23px;cursor:pointer}
+#aite-controls{display:flex;gap:7px;padding:10px 12px;border-bottom:1px solid #ffffff1c}#aite-controls select{min-width:0;flex:1;background:#101a2a;color:#e9e6df;border:1px solid #ffffff25;border-radius:10px;padding:8px;font-size:12px}
+#aite-status{padding:6px 14px;color:#aeb9ca;font-size:11px;border-bottom:1px solid #ffffff0c}#aite-messages{flex:1;overflow:auto;padding:14px;display:flex;flex-direction:column;gap:12px}
+.aite-msg{max-width:91%;padding:10px 12px;border-radius:14px;white-space:pre-wrap;overflow-wrap:anywhere}.aite-msg.bot{align-self:flex-start;background:#192437;border:1px solid #ffffff12;color:#eee9dd;border-bottom-left-radius:4px}.aite-msg.user{align-self:flex-end;background:linear-gradient(135deg,#bda36a,#8b7447);color:#111520;border-bottom-right-radius:4px}
+#aite-form{display:flex;gap:8px;padding:12px;border-top:1px solid #ffffff1c;background:#080d17}#aite-input{flex:1;min-width:0;max-height:100px;resize:vertical;background:#121d2d;color:#fff;border:1px solid #ffffff25;border-radius:13px;padding:11px;font:inherit}#aite-send{border:1px solid #d2b775;border-radius:13px;background:linear-gradient(135deg,#e1ca8d,#9a7b42);color:#111520;padding:0 16px;font-weight:700;cursor:pointer}#aite-foot{padding:0 14px 10px;color:#8794a8;font-size:10px}
+@media(max-width:540px){#aite-launch{right:15px;bottom:15px}#aite-panel{right:8px;bottom:84px;width:calc(100vw - 16px);height:min(74vh,650px)}}
+`;
+const st=document.createElement('style');st.textContent=css;document.head.appendChild(st);
+const launch=document.createElement('button');launch.id='aite-launch';launch.type='button';launch.setAttribute('aria-label','AITE öffnen');launch.textContent='A';
 const panel=document.createElement('section');panel.id='aite-panel';panel.setAttribute('aria-label','AITE Assistent');
-panel.innerHTML='<header id="aite-head"><div id="aite-sigil">✧</div><div><div id="aite-title">AITE · Sternensingularität</div><div id="aite-sub">Dein lokaler KI-Begleiter</div></div><button id="aite-close" aria-label="Schließen">×</button></header><div id="aite-controls"><select id="aite-persona" aria-label="AITE-Modus"></select><select id="aite-engine" aria-label="KI-Modus"><option value="local">Lokal / Offline</option><option value="openai">OpenAI (optional)</option></select></div><div id="aite-status">Offline-Modus bereit · lokale Reflexionshilfe aktiv</div><div id="aite-messages" aria-live="polite"></div><form id="aite-form"><textarea id="aite-input" rows="1" placeholder="Schreibe AITE …"></textarea><button id="aite-send" type="submit">Senden</button></form><div id="aite-foot">Privat auf diesem Gerät gespeichert. Spirituelle Inhalte sind Reflexionsangebote, keine Tatsachen- oder Heilsversprechen.</div>';
+panel.innerHTML='<header id="aite-head"><div id="aite-sigil">✧</div><div><div id="aite-title">AITE · Sternensingularität</div><div id="aite-sub">Local-first · dein KI-Begleiter</div></div><button id="aite-close" aria-label="Schließen">×</button></header><div id="aite-controls"><select id="aite-persona" aria-label="Gesprächsprofil"></select><select id="aite-engine" aria-label="KI-Modus"><option value="local">Lokal / Offline</option><option value="openai">OpenAI optional</option></select></div><div id="aite-status">Prüfe lokalen KI-Dienst …</div><div id="aite-messages" aria-live="polite"></div><form id="aite-form"><textarea id="aite-input" rows="1" placeholder="Schreibe AITE …"></textarea><button id="aite-send" type="submit">Senden</button></form><div id="aite-foot">Lokal gespeicherter Verlauf · spirituelle Inhalte sind Reflexionsangebote</div>';
 document.body.append(launch,panel);
-const $=id=>panel.querySelector('#'+id),persona=$('aite-persona'),engine=$('aite-engine'),messages=$('aite-messages'),status=$('aite-status'),input=$('aite-input');
-personaOptions.forEach(([v,t])=>{const o=document.createElement('option');o.value=v;o.textContent=t;persona.appendChild(o)});
-persona.value=cfg.persona||'compass';
+const $=id=>panel.querySelector('#'+id),messages=$('aite-messages'),status=$('aite-status'),input=$('aite-input'),engine=$('aite-engine');
+const modes=[['compass','Bewusstseinskompass'],['dharma','Ate Rea · Dharma'],['light','Lichtpfad'],['archetypes','Archetypen'],['creator','Schöpfergeist'],['tech','Technologie-Agent']];
+const sel=$('aite-persona');modes.forEach(([v,t])=>{const o=document.createElement('option');o.value=v;o.textContent=t;sel.appendChild(o)});sel.value=cfg.persona||'compass';
 let history=[];try{history=JSON.parse(localStorage.getItem(key)||'[]')}catch{}
-function add(role,text,save=true){const d=document.createElement('div');d.className='aite-msg '+(role==='user'?'user':'bot');d.textContent=text;messages.appendChild(d);messages.scrollTop=messages.scrollHeight;if(save){history.push({role,content:text});history=history.slice(-40);try{localStorage.setItem(key,JSON.stringify(history))}catch{}}}
+function add(role,text,save=true){const d=document.createElement('div');d.className='aite-msg '+(role==='user'?'user':'bot');d.textContent=text;messages.appendChild(d);messages.scrollTop=messages.scrollHeight;if(save){history.push({role:role==='assistant'?'assistant':'user',content:text});history=history.slice(-30);try{localStorage.setItem(key,JSON.stringify(history))}catch{}}}
 history.forEach(m=>add(m.role,m.content,false));
-if(!history.length)add('assistant','Ich bin AITE. Ich begleite dich mit klarer Reflexion, kreativen Impulsen und dem Wissen dieser Website: '+siteTitle+'. Wähle einen Modus und stelle deine Frage.');
-launch.addEventListener('click',()=>panel.classList.toggle('aite-open'));$('aite-close').addEventListener('click',()=>panel.classList.remove('aite-open'));
-function offlineReply(text,mode){
-const t=text.toLowerCase();
-const prompts={
-dharma:'Betrachte die Situation achtsam: Was ist gerade tatsächlich wahrnehmbar, was ist Interpretation, und welcher nächste Schritt vermindert Leid, ohne dir oder anderen zu schaden? Nimm dir einen ruhigen Atemzug und wähle eine kleine, konkrete Handlung.',
-light:'Richte den Blick auf deine Werte: Welche Qualität möchtest du in diese Situation einbringen – Mitgefühl, Mut, Wahrhaftigkeit, Geduld oder Klarheit? Formuliere daraus einen Schritt, den du heute wirklich umsetzen kannst.',
-archetypes:'Als symbolische Reflexion: Welcher innere Archetyp passt gerade – der Weise, die Hüterin, der Wanderer oder der Schöpfer? Das sind Deutungsbilder, keine Diagnose und keine übernatürlichen Feststellungen. Welche Stärke dieses Bildes kannst du praktisch nutzen?',
-creator:'Lass uns die Idee in drei Ebenen aufteilen: Vision, kleinster umsetzbarer Prototyp und nächster Test. Beschreibe zuerst das gewünschte Ergebnis in einem Satz; danach wählen wir einen realistischen ersten Schritt.',
-tech:'Ich kann lokal eine strukturierte Projektanalyse anbieten. Teile Ziel, vorhandenen Stand und Fehlermeldung. Wir ordnen es in Architektur, Daten, Sicherheit, Oberfläche, Tests und Deployment.',
-compass:'Ich helfe dir, die Frage zu sortieren. Was weißt du sicher? Was vermutest du? Was ist dir wichtig? Daraus können wir eine klare nächste Entscheidung ableiten.'
-};
-let answer=prompts[mode]||prompts.compass;
-if(/website|projekt|code|app|webseite|ki|agent|fehler|bug/.test(t))answer=prompts.tech;
-if(/angst|traurig|verzweifelt|überfordert|einsam/.test(t))answer='Danke, dass du das ansprichst. Lass uns zuerst bei dem bleiben, was jetzt konkret helfen kann: Benenne eine Sache, die du gerade spürst, und eine kleine sichere Handlung für die nächsten zehn Minuten. Wenn du dich akut gefährdet fühlst, wende dich bitte direkt an eine vertraute Person oder den örtlichen Notdienst.';
-if(/danke|hallo|hi|guten morgen/.test(t))answer='Gern. Ich bin hier, um dir beim Sortieren, Lernen und Gestalten zu helfen. Was möchtest du als Nächstes angehen?';
-return answer+'\n\n[Lokale Reflexionsantwort · Für ausführliche generative Antworten verbinde ein lokales Modell wie Ollama.]';
-}
-async function ollama(text){
-const base=(cfg.ollamaUrl||'http://localhost:11434').replace(/\/$/,'');
-const model=cfg.ollamaModel||'qwen2.5:3b';
-const res=await fetch(base+'/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model,messages:[{role:'system',content:'Du bist AITE, ein respektvoller deutschsprachiger Assistent. Bewahre den spirituellen Modus '+persona.value+' als symbolische Reflexionshilfe, nicht als übernatürliche Gewissheit. Nutze Website-Kontext: '+siteTitle+'. '+siteDesc+' Antworte klar, praktisch und verantwortungsvoll.'},...history.slice(0,-1).slice(-12),{role:'user',content:text}],stream:false,options:{temperature:0.65}})});
-if(!res.ok)throw new Error('Ollama nicht erreichbar');const data=await res.json();return data.message?.content||'Das lokale Modell hat keine Antwort geliefert.';
-}
-async function openai(text){
-if(typeof cfg.openAIRequest==='function')return await cfg.openAIRequest(text,history.slice(-12),{persona:persona.value,site:siteTitle});
-throw new Error('OpenAI-Zusatzmodus ist auf dieser Website noch nicht mit einem sicheren Server-Endpunkt verbunden. Kein API-Schlüssel wird im Browser gespeichert.');
-}
-$('aite-form').addEventListener('submit',async e=>{
-e.preventDefault();const text=input.value.trim();if(!text)return;input.value='';add('user',text);$('aite-send').disabled=true;
-try{let answer;if(engine.value==='openai'){status.textContent='Verbinde optionalen Online-Modus …';answer=await openai(text)}else{status.textContent='Lokales Modell wird angesprochen …';try{answer=await ollama(text);status.textContent='Antwort vom lokalen Modell · kein OpenAI-Guthaben verbraucht'}catch{answer=offlineReply(text,persona.value);status.textContent='Lokaler Fallback aktiv · Ollama nicht erreichbar'}}add('assistant',answer)}
-catch(err){add('assistant','Der gewählte Modus ist nicht verfügbar: '+err.message);status.textContent='Modus nicht verbunden'}
-finally{$('aite-send').disabled=false;input.focus()}
-});
-if(!navigator.onLine)status.textContent='Du bist offline · lokale Reflexionshilfe verfügbar. Für generative lokale Antworten muss Ollama installiert und gestartet sein.';
-window.addEventListener('offline',()=>status.textContent='Offline · lokale Reflexionshilfe verfügbar');window.addEventListener('online',()=>status.textContent='Online · lokale und optionale Online-Modi verfügbar');
+if(!history.length)add('assistant','Ich bin AITE. Ich bewahre die spirituelle Identität und die Themen dieser Website: '+site+'. Wähle ein Profil und stelle deine Frage.');
+launch.onclick=()=>panel.classList.toggle('open');$('aite-close').onclick=()=>panel.classList.remove('open');
+function fallback(q){const mode=sel.value;const replies={dharma:'Ate-Rea-Reflexion: Beobachte zuerst, was tatsächlich geschieht. Unterscheide Wahrnehmung von Interpretation und wähle einen kleinen nächsten Schritt, der Mitgefühl und Klarheit verbindet.',light:'Lichtpfad-Reflexion: Welche Qualität ist jetzt hilfreich – Wahrhaftigkeit, Mut, Geduld, Mitgefühl oder Klarheit? Übersetze sie in eine konkrete Handlung.',archetypes:'Symbolische Spiegelung: Welcher Archetyp hilft dir, die Situation neu zu betrachten – Weise, Hüter, Wanderer oder Schöpfer? Das ist eine Metapher zur Selbstreflexion, keine übernatürliche Feststellung.',creator:'Schöpfermodus: Lass uns Vision, kleinsten Prototyp und überprüfbaren nächsten Schritt trennen. Was soll am Ende konkret funktionieren?',tech:'Technologie-Agent: Beschreibe Ziel, aktuellen Stand und Fehlermeldung. Wir prüfen Architektur, Datenfluss, Sicherheit, Oberfläche, Tests und Deployment.',compass:'Kompass: Was weißt du sicher, was vermutest du, was ist dir wichtig und welcher kleine nächste Schritt ist überprüfbar?'};return (replies[mode]||replies.compass)+'\n\n[Offline-Fallback aktiv. Für ausführliche generative Antworten muss ein lokales Sprachmodell laufen.]'}
+async function local(q){const url=cfg.localEndpoint||'http://127.0.0.1:8765/api/chat';const r=await fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:cfg.localModel||'qwen2.5:3b',messages:[{role:'system',content:'Du bist AITE, ein hochwertiger deutschsprachiger Assistent. Gesprächsprofil: '+sel.value+'. Website: '+site+'. Bewahre die Identität und spirituellen Eigenschaften dieser Website als symbolische Reflexionshilfe. Antworte präzise, tiefgründig, praktisch, transparent und ohne erfundene Tatsachen.'},...history.slice(0,-1).slice(-14),{role:'user',content:q}],stream:false,options:{temperature:.65}})});if(!r.ok)throw Error('Lokaler AITE-Bridge-Dienst antwortet nicht ('+r.status+')');const data=await r.json();if(!data.message?.content)throw Error('Das lokale Modell lieferte keine Antwort');return data.message.content}
+async function online(q){if(typeof cfg.openAIRequest==='function')return await cfg.openAIRequest(q,history.slice(-14),{persona:sel.value,site});throw Error('OpenAI ist hier noch nicht über einen geschützten Server-Endpunkt angebunden.')}
+$('aite-form').addEventListener('submit',async e=>{e.preventDefault();const q=input.value.trim();if(!q)return;input.value='';add('user',q);$('aite-send').disabled=true;try{let a;if(engine.value==='openai'){status.textContent='Optionaler Online-Modus …';a=await online(q)}else{status.textContent='Verbinde mit lokalem Modell …';try{a=await local(q);status.textContent='Lokale KI aktiv · kein OpenAI-Guthaben verwendet'}catch(err){a=fallback(q);status.textContent='Offline-Fallback · lokaler Modellserver nicht erreichbar'}}add('assistant',a)}catch(err){add('assistant','Der gewählte Modus ist nicht verfügbar: '+err.message);status.textContent='Verbindung nicht verfügbar'}finally{$('aite-send').disabled=false;input.focus()}});
+async function probe(){try{const r=await fetch((cfg.healthEndpoint||'http://127.0.0.1:8765/health'),{cache:'no-store'});if(r.ok){const d=await r.json();status.textContent='Lokale KI bereit · '+(d.model||'Ollama')+' · offline-fähig'}else throw Error()}catch{status.textContent=navigator.onLine?'Lokaler Modellserver nicht gefunden · Offline-Fallback bereit':'Offline · Reflexionshilfe bereit; lokale KI benötigt den gestarteten Modellserver'}}
+probe();window.addEventListener('online',probe);window.addEventListener('offline',probe);
 })();
