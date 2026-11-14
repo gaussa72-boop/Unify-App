@@ -7,7 +7,7 @@ import json, os
 
 HOST = "127.0.0.1"
 PORT = int(os.environ.get("AITE_PORT", "8765"))
-MODEL = os.environ.get("AITE_MODEL", "qwen2.5:3b")
+MODEL = os.environ.get("AITE_MODEL", "qwen3.5:4b")
 OLLAMA = "http://127.0.0.1:11434"
 ALLOWED_SUFFIXES = tuple(x.strip().lower() for x in os.environ.get("AITE_ALLOWED_SUFFIXES", ".onrender.com").split(",") if x.strip())
 ALLOWED_EXACT = set(x.strip() for x in os.environ.get("AITE_ALLOWED_ORIGINS", "").split(",") if x.strip())
