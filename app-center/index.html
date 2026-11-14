@@ -28,7 +28,7 @@
     <div class="toolbar">
       <input id="authName" placeholder="Anzeigename (nur Registrierung)">
       <input id="authEmail" type="email" placeholder="E-Mail-Adresse">
-      <input id="authPassword" type="password" placeholder="Passwort (mindestens 12 Zeichen)">
+      <input id="authPassword" type="password" placeholder="Passwort (mindestens 12 Zeichen)"><input id="adminBootstrapToken" type="password" placeholder="Superadmin-Einrichtungsschlüssel (nur Admin)">
       <button class="btn" id="registerBtn">Konto erstellen</button>
       <button class="btn secondary" id="loginBtn">Anmelden</button>
     </div>
@@ -105,7 +105,7 @@ const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&
 async function api(path,options={}){const r=await fetch(API+path,{...options,headers:{'Content-Type':'application/json',...(sessionToken?{Authorization:'Bearer '+sessionToken}:{}),...(options.headers||{})}});const data=await r.json().catch(()=>({}));if(!r.ok)throw new Error(data.error||'Anfrage fehlgeschlagen');return data}
 function message(t){el('accountMessage').textContent=t}
 function showLoggedIn(user){el('authArea').hidden=true;el('profileArea').hidden=false;el('profileTitle').textContent=user.displayName;el('profileMeta').textContent=user.email+' · '+user.role;el('premiumStatus').textContent='Premium-Status: '+user.premiumStatus;el('adminArea').hidden=user.role!=='superadmin';loadProjects();loadWallets();if(user.role==='superadmin')loadAdmin()}
-async function register(){try{const data=await api('/api/auth/register',{method:'POST',body:JSON.stringify({displayName:el('authName').value,email:el('authEmail').value,password:el('authPassword').value})});sessionToken=data.token;localStorage.setItem('astralisToken',sessionToken);showLoggedIn(data.user);message('Konto erstellt.')}catch(e){message(e.message)}}
+async function register(){try{const data=await api('/api/auth/register',{method:'POST',body:JSON.stringify({displayName:el('authName').value,email:el('authEmail').value,password:el('authPassword').value,adminBootstrapToken:el('adminBootstrapToken').value})});sessionToken=data.token;localStorage.setItem('astralisToken',sessionToken);showLoggedIn(data.user);message('Konto erstellt.')}catch(e){message(e.message)}}
 async function login(){try{const data=await api('/api/auth/login',{method:'POST',body:JSON.stringify({email:el('authEmail').value,password:el('authPassword').value})});sessionToken=data.token;localStorage.setItem('astralisToken',sessionToken);showLoggedIn(data.user);message('Angemeldet.')}catch(e){message(e.message)}}
 async function loadMe(){if(!sessionToken)return;try{const d=await api('/api/auth/me');showLoggedIn(d.user)}catch{sessionToken='';localStorage.removeItem('astralisToken')}}
 async function loadWallets(){try{const d=await api('/api/premium/wallets');el('walletList').innerHTML=Object.entries(d.wallets).map(([coin,w])=>'<article class="card"><div class="tag">'+esc(coin)+' · '+esc(w.network)+'</div><p style="word-break:break-all;color:#f0d9a2">'+esc(w.address)+'</p><button class="btn secondary" data-copy="'+esc(w.address)+'">Adresse kopieren</button></article>').join('');el('walletList').querySelectorAll('[data-copy]').forEach(b=>b.onclick=()=>navigator.clipboard.writeText(b.dataset.copy).then(()=>message('Wallet-Adresse kopiert.')))}catch(e){message(e.message)}}
