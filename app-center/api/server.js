@@ -14,6 +14,7 @@ const PORT = process.env.PORT || 10000;
 const JWT_SECRET = process.env.JWT_SECRET;
 const DATABASE_URL = process.env.DATABASE_URL;
 const SUPERADMIN_EMAIL = (process.env.SUPERADMIN_EMAIL || '').trim().toLowerCase();
+const ADMIN_BOOTSTRAP_TOKEN = process.env.ADMIN_BOOTSTRAP_TOKEN || '';
 const APP_ORIGIN = process.env.APP_ORIGIN || 'https://astralis-app-center.onrender.com';
 const pool = new Pool({ connectionString: DATABASE_URL, ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false });
 
@@ -71,7 +72,8 @@ app.post('/api/auth/register', async (req,res) => {
   if (!/^\S+@\S+\.\S+$/.test(email) || !displayName || password.length < 12) return res.status(400).json({ error: 'Bitte gültige E-Mail, Namen und ein Passwort mit mindestens 12 Zeichen eingeben.' });
   try {
     const hash = await bcrypt.hash(password, 12);
-    const role = email === SUPERADMIN_EMAIL ? 'superadmin' : 'user';
+    const bootstrap = String(req.body.adminBootstrapToken || '');
+    const role = email === SUPERADMIN_EMAIL && ADMIN_BOOTSTRAP_TOKEN && bootstrap === ADMIN_BOOTSTRAP_TOKEN ? 'superadmin' : 'user';
     const result = await pool.query('INSERT INTO users(email,display_name,password_hash,role) VALUES($1,$2,$3,$4) RETURNING *', [email,displayName,hash,role]);
     res.status(201).json({ token: tokenFor(result.rows[0]), user: safeUser(result.rows[0]) });
   } catch (e) {
