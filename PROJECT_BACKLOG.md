@@ -20,7 +20,7 @@ Diese Liste ist der Arbeitsstand. „Live“ bedeutet nur, dass ein Render-Deplo
 6. Offline-KI-Architektur auf die übrigen geeigneten Websites ausrollen: gemeinsame lokale Modelladapter, Charakter-/Projektprofile, lokaler Speicher und Offline-Status.
 7. Cyber Shield technisch ausbauen: echte automatisierte Health-/Header-/TLS-Prüfungen, Schwachstellenberichte, Alerts und Service-Integrationen. Das aktuelle Portal ist zunächst ein Dashboard/Checklisten-Einstieg und schützt andere Apps noch nicht automatisch.
 8. Sicherheitsmiddleware in jedem einzelnen Webservice integrieren und testen: sichere Header/CSP, Authentifizierung/MFA, Rollenrechte, Rate Limits, CSRF, Input-/Upload-Prüfungen, Secrets-Handling, Backups und Wiederherstellungstests.
-9. Alle 36 Render-Services im ausgewählten Primary-Workspace und 43 GitHub-Repositories beider verbundenen Konten inventarisieren: Fehler, doppelte Services, veraltete Deployments, kaputte Build-Commands, fehlende Health Checks und nicht zugeordnete Projekte prüfen.
+9. Alle 66 Render-Services in den drei verbundenen Render-Workspaces und 43 GitHub-Repositories beider verbundenen Konten inventarisieren: Fehler, doppelte Services, veraltete Deployments, kaputte Build-Commands, fehlende Health Checks und nicht zugeordnete Projekte prüfen.
 10. Frühere Projekte vervollständigen: ULTIMA gemeinsame Identität und Rechte, Quantum-KI-Backends, KI-Game-Mod Backend, IONOS-/Note-KI-Verbindungen, Webshop-/Telegram-Bot-Workflows und App-Umsetzungen.
 
 ## Arbeitsregeln
@@ -33,7 +33,10 @@ Diese Liste ist der Arbeitsstand. „Live“ bedeutet nur, dass ein Render-Deplo
 
 
 ## Aktualisierung 14.11.2026 – Service-Inventar
-- Render-Inventar im ausgewählten Primary-Workspace erneut ausgelesen: 36 Services, alle als `not_suspended` gemeldet. Das ist kein Beleg für fehlerfreie HTTP-Erreichbarkeit oder vollständige Funktionen.
-- ULTIMA Central `index.html` mit den 36 aktuellen Render-Service-URLs, Repository-Links und Kurzbeschreibungen aktualisiert.
+- Render-Inventar in drei verbundenen Render-Workspaces erneut ausgelesen: 66 Services, alle als `not_suspended` gemeldet. Das ist kein Beleg für fehlerfreie HTTP-Erreichbarkeit oder vollständige Funktionen.
+- ULTIMA Central `index.html` mit den 66 aktuellen Render-Service-URLs, Repository-Links und Kurzbeschreibungen aktualisiert.
 - Neuer Central-Deploy `dep-dbrqa349v7es73b6h5bg` wurde gestartet; Live-Status und anschließender Browser-/Funktionscheck stehen noch aus.
 - Nächster Schritt: Deploy abschließen lassen, Homepage prüfen, danach Services in Gruppen auf HTTP-/Health-Endpunkte, Logs und Kernfunktionen auditieren. Alte und doppelte Services bleiben erhalten, bis ihre Zuordnung und Abhängigkeiten geklärt sind.
+
+- Erweiterte Inventur über alle drei verbundenen Render-Workspaces: 36 Services im Primary-Workspace, 7 im Workspace „Adriano's workspace“ (Phenex) und 23 im weiteren Workspace „Adriano's workspace“ (Konto 30), insgesamt 66 Services.
+- ULTIMA Central wurde auf alle 66 Services erweitert; mehrere parallel laufende ältere Instanzen sind bewusst sichtbar geblieben. Noch nicht zusammenführen oder löschen, bevor Domain-/Datenbank-/Webhook-Abhängigkeiten geprüft wurden.
