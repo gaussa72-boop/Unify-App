@@ -44,7 +44,27 @@
       "admin_console_required": true,
       "dedicated_support_bot_required": true,
       "bot_username": null,
-      "rollout_status": "not_integrated"
+      "rollout_status": "registered-with-export-import-workflow",
+      "integration_profile": {
+        "module": "film-simulation-ai",
+        "features": [
+          "long-form-film-planning",
+          "scene-and-transition-design",
+          "character-consistency-briefs",
+          "game-engine-json-export"
+        ],
+        "connected_targets": [
+          "quantum-mirror-wonderland",
+          "omega-aurealis",
+          "ultima-central",
+          "registered-ai-network"
+        ],
+        "credit_offer_eur": 300,
+        "max_film_minutes": 120,
+        "credit_charge_enabled": false,
+        "production_video_generation": "provider-api-integration-pending",
+        "game_engine_exchange": "json-export-import"
+      }
     },
     {
       "id": "ionos-ki",
@@ -200,7 +220,12 @@
       "admin_console_required": true,
       "dedicated_support_bot_required": true,
       "bot_username": null,
-      "rollout_status": "not_integrated"
+      "rollout_status": "linked-by-navigation-and-registry",
+      "connected_modules": [
+        "novatube-film-simulation-ai",
+        "creative-project-registry",
+        "game-engine-idea-library"
+      ]
     },
     {
       "id": "lichtkrieger",
@@ -270,5 +295,26 @@
       "name": "Rothshild",
       "reason": "separater Betrieb, außerhalb des gemeinsamen KI-Netzwerks"
     }
-  ]
+  ],
+  "shared_creative_assets": {
+    "version": 1,
+    "policy": "Register reusable AI-generated concepts, scripts, characters, scene plans, story worlds and game-design drafts across all non-shop AI projects.",
+    "source": "NovaTube Film-Simulation KI",
+    "exchange_format": "novatube.film-project.v1 JSON",
+    "game_engine_target": "Quantum Mirror Wonderland / Dark Mirror KI Game Mod",
+    "collection_targets": [
+      "Omega Aurealis",
+      "ULTIMA Central"
+    ],
+    "excluded_apps": [
+      "Lyca",
+      "Webshop Parfum",
+      "Sneaker",
+      "Bullrun Apparel",
+      "Drop-shipping",
+      "Rothshild"
+    ],
+    "shop_integrations": false,
+    "autonomous_deployment": false
+  }
 }
