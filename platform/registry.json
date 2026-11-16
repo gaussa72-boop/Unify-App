@@ -262,6 +262,34 @@
       "dedicated_support_bot_required": true,
       "bot_username": null,
       "rollout_status": "not_integrated"
+    },
+    {
+      "id": "neuroforge-systems-2035",
+      "name": "NeuroForge Systems 2035",
+      "url": "https://neuroforge-gaussa-2035.onrender.com",
+      "trial_enabled": true,
+      "premium_required_after_trial": true,
+      "dedicated_database_required": true,
+      "admin_console_required": true,
+      "dedicated_support_bot_required": true,
+      "bot_username": null,
+      "rollout_status": "registered-in-ultima-catalogue",
+      "repository": "https://github.com/gaussa72-boop/Neuroforge",
+      "integration_profile": {
+        "module": "neuroforge-research-platform",
+        "features": [
+          "neural-inspired-pattern-research",
+          "adaptive-systems-concepts",
+          "bio-inspired-computing-research",
+          "autokrypt-technology-overview",
+          "zip-archive-documentation"
+        ],
+        "connected_targets": [
+          "ultima-central",
+          "aurealis-ai-center"
+        ],
+        "commercial_autokrypt_source_included": false
+      }
     }
   ],
   "excluded_apps": [
@@ -334,9 +362,10 @@
       "omega-aurealis",
       "lichtkrieger",
       "ate-rea-library",
-      "autokrypt-boerse"
+      "autokrypt-boerse",
+      "neuroforge-systems-2035"
     ],
     "default_access_mode": "registered-for-reuse; each app must explicitly import or query the shared project asset",
-    "rollout_status": "catalogued; NovaTube-to-Game-Engine JSON workflow implemented; other AI frontends require individual UI/API adoption"
+    "rollout_status": "catalogued; NovaTube-to-Game-Engine JSON workflow implemented; NeuroForge registered; other AI frontends require individual UI/API adoption"
   }
 }
