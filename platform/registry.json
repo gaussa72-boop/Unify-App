@@ -266,14 +266,14 @@
     {
       "id": "neuroforge-systems-2035",
       "name": "NeuroForge Systems 2035",
-      "url": "https://neuroforge-gaussa-2035.onrender.com",
+      "url": "https://neuroforge-2035.onrender.com",
       "trial_enabled": true,
       "premium_required_after_trial": true,
       "dedicated_database_required": true,
       "admin_console_required": true,
       "dedicated_support_bot_required": true,
       "bot_username": null,
-      "rollout_status": "registered-in-ultima-catalogue",
+      "rollout_status": "registered-in-ultima-catalogue-new-render-service",
       "repository": "https://github.com/gaussa72-boop/Neuroforge",
       "integration_profile": {
         "module": "neuroforge-research-platform",
