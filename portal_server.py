@@ -18,6 +18,14 @@ def security_headers(response):
 def home():
     return send_from_directory(ROOT, "index.html")
 
+@app.get("/autokrypt/")
+def autokrypt_home():
+    return send_from_directory(ROOT / "autokrypt", "index.html")
+
+@app.get("/autokrypt/<path:filename>")
+def autokrypt_assets(filename):
+    return send_from_directory(ROOT / "autokrypt", filename)
+
 @app.get("/manifest.webmanifest")
 def manifest():
     return send_from_directory(ROOT, "manifest.webmanifest")
