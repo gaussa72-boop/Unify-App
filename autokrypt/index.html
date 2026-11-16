@@ -1,13 +1,104 @@
 <!doctype html>
-<html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#090d18"><meta name="description" content="ULTIMA Secure Network — lokale Nachrichtenverschlüsselung"><title>ULTIMA Secure Network · Autokrypt</title><link rel="stylesheet" href="/autokrypt/style.css?v=2"></head>
-<body><header><a class="brand" href="/">ULTIMA <span>CENTRAL</span></a><nav><a href="/">← Verwaltungszentrale</a><a href="https://github.com/Itsanormalconversation/Autokrypt" target="_blank" rel="noreferrer">Autokrypt Source ↗</a></nav></header>
-<main><section class="hero"><div class="eyebrow"><i></i> ULTIMA SECURITY LAYER · AUTOKRYPT</div><h1>Private Daten.<br><em>Unter deiner Kontrolle.</em></h1><p>Verschlüssele Nachrichten direkt auf deinem Gerät. Klartext und Passphrase werden von diesem Modul nicht an ULTIMA oder einen Server gesendet.</p><div class="metrics"><div><b>AES-256-GCM</b><small>Authentifizierte Verschlüsselung</small></div><div><b>PBKDF2 · SHA-256</b><small>Schlüsselableitung</small></div><div><b>CLIENT-SIDE</b><small>Lokale Verarbeitung</small></div></div></section>
-<section class="workspace"><div class="section-head"><div><small>01 / PRIVATE WORKSPACE</small><h2>Secure message lab</h2></div><span class="status"><i></i> BROWSER CRYPTO READY</span></div>
-<div class="panel"><div class="panel-title"><div class="symbol">⌁</div><div><b>Nachricht verschlüsseln</b><small>Oder ein vorhandenes Autokrypt-Paket entschlüsseln</small></div><span class="private">▣ LOCAL SESSION</span></div>
-<label for="message">NACHRICHT / VERSCHLÜSSELTES PAKET</label><textarea id="message" rows="7" placeholder="Nachricht schreiben oder ein .autokrypt-Paket hier einfügen …"></textarea>
+<html lang="de">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#101010"><meta name="description" content="Autokrypt — adaptive Mustererkennung, Risikoanalyse und lokale Nachrichtenverschlüsselung">
+<title>Autokrypt · ULTIMA Central</title><link rel="stylesheet" href="/autokrypt/style.css?v=chat3">
+</head>
+<body>
+<div class="app-shell">
+<aside class="sidebar" id="sidebar">
+  <a class="brand" href="/"><span class="brand-symbol">A</span><span>AUTOKRYPT<small>ULTIMA CENTRAL</small></span></a>
+  <a class="new-chat" href="#workspace">＋ <span>Neue Analyse</span></a>
+  <div class="side-label">ARBEITSBEREICHE</div>
+  <nav class="side-nav">
+    <a class="active" href="#overview"><span>⌂</span> Übersicht</a>
+    <a href="#workspace"><span>⌁</span> Secure Message Lab</a>
+    <a href="#classifier"><span>▦</span> AutoClassifier</a>
+    <a href="#brain"><span>◉</span> Brain</a>
+    <a href="#evolution"><span>⟲</span> Evolution</a>
+    <a href="#behavior"><span>⌇</span> Behavior Analysis</a>
+    <a href="#formula"><span>ƒ</span> Autokrypt-Formel</a>
+    <a href="#risk"><span>◈</span> Risiko-Scoring</a>
+  </nav>
+  <div class="side-label recent-label">PROJEKT</div>
+  <a class="repo-link" href="https://github.com/Itsanormalconversation/Autokrypt" target="_blank" rel="noreferrer"><span>⌘</span><span>GitHub Repository<small>Itsanormalconversation / Autokrypt</small></span><b>↗</b></a>
+  <div class="side-bottom"><span class="avatar">U</span><span>ULTIMA CENTRAL<small>Autokrypt Workspace</small></span><span class="online"></span></div>
+</aside>
+<div class="main-column">
+<header class="topbar"><button class="mobile-menu" id="menuToggle" aria-label="Menü öffnen">☰</button><div class="crumb">ULTIMA CENTRAL <span>/</span> <b>AUTOKRYPT</b></div><div class="top-actions"><span class="secure-dot"></span><span>LOKALE SICHERHEITSSESSION</span><a href="/" aria-label="Zur Verwaltungszentrale">↗</a></div></header>
+<main id="overview">
+<section class="welcome">
+<div class="eyebrow"><span class="glow-dot"></span> ADAPTIVE PATTERN RECOGNITION FRAMEWORK</div>
+<h1>Was möchtest du<br><em>mit Autokrypt analysieren?</em></h1>
+<p>Eine zentrale Arbeitsoberfläche für Mustererkennung, Risikoanalyse, Anomalie-Detektion und lokale Nachrichtenverschlüsselung.</p>
+<div class="quick-grid">
+<a href="#classifier" class="quick-card"><span class="quick-icon">▦</span><b>Muster klassifizieren</b><small>AutoClassifier · Algorithmusauswahl</small><span class="arrow">↗</span></a>
+<a href="#risk" class="quick-card"><span class="quick-icon">◈</span><b>Risiko bewerten</b><small>Score und Risikostufen</small><span class="arrow">↗</span></a>
+<a href="#behavior" class="quick-card"><span class="quick-icon">⌇</span><b>Verhalten analysieren</b><small>Intervalle · Varianz · Ausreißer</small><span class="arrow">↗</span></a>
+<a href="#workspace" class="quick-card"><span class="quick-icon">⌁</span><b>Nachricht verschlüsseln</b><small>AES-256-GCM im Browser</small><span class="arrow">↗</span></a>
+</div>
+</section>
+
+<section class="content-section" id="workspace">
+<div class="section-title"><div><span class="section-kicker">01 / PRIVATE WORKSPACE</span><h2>Secure message lab</h2><p>Verschlüssele oder entschlüssele Nachrichten direkt auf diesem Gerät.</p></div><span class="live-pill"><i></i> BROWSER CRYPTO</span></div>
+<div class="chat-card">
+<div class="assistant-row"><div class="assistant-avatar">A</div><div><b>Autokrypt Secure Assistant</b><small>Lokale Verschlüsselungswerkzeuge</small></div><span class="private-label">▣ PRIVATE SESSION</span></div>
+<div class="message-intro"><b>Deine Nachricht bleibt unter deiner Kontrolle.</b><p>Gib eine Nachricht ein und verschlüssele sie mit einer gemeinsamen Passphrase. Zum Entschlüsseln fügst du ein vorhandenes Autokrypt-Paket ein.</p></div>
+<label for="message">NACHRICHT ODER VERSCHLÜSSELTES PAKET</label>
+<textarea id="message" rows="6" placeholder="Schreibe deine Nachricht oder füge ein .autokrypt-Paket ein …"></textarea>
 <div class="pass-row"><div class="field"><label for="passphrase">PASSPHRASE</label><input id="passphrase" type="password" autocomplete="new-password" placeholder="Mindestens 12 Zeichen"></div><button class="ghost" id="togglePass" type="button">ANZEIGEN</button></div>
 <div class="actions"><button class="primary" id="encrypt">↗ Verschlüsseln</button><button class="secondary" id="decrypt">↙ Entschlüsseln</button><button class="ghost" id="clear">Leeren</button></div>
 <div class="result" id="resultWrap" hidden><div class="result-head"><span>AUSGABE</span><span id="resultState">ENCRYPTED PACKAGE</span></div><pre id="output"></pre><div class="actions"><button class="secondary" id="copy">Ausgabe kopieren</button><button class="secondary" id="download">.autokrypt speichern</button></div></div>
-<div class="notice" id="notice" role="status">Teile die Passphrase niemals zusammen mit dem verschlüsselten Paket. Nutze einen separaten sicheren Kanal.</div></div></section>
-<section class="layers"><div class="section-head"><div><small>02 / ARCHITEKTUR</small><h2>Security layers</h2></div></div><div class="cards"><article><b>01</b><h3>Lokale Verschlüsselung</h3><p>Die Web Crypto API verschlüsselt im Browser. Das exportierte Paket enthält Salt, Nonce und Ciphertext, aber keinen Klartext.</p><span class="ready">BROWSER PROTOTYPE</span></article><article><b>02</b><h3>Identität & Schlüssel</h3><p>Konten, öffentliche Identitäten, verifizierter Schlüsselaustausch und sichere Wiederherstellung sind als nächste Ausbaustufe vorgesehen.</p><span class="planned">GEPLANT</span></article><article><b>03</b><h3>Encrypted Relay</h3><p>Ein künftiger Relay-Dienst kann Pakete zustellen, ohne deren Inhalt zu lesen. Zustellung und Speicherung sind noch nicht implementiert.</p><span class="planned">GEPLANT</span></article></div></section>
-<aside class="warning"><b>⚠ Sicherheitsstatus: Prototyp</b><p>Dies ist aktuell ein lokales Verschlüsselungswerkzeug, noch kein vollständiger Messenger und nicht unabhängig auditiert. Das bestehende Autokrypt-Repository enthält Mustererkennungscode; dieser wird nicht als kryptografischer Algorithmus ausgegeben. Keine hochkritischen Geheimnisse mit diesem Prototyp verarbeiten.</p></aside></main><footer><span>ULTIMA CENTRAL · SECURE NETWORK</span><span>Autokrypt integration · Web Crypto API</span></footer><script src="/autokrypt/app.js?v=2"></script></body></html>
+<div class="notice" id="notice" role="status">Die Verschlüsselung läuft lokal im Browser. Teile die Passphrase immer getrennt vom verschlüsselten Paket.</div>
+</div>
+<div class="privacy-line"><span>🔒</span> Klartext und Passphrase werden von diesem Modul nicht an ULTIMA oder einen Server gesendet.</div>
+</section>
+
+<section class="content-section" id="classifier">
+<div class="section-title"><div><span class="section-kicker">02 / CLASSIFICATION ENGINE</span><h2>AutoClassifier</h2><p>Die im Repository beschriebene Klassifizierungs-Pipeline.</p></div><span class="module-tag">AutoClassifier.php</span></div>
+<div class="module-panel"><div class="pipeline"><div class="pipeline-node"><span>▤</span><b>Eingabedaten</b><small>Text / Muster</small></div><i>→</i><div class="pipeline-node"><span>◉</span><b>Brain</b><small>Algorithmus wählen</small></div><i>→</i><div class="pipeline-node"><span>⟲</span><b>Evolution</b><small>Optimierung</small></div><i>→</i><div class="pipeline-node"><span>◈</span><b>Klassifikation</b><small>Kategorie / Confidence</small></div></div>
+<p class="module-copy">AutoClassifier.php beschreibt die Auswahl eines passenden Algorithmus durch das Brain, eine mögliche Evolution und die anschließende Klassifizierung. Danach wird Feedback an das Brain zurückgegeben.</p>
+<div class="chips"><span>Regex</span><span>Levenshtein</span><span>Naive Bayes</span><span>KNN</span><span>Vector Similarity</span></div></div>
+</section>
+
+<section class="content-section" id="brain">
+<div class="section-title"><div><span class="section-kicker">03 / CENTRAL INTELLIGENCE</span><h2>Brain · Musterbewertung</h2><p>Die zentrale Auswahl- und Bewertungslogik laut Brain.php.</p></div><span class="module-tag">Brain.php</span></div>
+<div class="three-grid"><article class="data-card"><span class="card-icon">◉</span><h3>Algorithmus-Registry</h3><p>Registriert Algorithmen und sammelt ihre Stärken und Spezialisierungen.</p></article><article class="data-card"><span class="card-icon">⌁</span><h3>Performance Memory</h3><p>Berücksichtigt historische Performance, Confidence und Anpassung an Eingabedaten.</p></article><article class="data-card"><span class="card-icon">◎</span><h3>Entscheidung</h3><p>Vergleicht die Bewertungen und wählt den Algorithmus mit dem höchsten Score.</p></article></div>
+</section>
+
+<section class="content-section" id="evolution">
+<div class="section-title"><div><span class="section-kicker">04 / ADAPTIVE OPTIMIZATION</span><h2>Evolution</h2><p>Selektion, Crossover und Mutation als im Repository beschriebene Mechanismen.</p></div><span class="module-tag">Evolution.php</span></div>
+<div class="module-panel"><div class="evolution-flow"><div><b>01</b><strong>Selektion</strong><small>Fitteste auswählen</small></div><span>→</span><div><b>02</b><strong>Crossover</strong><small>Eigenschaften kombinieren</small></div><span>→</span><div><b>03</b><strong>Mutation</strong><small>Parameter verändern</small></div><span>→</span><div><b>04</b><strong>Champion</strong><small>Fitness vergleichen</small></div></div><p class="module-copy">Evolution.php enthält Methoden für Crossover, zufällige Parameter-Mutationen und die Auswahl der leistungsstärksten Algorithmen.</p></div>
+</section>
+
+<section class="content-section" id="behavior">
+<div class="section-title"><div><span class="section-kicker">05 / BEHAVIOR ANALYSIS</span><h2>Verhaltensanalyse</h2><p>BehaviorModule.php beschreibt die Auswertung von Zeit- und Bewegungsmustern.</p></div><span class="module-tag">BehaviorModule.php</span></div>
+<div class="three-grid"><article class="data-card"><span class="card-icon">⌁</span><h3>Klickintervalle</h3><p>Abstände zwischen Klicks in Millisekunden; Varianz und Ausreißerquote.</p></article><article class="data-card"><span class="card-icon">⌖</span><h3>Mausgeschwindigkeit</h3><p>Relative Geschwindigkeitswerte werden als Mustermerkmale verarbeitet.</p></article><article class="data-card"><span class="card-icon">◷</span><h3>Reaktionszeiten</h3><p>Reaktionszeiten werden auf Varianz und auffällige Ausreißer untersucht.</p></article></div>
+</section>
+
+<section class="content-section" id="formula">
+<div class="section-title"><div><span class="section-kicker">06 / MATHEMATICAL CORE</span><h2>Autokrypt-Formel</h2><p>Die Formel und Begriffe aus AutokryptFormula.php und README.md.</p></div><span class="module-tag">AutokryptFormula.php</span></div>
+<div class="formula-panel"><div class="formula-equation">f(x) = P(x) + ∫<sub>a</sub><sup>b</sup> R(t) · M(t,x) dt</div><div class="formula-defs"><div><b>P(x)</b><span>Primärmuster · direkte Merkmale</span></div><div><b>R(t)</b><span>Risikofunktion über t</span></div><div><b>M(t,x)</b><span>Musterinteraktion zwischen t und x</span></div><div><b>f(x)</b><span>Normalisiertes Ergebnis von 0 bis 100</span></div></div></div>
+</section>
+
+<section class="content-section" id="risk">
+<div class="section-title"><div><span class="section-kicker">07 / RISK ANALYSIS</span><h2>Risiko-Scoring</h2><p>Die README dokumentiert beispielhafte Score-Bänder. BehaviorModule.php nutzt zusätzlich eigene Textschwellen.</p></div><span class="module-tag">README.md</span></div>
+<div class="risk-list"><div><span class="risk-color green"></span><b>0–20</b><span>Unkritisch</span></div><div><span class="risk-color yellow"></span><b>20–50</b><span>Auffällig</span></div><div><span class="risk-color orange"></span><b>50–80</b><span>Verdächtig</span></div><div><span class="risk-color red"></span><b>80–100</b><span>Kritisch</span></div></div>
+<div class="note-box"><b>Hinweis zu den Quellcodedetails</b><p>BehaviorModule.php verwendet für seine Textinterpretation die Grenzen unter 20, unter 50, unter 75 und ab 75. Die README zeigt dagegen die oben aufgeführten Konzept-Bänder. Die beiden Darstellungen sind bewusst getrennt.</p></div>
+</section>
+
+<section class="content-section source-section">
+<div class="section-title"><div><span class="section-kicker">08 / REPOSITORY & LICENSING</span><h2>Projektinformationen</h2><p>Quellcode, Anwendungsfelder und Lizenzhinweise aus der README.</p></div></div>
+<div class="three-grid"><article class="data-card"><h3>Anwendungsfelder</h3><p>Anti-Phishing, Log-Analyse, Bot-Erkennung, Anomaly Detection und theoretisch Verhaltens-Anti-Cheat.</p></article><article class="data-card"><h3>Technologie</h3><p>PHP-basiertes, modulares Framework. Die README beschreibt eine Integration ohne externe Abhängigkeiten.</p></article><article class="data-card"><h3>Dual Licensing</h3><p>Laut README nicht-kommerzielle Nutzung kostenlos; kommerzielle Nutzung benötigt eine gesonderte Lizenz.</p></article></div>
+<a class="repo-button" href="https://github.com/Itsanormalconversation/Autokrypt" target="_blank" rel="noreferrer">⌘ Original-Repository auf GitHub öffnen ↗</a>
+</section>
+<footer><span>ULTIMA CENTRAL · AUTOKRYPT WORKSPACE</span><span>Framework-Dokumentation und Browser-Verschlüsselungsprototyp</span></footer>
+</main>
+</div>
+</div>
+<script src="/autokrypt/app.js?v=2"></script>
+<script>
+(()=>{const b=document.getElementById('menuToggle'),s=document.getElementById('sidebar');if(b&&s)b.addEventListener('click',()=>s.classList.toggle('open'));document.querySelectorAll('.side-nav a').forEach(a=>a.addEventListener('click',()=>{document.querySelectorAll('.side-nav a').forEach(x=>x.classList.remove('active'));a.classList.add('active');s.classList.remove('open')}));})();
+</script>
+</body></html>
