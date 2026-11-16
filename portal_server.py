@@ -32,6 +32,14 @@ def home():
     html = html.replace('<h2>Projektübersicht</h2>', section + '<h2>Projektübersicht</h2>', 1)
     return Response(html, mimetype="text/html")
 
+@app.get("/account/")
+def account_home():
+    return send_from_directory(ROOT / "account", "index.html")
+
+@app.get("/admin/")
+def admin_home():
+    return send_from_directory(ROOT / "admin", "index.html")
+
 @app.get("/cosmican/")
 def cosmican_home():
     return send_from_directory(ROOT / "cosmican", "index.html")
@@ -73,7 +81,7 @@ def icon():
 
 @app.get("/health")
 def health():
-    return jsonify(status="ok", service="ultima-central", mode="portfolio-launcher", cosmican="available"), 200
+    return jsonify(status="ok", service="ultima-central", mode="portfolio-launcher", cosmican="available", identity="not-configured", admin="locked-pending-sso"), 200
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=int(os.environ.get("PORT", "10000")))
