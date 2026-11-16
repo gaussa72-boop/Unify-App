@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#090b12">
+<title>Cosmican Lux Syndicate</title>
+<style>
+:root{color-scheme:dark;--bg:#090b12;--panel:#141923;--line:#34313a;--gold:#e6b85c;--muted:#a9a7ad;--cyan:#8ed8db}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% -15%,#4a2d16 0,transparent 42%),radial-gradient(ellipse at 100% 70%,#142d3c 0,transparent 34%),var(--bg);color:#f6f0e5;font:16px/1.6 system-ui,sans-serif}
+header{position:sticky;top:0;z-index:5;background:#090b12e8;backdrop-filter:blur(16px);border-bottom:1px solid #ffffff18;padding:15px max(18px,calc((100% - 1100px)/2));display:flex;align-items:center;justify-content:space-between;gap:14px}
+.brand{color:var(--gold);font-size:13px;letter-spacing:.22em;font-weight:800}.nav{display:flex;gap:14px;flex-wrap:wrap}.nav a{color:#d7d2c8;text-decoration:none;font-size:13px}
+main{max-width:1100px;margin:auto;padding:34px 20px 70px}.eyebrow{color:var(--cyan);font-size:11px;letter-spacing:.25em}.hero{padding:50px 0 34px}.hero h1{font-size:clamp(38px,7vw,76px);line-height:1.02;letter-spacing:-.05em;margin:14px 0;color:var(--gold)}.hero p{max-width:720px;color:var(--muted);font-size:18px}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+a.btn,button{border:1px solid #725c36;border-radius:10px;padding:11px 16px;background:linear-gradient(110deg,#e6b85c,#f3d99a);color:#17130d;font-weight:750;text-decoration:none;cursor:pointer;font:inherit}a.secondary,button.secondary{background:#172330;border-color:#36505c;color:#c4e9e7}
+.grid{display:grid;grid-template-columns:1.1fr .9fr;gap:16px;margin:20px 0}.panel{background:linear-gradient(145deg,#171d28,#10141d);border:1px solid var(--line);border-radius:17px;padding:22px}.panel h2{margin:0 0 8px;color:var(--gold)}.muted{color:var(--muted);font-size:13px}
+input,textarea{width:100%;padding:12px;margin:6px 0 14px;background:#090f18;border:1px solid #354253;border-radius:9px;color:#fff;font:inherit}textarea{min-height:150px;resize:vertical}label{font-size:13px;color:#d9d2c4}
+.post{padding:20px 0;border-bottom:1px solid #ffffff20}.post h3{margin:0 0 5px;color:var(--gold)}.post .meta{font-size:12px;color:var(--cyan)}.post p{white-space:pre-wrap;color:#e5e0d6}.post a{color:var(--cyan)}.post img{max-width:100%;max-height:440px;object-fit:contain;border-radius:12px;margin-top:10px}
+.status{padding:10px 12px;border:1px solid #4c493e;border-radius:9px;color:#e4d2a7;font-size:13px;margin:12px 0}.toolbar{display:flex;gap:8px;flex-wrap:wrap}.toolbar button{font-size:13px}
+@media(max-width:760px){.grid{grid-template-columns:1fr}header{align-items:flex-start;flex-direction:column}.hero{padding-top:30px}}
+</style>
+</head>
+<body>
+<header><div class="brand">COSMICAN LUX SYNDICATE</div><nav class="nav"><a href="/">ULTIMA Central</a><a href="https://www.facebook.com/groups/1021804703085867/" target="_blank" rel="noopener">Facebook-Gruppe ↗</a></nav></header>
+<main>
+<section class="hero"><div class="eyebrow">COMMUNITY · GEDANKEN · KOSMOS</div><h1>Cosmican Lux<br>Syndicate</h1><p>Ein digitales Archiv für Gedanken, Visionen, Bilder und Geschichten aus der Cosmican-Lux-Community. Beiträge aus der privaten Facebook-Gruppe können hier manuell übernommen und als eigener Blogeintrag veröffentlicht werden.</p><div class="actions"><a class="btn" href="#beitraege">Beiträge entdecken</a><a class="btn secondary" href="https://www.facebook.com/groups/1021804703085867/" target="_blank" rel="noopener">Facebook-Gruppe öffnen ↗</a></div></section>
+<section class="grid">
+<article class="panel"><h2>Community-Archiv</h2><p class="muted">Hier erscheinen die Beiträge, die du über den Import-Bereich hinzufügst. Originalbeiträge bleiben auf Facebook verlinkt.</p><div id="status" class="status">Noch keine Beiträge importiert.</div><div class="toolbar"><button class="secondary" id="export">Archiv exportieren</button><button class="secondary" id="importFile">JSON-Archiv importieren</button><input id="jsonFile" type="file" accept="application/json" hidden></div></article>
+<article class="panel"><h2>Über die Gruppe</h2><p>Cosmican Lux Syndicate ist eine private Facebook-Gruppe. Die Website ist ein ergänzendes Blog- und Lese-Archiv, keine Kopie des Facebook-Logins oder der Mitgliederverwaltung.</p><p class="muted">Die offizielle Gruppen-API steht für eine automatische Synchronisierung nicht mehr zur Verfügung. Neue Gruppenbeiträge werden deshalb über den manuellen Import übernommen.</p></article>
+</section>
+<section id="beitraege" class="panel"><div class="eyebrow">DAS ARCHIV</div><h2>Veröffentlichte Beiträge</h2><div id="posts"><p class="muted">Noch keine Beiträge vorhanden. Importiere deinen ersten Facebook-Beitrag.</p></div></section>
+<section class="panel" style="margin-top:18px"><div class="eyebrow">ADMIN · MANUELLER IMPORT</div><h2>Facebook-Beitrag übernehmen</h2><p class="muted">Öffne deinen Beitrag in der Facebook-Gruppe, kopiere den Text und füge ihn hier ein. Ergänze den Original-Link und optional eine Bild-URL.</p>
+<form id="postForm"><label for="title">Titel</label><input id="title" maxlength="140" required placeholder="Titel des Beitrags"><label for="body">Beitragstext</label><textarea id="body" maxlength="12000" required placeholder="Text aus Facebook hier einfügen …"></textarea><label for="source">Facebook-Original-Link</label><input id="source" type="url" placeholder="https://www.facebook.com/groups/1021804703085867/…"><label for="image">Bild-URL (optional, öffentlich erreichbar)</label><input id="image" type="url" placeholder="https://…"><div class="toolbar"><button type="submit">Beitrag veröffentlichen</button><button type="reset" class="secondary">Formular leeren</button></div></form><p class="muted">Hinweis: Das Archiv wird in diesem Browser gespeichert. Mit „Archiv exportieren“ kannst du eine Sicherung übertragen. Für geräteübergreifende Veröffentlichung ist noch eine zentrale Datenbank mit Admin-Anmeldung erforderlich.</p></section>
+<footer class="muted" style="padding:24px 0;border-top:1px solid #ffffff20;margin-top:30px">COSMICAN LUX SYNDICATE · Teil des ULTIMA-Netzwerks · <a href="/" style="color:var(--cyan)">Zurück zu ULTIMA Central</a></footer>
+</main>
+<script>
+const KEY="ultima.cosmican.posts.v1";
+const $=id=>document.getElementById(id);
+let posts=[];try{posts=JSON.parse(localStorage.getItem(KEY)||"[]");if(!Array.isArray(posts))posts=[]}catch{posts=[]}
+function save(){localStorage.setItem(KEY,JSON.stringify(posts));render()}
+function safeUrl(value){try{const u=new URL(value);return ["https:","http:"].includes(u.protocol)?u.href:""}catch{return""}}
+function render(){const root=$("posts");root.replaceChildren();$("status").textContent=posts.length+" Beitrag/Beiträge in diesem Browser gespeichert.";if(!posts.length){const p=document.createElement("p");p.className="muted";p.textContent="Noch keine Beiträge vorhanden.";root.append(p);return}
+[...posts].sort((a,b)=>b.createdAt-a.createdAt).forEach(post=>{const article=document.createElement("article");article.className="post";const h=document.createElement("h3");h.textContent=post.title;const meta=document.createElement("div");meta.className="meta";meta.textContent=new Date(post.createdAt).toLocaleString("de-DE");const p=document.createElement("p");p.textContent=post.body;article.append(h,meta,p);const src=safeUrl(post.source);if(src){const a=document.createElement("a");a.href=src;a.target="_blank";a.rel="noopener";a.textContent="Original auf Facebook öffnen ↗";article.append(a)}const img=safeUrl(post.image);if(img){const image=document.createElement("img");image.src=img;image.alt="Beitragsbild";image.loading="lazy";article.append(image)}root.append(article)})}
+$("postForm").addEventListener("submit",e=>{e.preventDefault();const title=$("title").value.trim(),body=$("body").value.trim();if(!title||!body)return;posts.push({id:crypto.randomUUID?crypto.randomUUID():String(Date.now()),title,body,source:safeUrl($("source").value),image:safeUrl($("image").value),createdAt:Date.now()});save();e.target.reset();$("beitraege").scrollIntoView({behavior:"smooth"})});
+$("export").onclick=()=>{const blob=new Blob([JSON.stringify(posts,null,2)],{type:"application/json"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="cosmican-lux-syndicate-archiv.json";a.click();URL.revokeObjectURL(a.href)};
+$("importFile").onclick=()=>$("jsonFile").click();
+$("jsonFile").onchange=async e=>{const f=e.target.files[0];if(!f)return;try{const data=JSON.parse(await f.text());if(!Array.isArray(data))throw Error();posts=[...posts,...data.filter(x=>x&&typeof x.title==="string"&&typeof x.body==="string").map(x=>({...x,id:x.id||String(Date.now()+Math.random()),createdAt:Number(x.createdAt)||Date.now()}))];save()}catch{alert("Die JSON-Datei konnte nicht gelesen werden.")}e.target.value=""};
+render();
+</script>
+</body></html>
