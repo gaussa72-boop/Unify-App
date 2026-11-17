@@ -30,5 +30,5 @@ export AITE_ALLOWED_ORIGINS="https://aurealis-cyber-shield.onrender.com,https://
 (ollama serve >/tmp/aite-ollama.log 2>&1 &) || true
 sleep 3
 DIR="$(cd "$(dirname "$0")" && pwd)"
-echo "AITE Bridge läuft auf 127.0.0.1:8765. Terminal offen lassen."
+echo "AITE Bridge läuft auf 127.0.0.1:8766. Terminal offen lassen."
 python3 "$DIR/local_bridge.py"
