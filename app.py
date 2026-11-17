@@ -21,7 +21,7 @@ app.config["SESSION_COOKIE_SECURE"] = os.environ.get("RENDER", "") == "true"
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 csrf = CSRFProtect(app)
-app.config["WTF_CSRF_TIME_LIMIT"] = timedelta(hours=12)
+app.config["WTF_CSRF_TIME_LIMIT"] = 12 * 60 * 60  # Flask-WTF expects seconds, not datetime.timedelta
 
 @app.errorhandler(CSRFError)
 def handle_expired_csrf(error):
