@@ -1,6 +1,6 @@
 import os, json
 from datetime import datetime, timezone, timedelta
-from flask import Flask, request, redirect, url_for, session, render_template_string, flash, jsonify
+from flask import Flask, request, redirect, url_for, session, render_template_string, flash, jsonify, send_from_directory
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_wtf.csrf import CSRFProtect, CSRFError
@@ -52,7 +52,7 @@ PAGE = """
 </style><main><div class="brand">ULTIMA NETWORK · UNIFY</div><div class="hero"><div class="orb"></div><div><h1>Ein Konto. Dein Netzwerk.</h1><p>Zentrale Anmeldung und persönliche Profile für verbundene Websites.</p></div></div>
 {% for m in get_flashed_messages() %}<div class="flash">{{m}}</div>{% endfor %}
 {% if user %}
-<div class="grid"><section class="panel"><h2>Dein Profil</h2><p>{{user.email}}</p><p>Rolle: <b>{{user.role}}</b></p><form method="post" action="/logout"><input type="hidden" name="csrf_token" value="{{csrf_token()}}"><button>Abmelden</button></form></section>
+<div class="grid"><section class="panel"><h2>Dein Profil</h2><p>{{user.email}}</p><p>Rolle: <b>{{user.role}}</b></p><p><a href="/assistant/">ULTIMA AI · Assistent öffnen ↗</a></p><form method="post" action="/logout"><input type="hidden" name="csrf_token" value="{{csrf_token()}}"><button>Abmelden</button></form></section>
 <section class="panel"><h2>Website-Profil speichern</h2><form method="post" action="/profile"><input type="hidden" name="csrf_token" value="{{csrf_token()}}"><label>Website-Kennung</label><input name="site_key" placeholder="z. B. lichtkrieger" required maxlength="100"><label>Profilinformationen (JSON)</label><textarea name="profile_data" rows="4" placeholder='{"anzeigename":"...","interessen":[]}'></textarea><button>Profil speichern</button></form></section></div>
 <section class="panel" style="margin-top:16px"><h2>Deine Website-Profile</h2>{% if profiles %}{% for p in profiles %}<p><b>{{p.site_key}}</b> · {{p.profile_data}}</p>{% endfor %}{% else %}<p>Noch keine Website-Profile gespeichert.</p>{% endif %}</section>
 {% else %}
@@ -121,6 +121,32 @@ def save_profile():
     else: db.session.add(SiteProfile(user_id=user.id, site_key=key, profile_data=json.dumps(data, ensure_ascii=False)))
     db.session.commit(); flash("Website-Profil gespeichert.")
     return redirect(url_for("home"))
+
+@app.get("/assistant/")
+def assistant_home():
+    user = db.session.get(User, session.get("user_id")) if session.get("user_id") else None
+    if not user:
+        flash("Bitte melde dich zuerst an, um ULTIMA AI zu öffnen.")
+        return redirect(url_for("home"))
+    response = send_from_directory(os.path.dirname(__file__), "assistant.html")
+    response.headers["Cache-Control"] = "no-store"
+    return response
+
+@app.get("/api/assistant/status")
+def assistant_status():
+    user = db.session.get(User, session.get("user_id")) if session.get("user_id") else None
+    if not user:
+        return jsonify(error="authentication_required"), 401
+    return jsonify(
+        assistant="ULTIMA AI",
+        dashboard="available",
+        browser_voice="client_optional",
+        desktop_agent="not_installed",
+        mobile_companion="not_installed",
+        email_connectors="awaiting_user_connection",
+        privileged_actions="approval_required",
+        note="This endpoint reports only verified application capabilities; it does not claim device or account control."
+    ), 200
 
 @app.get("/health")
 def health():
