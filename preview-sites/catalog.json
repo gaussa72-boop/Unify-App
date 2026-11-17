@@ -1,0 +1,34 @@
+{
+  "repository": "gaussa72-boop/Unify-App",
+  "purpose": "Central monorepo for ULTIMA web previews and portals. Independent AI repositories remain separate to preserve product identity and service boundaries.",
+  "projects": [
+    {
+      "name": "Cosmican Lux Syndicate",
+      "path": "cosmican/",
+      "url": "https://ultima-central-45ne.onrender.com/cosmican/",
+      "deployment": "existing ULTIMA Central static site",
+      "status": "deployed"
+    },
+    {
+      "name": "Aurelis Investment",
+      "path": "aurelis-investment/",
+      "url": "https://aurelis-investment.onrender.com/",
+      "deployment": "separate Render static site publishing this subdirectory",
+      "status": "deployment_pending"
+    },
+    {
+      "name": "ULTIMA App Center",
+      "path": "app-center/",
+      "url": "https://ultima-central-45ne.onrender.com/app-center/",
+      "deployment": "existing ULTIMA Central static site",
+      "status": "deployed"
+    },
+    {
+      "name": "ULTIMA Central",
+      "path": "/",
+      "url": "https://ultima-central-45ne.onrender.com/",
+      "deployment": "existing Render static site",
+      "status": "deployed"
+    }
+  ]
+}
