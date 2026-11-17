@@ -20,7 +20,7 @@ ollama pull qwen3.5:4b
 ollama serve
 python3 local_bridge.py
 ```
-The bridge listens only on 127.0.0.1:8765 and forwards to Ollama at 127.0.0.1:11434. The Windows/macOS setup scripts set an exact allowlist for the 67 Render origins found across your three connected workspaces. Add any custom domains explicitly to `AITE_ALLOWED_ORIGINS`; the bridge does not enable wildcard CORS.
+The bridge listens only on 127.0.0.1:8766 and forwards to Ollama at 127.0.0.1:11434. The Windows/macOS setup scripts set an exact allowlist for the 67 Render origins found across your three connected workspaces. Add any custom domains explicitly to `AITE_ALLOWED_ORIGINS`; the bridge does not enable wildcard CORS.
 
 ## Embed locally
 ```html
