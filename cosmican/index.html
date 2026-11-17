@@ -25,10 +25,31 @@
 const groupUrl="https://www.facebook.com/groups/1021804703085867/";
 const root=document.getElementById("posts"),status=document.getElementById("feedStatus");
 function safe(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
-function attachmentHtml(a){if(!a)return"";const url=String(a.url||a.media_url||"");if(!/^https?:\/\//i.test(url))return"";const type=String(a.type||a.media_type||"").toLowerCase();if(type.includes("video"))return '<video controls playsinline style="width:100%;max-height:420px" src="'+safe(url)+'"></video>';if(type.includes("photo")||type.includes("image")||/\.(jpg|jpeg|png|gif|webp)(\?|$)/i.test(url))return '<img loading="lazy" src="'+safe(url)+'" alt="Facebook-Anhang" style="width:100%;max-height:480px;object-fit:contain;border-radius:10px">';return '<a href="'+safe(url)+'" target="_blank" rel="noopener">Anhang öffnen ↗</a>'}
+function attachmentHtml(a){
+ if(!a)return "";
+ const url=String(a.url||a.media_url||"");
+ if(/^https?:\/\//i.test(url)){
+  const type=String(a.type||a.media_type||"").toLowerCase();
+  if(type.includes("video"))return '<video controls playsinline style="width:100%;max-height:420px" src="'+safe(url)+'"></video>';
+  if(type.includes("photo")||type.includes("image")||/\.(jpg|jpeg|png|gif|webp)(\?|$)/i.test(url))return '<img loading="lazy" src="'+safe(url)+'" alt="Facebook-Anhang" style="width:100%;max-height:480px;object-fit:contain;border-radius:10px">';
+  return '<a href="'+safe(url)+'" target="_blank" rel="noopener">Anhang öffnen ↗</a>';
+ }
+ const name=safe(a.filename||"Facebook-Medium");
+ return '<div class="attachment"><div class="attachment-art">▧</div><div class="attachment-text"><small>FACEBOOK-ANHANG · AUS DEM EXPORT</small><b>'+name+'</b><span class="muted">Originaldatei im ZIP erkannt; Medienübernahme folgt separat.</span></div></div>';
+}
 function render(items){root.innerHTML="";if(!Array.isArray(items)||!items.length){status.textContent="Noch keine Facebook-Beiträge über die Gruppenverbindung empfangen. Die Seite zeigt keine erfundenen Beiträge.";return}
-status.textContent=items.length+" Beiträge aus der verbundenen Community";items.forEach(p=>{const author=safe(p.author||p.from?.name||"Cosmican Community"),text=safe(p.message||p.text||""),title=safe(p.title||"Community-Beitrag"),date=safe(p.created_time||p.createdAt||"");const media=(p.attachments||p.media||[]);let attachments=Array.isArray(media)?media.map(attachmentHtml).join(""):attachmentHtml(media);const card=document.createElement("article");card.className="postcard";card.innerHTML='<div class="posthead"><div class="avatar">✧</div><div><div class="author">'+author+' <span class="role">Community</span></div><div class="meta">'+date+'</div></div><span class="dots">•••</span></div><h2>'+title+'</h2><p>'+text+'</p>'+attachments+'<div class="post-actions"><span>♡ Gefällt mir</span><span>▢ Kommentieren</span><span>➦ Teilen</span><span>♧ Speichern</span></div>';root.append(card)})}
-async function load(){try{const r=await fetch("/api/cosmican/facebook-feed",{headers:{Accept:"application/json"}});if(!r.ok)throw Error("feed endpoint unavailable");const data=await r.json();render(data.posts||data.data||data)}catch(e){status.innerHTML='Die Facebook-Gruppenverbindung ist noch nicht autorisiert. <a style="color:#ffdc91;text-decoration:underline" href="'+groupUrl+'" target="_blank" rel="noopener">Facebook-Gruppe öffnen ↗</a>';}}
+status.textContent=items.length+" Beiträge aus der verbundenen Community";items.forEach(p=>{const author=safe(p.author||p.from?.name||"Cosmican Community"),text=safe(p.message||p.text||""),title=safe(p.title||"Community-Beitrag"),date=safe(p.created_time||p.createdAt||""),group=safe(p.group||"Gruppenname im Export nicht angegeben");const media=(p.attachments||p.media||[]);let attachments=Array.isArray(media)?media.map(attachmentHtml).join(""):attachmentHtml(media);const card=document.createElement("article");card.className="postcard";card.innerHTML='<div class="posthead"><div class="avatar">✧</div><div><div class="author">'+author+' <span class="role">Community</span></div><div class="meta">'+group+' · '+date+'</div></div><span class="dots">•••</span></div><h2>'+title+'</h2><p>'+text+'</p>'+attachments+'<div class="post-actions"><span>♡ Gefällt mir</span><span>▢ Kommentieren</span><span>➦ Teilen</span><span>♧ Speichern</span></div>';root.append(card)})}
+async function load(){
+ try{
+  const r=await fetch("/cosmican/data/facebook-posts.json",{headers:{Accept:"application/json"},cache:"no-store"});
+  if(!r.ok)throw Error("Archivdatei nicht erreichbar");
+  const data=await r.json();
+  render(data.posts||[]);
+  status.textContent=(data.posts||[]).length+" Einträge aus dem Facebook-Gruppenarchiv · Originaldaten";
+ }catch(e){
+  status.innerHTML='Das Facebook-Archiv konnte nicht geladen werden. <a style="color:#ffdc91;text-decoration:underline" href="'+groupUrl+'" target="_blank" rel="noopener">Facebook-Gruppe öffnen ↗</a>';
+ }
+}
 load();
 
 
