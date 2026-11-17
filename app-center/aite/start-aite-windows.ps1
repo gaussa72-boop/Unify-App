@@ -22,5 +22,5 @@ if (-not (Test-NetConnection 127.0.0.1 -Port 11434 -InformationLevel Quiet)) {
   Start-Process -WindowStyle Minimized -FilePath ollama -ArgumentList "serve"
   Start-Sleep -Seconds 5
 }
-Write-Host "AITE Bridge läuft auf 127.0.0.1:8765. Dieses Fenster offen lassen." -ForegroundColor Green
+Write-Host "AITE Bridge läuft auf 127.0.0.1:8766. Dieses Fenster offen lassen." -ForegroundColor Green
 if ($python -eq "py") { py -3 "$root\local_bridge.py" } else { python "$root\local_bridge.py" }
