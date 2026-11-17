@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
-"""Loopback-only AITE bridge: browser -> localhost:8765 -> Ollama localhost:11434."""
+"""Loopback-only AITE bridge: browser -> localhost:8766 -> Ollama localhost:11434."""
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from urllib.request import Request, urlopen
 from urllib.error import URLError, HTTPError
 import json, os
 
 HOST = "127.0.0.1"
-PORT = int(os.environ.get("AITE_PORT", "8765"))
+PORT = int(os.environ.get("AITE_PORT", "8766"))
 MODEL = os.environ.get("AITE_MODEL", "qwen3.5:4b")
 OLLAMA = "http://127.0.0.1:11434"
 ALLOWED_SUFFIXES = tuple(x.strip().lower() for x in os.environ.get("AITE_ALLOWED_SUFFIXES", "").split(",") if x.strip())
