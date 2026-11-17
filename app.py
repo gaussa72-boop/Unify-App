@@ -158,6 +158,14 @@ def health():
 
 with app.app_context():
     db.create_all()
+    # Keep the configured ULTIMA master account privileged even when it
+    # was registered before SUPERADMIN_EMAIL was configured.
+    owner_email = os.environ.get("SUPERADMIN_EMAIL", "").strip().lower()
+    if owner_email:
+        owner = User.query.filter(db.func.lower(User.email) == owner_email).first()
+        if owner and owner.role != "SUPERADMIN":
+            owner.role = "SUPERADMIN"
+            db.session.commit()
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 10000)))
