@@ -1,9 +1,9 @@
 import os, json
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 from flask import Flask, request, redirect, url_for, session, render_template_string, flash, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
-from flask_wtf.csrf import CSRFProtect
+from flask_wtf.csrf import CSRFProtect, CSRFError
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY", "development-only-change-me")
@@ -21,6 +21,12 @@ app.config["SESSION_COOKIE_SECURE"] = os.environ.get("RENDER", "") == "true"
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 csrf = CSRFProtect(app)
+app.config["WTF_CSRF_TIME_LIMIT"] = timedelta(hours=12)
+
+@app.errorhandler(CSRFError)
+def handle_expired_csrf(error):
+    flash("Deine Sitzung oder das Sicherheits-Token ist abgelaufen. Bitte sende das Formular erneut.")
+    return redirect(url_for("home"))
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
