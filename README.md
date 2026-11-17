@@ -26,5 +26,13 @@ This project currently provides a portfolio launcher, not a universal identity p
 
 No passwords, API keys, bot tokens, payment credentials or private environment values belong in Git. Store deployment secrets only in each service's environment settings.
 
+## ULTIMA AI Personal Command Center
+
+The authenticated `/assistant/` page is the first dashboard prototype for the planned ULTIMA AI assistant. It includes browser-only optional voice input and a status endpoint. It does **not** install a desktop background agent or control the user's computer, phone, or email. The desktop agent, mobile companion, OAuth email integrations, and permissioned action runner remain separate implementation milestones.
+
+Security model: least-privilege OAuth, per-device pairing, scoped permissions, approval for external communications, payments, deletion, account/security changes and publishing, immutable audit events, visible microphone status, and an emergency stop. Never store email passwords, API keys, or device credentials in Git.
+
+Project inventory: `data/project_registry.json` records the currently inventoried Render workspaces and GitHub repositories. It is an inventory snapshot only; it does not move or rename live projects.
+
 ## Deployment
 Render Blueprint uses `portal_server.py`, Python 3.11 and the free Frankfurt web-service plan. Auto-deploy is enabled for pushes to `main`.
