@@ -68,3 +68,39 @@ Die Versionsgrenzen lassen die jeweils neueste kompatible Version innerhalb der 
 - Wartungsrichtlinie: `MAINTENANCE_POLICY.md`
 - Hauptrepository: https://github.com/gaussa72-boop/Unify-App
 - Render-Projektverwaltung: https://dashboard.render.com/
+
+
+## Nachtrag – erweiterter Software- und Kernbackend-Check
+
+### Weitere Abhängigkeitsupdates
+
+| Repository | Geänderte Datei(en) | Commit / Deployment |
+|---|---|---|
+| `Rea.Signature` | `requirements.txt` | `6933ce2794586972f39a1df28da4cccdf213f7ce` · live |
+| `Bullrun.Apparel` | `requirements.txt` | `a6481f2bf8817e5955d19aad86baca6faec3fcec` · live |
+| `Quantum.MIrror.Wonderland` | `requirements.txt` | `cf72aae03163edce68030b49d0d7f8fb07c8a5ae` · live |
+| `Unify-App` | `requirements.txt` | `fb465e32174aa1f6a24d186f360a5a6d664dadf6` · live |
+| `Quantum-Shield` | `requirements.txt` | `d5efbafc2380aee76ba53606eac2fcba87dfa2b5` · live |
+
+Die zentrale Membership-API wurde mit Flask 3.1.3, SQLAlchemy 2.1.9, Gunicorn 27.0.1, Psycopg 3.3.9 und Flask-Limiter 4.1.1 erfolgreich neu gebaut. Render hat anschließend wiederholt `GET /health` mit HTTP 200 protokolliert und den Dienst als live gemeldet.
+
+### Aktuelle Paketstände als Prüfgrundlage
+
+Die Versionsstände wurden mit den offiziellen Paketverzeichnissen abgeglichen:
+- Flask 3.1.3
+- Gunicorn 27.0.1
+- Flask-CORS 6.0.5
+- OpenAI Python SDK 3.51.0
+- FastAPI 0.163.1
+- Uvicorn 0.54.0
+- Requests 2.34.2
+- pypdf 7.1.0
+- SQLAlchemy 2.1.9
+
+Offizielle Verzeichnisse: https://pypi.org/project/Flask/ · https://pypi.org/project/gunicorn/ · https://pypi.org/project/flask-cors/ · https://pypi.org/project/openai/ · https://pypi.org/project/fastapi/ · https://pypi.org/project/uvicorn/ · https://pypi.org/project/requests/ · https://pypi.org/project/pypdf/ · https://pypi.org/project/SQLAlchemy/
+
+### Abschließender Render-Stand
+
+Der geprüfte Render-Workspace enthält 42 aktive, nicht suspendierte Dienste. Nach Abschluss der letzten Wartungsdeployments waren auch ULTIMA Unify und die Membership-API live. Für die Membership-API liegt zusätzlich ein protokollierter HTTP-200-Healthcheck vor. In den abgefragten Fehlerlogs der aktualisierten Python-Backends wurden keine Build-/App-Fehler zurückgegeben.
+
+Die tatsächlich generative Online-KI wurde nicht mit einem echten Nutzer-API-Schlüssel getestet; die lokalen Qwen-Modelle wurden nicht auf einem Endgerät gestartet. Diese Prüfungen bleiben getrennte Betriebsbedingungen und dürfen nicht aus einem erfolgreichen Render-Build abgeleitet werden.
