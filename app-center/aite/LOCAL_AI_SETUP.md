@@ -1,42 +1,61 @@
 # AITE – lokales KI-Modell ohne OpenAI-Guthaben
 
-## Was wirklich offline funktioniert
+## Was offline wirklich funktioniert
 
-- Die AITE-Oberfläche und ihre sechs Reflexionsmodi funktionieren ohne OpenAI.
-- Ohne lokales Sprachmodell antwortet AITE mit einer kleinen eingebauten Reflexionshilfe. Das ist kein generatives Sprachmodell.
-- Für freie, generative Antworten nutzt AITE standardmäßig Ollama auf dem eigenen Gerät.
-- Das Modell muss einmalig heruntergeladen werden. Danach kann es lokal ohne Internet und ohne OpenAI-Guthaben laufen.
-- OpenAI bleibt ein optionaler Zusatzmodus. Eine Website muss dafür einen eigenen geschützten Server-Endpunkt bereitstellen; niemals einen API-Schlüssel in die Browserseite schreiben.
+AITE hat drei klar getrennte Modi:
 
-## Einmalige Einrichtung
+- **Lokal / Offline mit Ollama:** generative Antworten werden auf dem eigenen Gerät berechnet. Das Modell muss einmalig heruntergeladen sein; danach benötigt die Inferenz weder Internet noch OpenAI-Guthaben.
+- **Offline-Fallback:** ohne laufenden lokalen Modellserver gibt AITE eine kurze, regelbasierte Reflexionshilfe. Das ist ausdrücklich kein generatives Sprachmodell.
+- **Online / OpenAI:** nur über einen geschützten Server-Endpunkt der jeweiligen Website. API-Schlüssel gehören niemals in Browser-JavaScript.
 
-1. Ollama von der offiziellen Website installieren: https://ollama.com
-2. Terminal öffnen und das Modell herunterladen:
-   ```bash
-   ollama pull qwen2.5:3b
+## Einrichtung unter Windows
+
+1. Ollama installieren: https://ollama.com/download
+2. PowerShell im Ordner `app-center/aite` öffnen.
+3. Starten:
+   ```powershell
+   .\start-aite-windows.ps1
    ```
-3. Ollama starten:
-   ```bash
-   ollama serve
-   ```
-4. Browser auf der Website öffnen und in AITE den Modus „Lokal / Offline“ wählen.
-5. Beim ersten Zugriff dem Browser erlauben, mit dem lokalen Ollama-Dienst auf diesem Gerät zu kommunizieren, falls er danach fragt.
+4. Das Skript wählt anhand des Arbeitsspeichers ein passendes Qwen-3.5-Modell, lädt es einmalig und startet Ollama sowie die lokale AITE-Bridge.
+5. Dieses PowerShell-Fenster geöffnet lassen, solange AITE den lokalen Modellserver verwenden soll.
 
-## Browserzugriff und Sicherheit
+## Einrichtung unter macOS
 
-AITE sendet lokale Anfragen an `http://localhost:11434/api/chat`. Browser können dafür eine lokale Netzwerk-/CORS-Freigabe verlangen. Falls Ollama den Ursprung blockiert, muss `OLLAMA_ORIGINS` auf die exakten Website-Ursprünge beschränkt werden, die verwendet werden (z. B. `https://astralis-app-center.onrender.com` plus die tatsächlich genutzten Projekt-Domains). Keine pauschale Freigabe für alle Ursprünge setzen, wenn es nicht zwingend nötig ist.
+Das mitgelieferte macOS-Skript setzt **macOS 14 Sonoma oder neuer** und Ollama voraus. Es bricht auf älteren macOS-Versionen absichtlich ab. Starte im Ordner `app-center/aite`:
+```bash
+./start-aite-macos.command
+```
+Auf älteren Macs ist dieser Ollama-Aufbau nicht unterstützt; dort bleibt nur der einfache Offline-Fallback oder ein separates, unterstütztes Gerät.
+
+## Technischer Aufbau und Ports
+
+- AITE-Bridge: `http://127.0.0.1:8766`
+- Ollama: `http://127.0.0.1:11434`
+- Die Bridge lauscht nur auf `127.0.0.1`, nicht im LAN oder öffentlichen Internet.
+- Der ULTIMA Desktop-Agent verwendet separat Port `8765`; dadurch können beide lokalen Dienste gleichzeitig laufen.
+- Die Bridge erlaubt nur explizit eingetragene Website-Ursprünge. Die Installationsskripte setzen eine Allowlist für die verbundenen Render-Websites. Eigene Domains müssen explizit ergänzt werden.
+
+Manuelle Einrichtung:
+```bash
+ollama pull qwen3.5:4b
+ollama serve
+AITE_MODEL=qwen3.5:4b AITE_ALLOWED_ORIGINS=https://deine-domain.example python3 local_bridge.py
+```
+
+Die AITE-Weboberfläche fragt `/health` ab und sendet Chats an `/api/chat`. Bei fehlendem lokalen Dienst bleibt die kurze Reflexionshilfe verfügbar; freie lokale Textgenerierung steht dann nicht zur Verfügung.
 
 ## Hardware und Grenzen
 
-- Qwen 2.5 3B ist ein kompaktes Modell; Antworten und Geschwindigkeit hängen von RAM, CPU/GPU und Betriebssystem ab.
-- Ältere Rechner und mobile Browser unterstützen nicht jede lokale Laufzeit. Auf solchen Geräten bleibt der Offline-Reflexionsmodus verfügbar; freie lokale Textgenerierung kann ausfallen.
-- Ein bereits heruntergeladenes Modell belegt mehrere Gigabyte Speicher. Das Modell wird nicht automatisch von der Website heruntergeladen.
-- Offline bedeutet: Das Modell rechnet auf deinem Gerät. Website-Updates, erstmalige Installation und Modell-Download benötigen Internet.
-- Der Chatverlauf liegt standardmäßig im lokalen Browser-Speicher dieses Geräts und synchronisiert sich nicht automatisch zwischen Geräten.
+- Das Modell wird nicht automatisch durch das Öffnen einer Website installiert.
+- Modellgröße, RAM-Bedarf und Geschwindigkeit hängen von der gewählten Qwen-Variante, Quantisierung und Hardware ab.
+- Ältere Geräte können bei großen Modellen sehr langsam sein oder sie nicht laden. Wähle ein Modell, das genug RAM für Betriebssystem und andere Apps übrig lässt.
+- Das Modell muss mindestens einmal heruntergeladen werden. Erst danach kann die lokale Inferenz offline laufen.
+- Browser- und Gesprächsverlauf werden lokal gespeichert und nicht automatisch zwischen Geräten synchronisiert.
 
-## Website-spezifische Profile
+## Website-Profile
 
-Jede Einbindung kann ihr eigenes Profil wählen:
+Jede Einbindung kann ihr eigenes AITE-Profil wählen:
+
 - `dharma`: Ate Rea / achtsame Reflexion
 - `archetypes`: symbolische Archetypen und Spiegelwelt
 - `light`: Lichtpfad und Werteorientierung
