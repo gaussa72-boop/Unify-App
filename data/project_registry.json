@@ -1,0 +1,243 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-11-17",
+  "purpose": "Inventory snapshot for ULTIMA AI project organization. No repositories or Render services are moved by this file.",
+  "render": {
+    "distinct_workspaces": [
+      {
+        "workspace": "Workspace One",
+        "account_labels": [
+          "Primary",
+          "Arian.Domimate",
+          "Render",
+          "A",
+          "B"
+        ],
+        "service_count": 41,
+        "projects": [
+          "ionos-7-gauss-portal",
+          "quantum-mirror-dark-wonderland",
+          "neuroforge-2035",
+          "neuroforge-gaussa-2035",
+          "neuroforge-systems-2035",
+          "aurealis-cyber-shield",
+          "technologisierte-einheit",
+          "ate-rea-characterverse",
+          "aurelis-creative-ai-studio",
+          "ultima-central-45ne",
+          "ultima-unify-45ne",
+          "lichtkrieger-dark-mirror-realms",
+          "lichtkrieger-cloud-gaming",
+          "ultima-membership-api",
+          "astralis-omega",
+          "novatube",
+          "Ate-Rea-Vermächtnis",
+          "dropshift-store",
+          "Quantum.AI.",
+          "KI-Game-Mod",
+          "Note-KI",
+          "IPad-App.IONOS-7",
+          "galactic-ai-v3",
+          "Quantum.Super-Intelligence",
+          "IONOS-8",
+          "Quantum-KI-CAT.CHAT.",
+          "AI-Quantumlight",
+          "Quantenformel",
+          "Quantum_Singularity",
+          "IONOS-AI",
+          "rea-signature",
+          "Quantum AI-One",
+          "Quantum KI Ultra Pro V2",
+          "Bullrun.Apparel",
+          "Quantum.MIrror.Wonderland",
+          "IONOS-KI",
+          "Ionos-7",
+          "UltraKI.AI",
+          "ultra-ki-v2",
+          "Quantum.KI.Ultra.Pro.V2",
+          "QuantumAI-Chat"
+        ]
+      },
+      {
+        "workspace": "Adriano's workspace",
+        "account_labels": [
+          "Phenex"
+        ],
+        "service_count": 7,
+        "projects": [
+          "trinity-trading",
+          "Aktiv-Lyca",
+          "royal-palace",
+          "business-real-estate-membership",
+          "sneaker-store",
+          "webshop-parfum",
+          "aktiv-lyca"
+        ]
+      },
+      {
+        "workspace": "Adriano's workspace",
+        "account_labels": [
+          "30"
+        ],
+        "service_count": 24,
+        "projects": [
+          "astralis-app-center",
+          "sneaker-store",
+          "aktiv-lyca-standalone",
+          "drop-shipping-store",
+          "autokrypt-boerse",
+          "ate-rea-library",
+          "lichtkrieger-hub",
+          "omega-aurealis",
+          "quantum-mirror-wonderland",
+          "galactic-ai-v3-app",
+          "quantum-singularity",
+          "quantum-ki-cat-chat",
+          "ai-quantumlight",
+          "ionos-8-platform",
+          "ultraki-ai-app",
+          "ultra-ki-v2-app",
+          "quantum-ki-ultra-pro-v2",
+          "quantum-ai-app",
+          "quantum-k-app",
+          "ultima-central-bt56",
+          "ultima-central-5zeh",
+          "ultima-central-r88g",
+          "novatube-studio-vli0",
+          "ionos-ki-v2-1oki"
+        ]
+      }
+    ]
+  },
+  "github": {
+    "accounts": [
+      {
+        "name": "Primary",
+        "repo_count": 7,
+        "repositories": [
+          "ariandomimate-blip/Aktiv-Lyca",
+          "ariandomimate-blip/Webshop.Parfum",
+          "ariandomimate-blip/sneaker",
+          "ariandomimate-blip/rothshild-order",
+          "ariandomimate-blip/Drop-shipping",
+          "ariandomimate-blip/Autokrypt-B-rse",
+          "ariandomimate-blip/Ate-Rea-Verm-chtnis-chronik"
+        ]
+      },
+      {
+        "name": "Privat",
+        "repo_count": 40,
+        "repositories": [
+          "gaussa72-boop/Quantum.K",
+          "gaussa72-boop/Quantum.AI.",
+          "gaussa72-boop/Quantum.KI.Ultra.Pro.V2",
+          "gaussa72-boop/ultra-ki-v2",
+          "gaussa72-boop/UltraKI.AI",
+          "gaussa72-boop/IONOS-7",
+          "gaussa72-boop/IONOS-KI",
+          "gaussa72-boop/IPad-App.IONOS-7",
+          "gaussa72-boop/Quantum.MIrror.Wonderland",
+          "gaussa72-boop/AI-Quantumlight",
+          "gaussa72-boop/Quantum-KI-CAT.CHAT.",
+          "gaussa72-boop/IONOS-8",
+          "gaussa72-boop/Quantum_Singularity",
+          "gaussa72-boop/galactic-ai-v3",
+          "gaussa72-boop/codex-relay",
+          "gaussa72-boop/Bullrun.Apparel",
+          "gaussa72-boop/KI-Game-Mod",
+          "gaussa72-boop/Quantenformel.QAI",
+          "gaussa72-boop/Note-KI",
+          "gaussa72-boop/Quantenformel",
+          "gaussa72-boop/QUANTUM-MIRROR-DARK-WONDERLAND",
+          "gaussa72-boop/Rea.Signature",
+          "gaussa72-boop/Ultra_KI_Merge",
+          "gaussa72-boop/Quantum-Shield",
+          "gaussa72-boop/Ate-Rea-",
+          "gaussa72-boop/Ate-Rea-Verm-chtnis",
+          "gaussa72-boop/Novatube",
+          "gaussa72-boop/Omega.Aurealis",
+          "gaussa72-boop/Lichtkrieger",
+          "gaussa72-boop/The-Lord",
+          "gaussa72-boop/Unify-App",
+          "gaussa72-boop/Aurealis-Trading",
+          "gaussa72-boop/Kryptoaurora",
+          "gaussa72-boop/Aurealis-Creative-AI",
+          "gaussa72-boop/Aurelis-Creative-AI-Studio",
+          "gaussa72-boop/ate-rea-characterverse",
+          "gaussa72-boop/Neuroforge",
+          "ariandomimate-blip/Aktiv-Lyca",
+          "ariandomimate-blip/Webshop.Parfum",
+          "ariandomimate-blip/sneaker"
+        ]
+      },
+      {
+        "name": "Cornelius Gaus",
+        "repo_count": 0,
+        "repositories": []
+      }
+    ]
+  },
+  "categories": {
+    "AI & Agents": [
+      "Quantum.K",
+      "Quantum.AI.",
+      "Quantum.KI.Ultra.Pro.V2",
+      "ultra-ki-v2",
+      "UltraKI.AI",
+      "AI-Quantumlight",
+      "Quantum-KI-CAT.CHAT.",
+      "galactic-ai-v3",
+      "ate-rea-characterverse"
+    ],
+    "IONOS & Infrastructure": [
+      "IONOS-7",
+      "IONOS-8",
+      "IONOS-KI",
+      "IONOS-AI",
+      "IPad-App.IONOS-7",
+      "codex-relay",
+      "Unify-App"
+    ],
+    "Commerce & Brands": [
+      "Bullrun.Apparel",
+      "Rea.Signature",
+      "Webshop.Parfum",
+      "sneaker",
+      "Drop-shipping",
+      "rothshild-order",
+      "Aktiv-Lyca"
+    ],
+    "Creative & Media": [
+      "Aurealis-Creative-AI",
+      "Aurelis-Creative-AI-Studio",
+      "Novatube",
+      "KI-Game-Mod",
+      "Note-KI"
+    ],
+    "Ate Rea & Literature": [
+      "Ate-Rea-",
+      "Ate-Rea-Verm-chtnis",
+      "Ate-Rea-Verm-chtnis-chronik",
+      "Quantenformel",
+      "Quantenformel.QAI"
+    ],
+    "Finance & Trading": [
+      "Aurealis-Trading",
+      "Kryptoaurora",
+      "Autokrypt-B-rse",
+      "Omega.Aurealis"
+    ],
+    "Community & Identity": [
+      "Quantum.MIrror.Wonderland",
+      "QUANTUM-MIRROR-DARK-WONDERLAND",
+      "Quantum-Shield",
+      "Lichtkrieger",
+      "The-Lord"
+    ]
+  },
+  "notes": [
+    "Multiple account labels expose the same Render workspace ID; count unique workspaces, not account labels.",
+    "Repository and service names are recorded separately; no unverified repository-to-service mapping is asserted.",
+    "Do not merge, transfer, delete, suspend, or overwrite projects until backups and dependency mappings are checked."
+  ]
+}
