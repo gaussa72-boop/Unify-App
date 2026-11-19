@@ -80,8 +80,16 @@ async function load(){
   const r=await fetch("/cosmican/data/facebook-posts.json",{headers:{Accept:"application/json"},cache:"no-store"});
   if(!r.ok)throw Error("Archivdatei nicht erreichbar");
   const data=await r.json();
-  render(data.posts||[]);
-  status.textContent=(data.posts||[]).length+" Einträge aus dem Facebook-Gruppenarchiv · Originaldaten";
+  // Never render mixed-group archives or posts without an explicit public-visibility marker.
+  const publicPosts=(Array.isArray(data.posts)?data.posts:[]).filter(p=>{
+   const groupId=String(p.groupId||p.group_id||"");
+   const visibility=String(p.visibility||p.privacy||"").trim().toLowerCase();
+   return groupId==="1021804703085867" && visibility==="public";
+  });
+  render(publicPosts);
+  status.textContent=publicPosts.length
+   ? publicPosts.length+" öffentlich zugängliche Beiträge aus Cosmican Lux Syndicate"
+   : "Keine verifizierten öffentlichen Cosmican-Beiträge vorhanden. Nicht bestätigte Archiveinträge werden nicht angezeigt.";
  }catch(e){
   status.innerHTML='Das Facebook-Archiv konnte nicht geladen werden. <a style="color:#ffdc91;text-decoration:underline" href="'+groupUrl+'" target="_blank" rel="noopener">Facebook-Gruppe öffnen ↗</a>';
  }
