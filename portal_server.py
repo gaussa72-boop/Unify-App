@@ -3,7 +3,10 @@ from flask import Flask, send_from_directory, jsonify, Response
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
-app = Flask(__name__, static_folder=None)\n\nfrom ultima_ai import bp as ultima_ai_bp\napp.register_blueprint(ultima_ai_bp)
+app = Flask(__name__, static_folder=None)
+
+from ultima_ai import bp as ultima_ai_bp
+app.register_blueprint(ultima_ai_bp)
 
 @app.after_request
 def security_headers(response):
