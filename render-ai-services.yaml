@@ -1,0 +1,160 @@
+# ULTIMA Central – managed AI web services
+# Existing services are adopted by exact Render service name. No secret values are stored here.
+services:
+  - type: web
+    name: ionos-ki-v2-1oki
+    runtime: python
+    repo: https://github.com/gaussa72-boop/IONOS-KI
+    branch: main
+    region: frankfurt
+    plan: free
+    buildCommand: pip install --upgrade pip && pip install -r requirements.txt
+    startCommand: gunicorn --bind 0.0.0.0:$PORT app:app
+    healthCheckPath: /health
+    envVars:
+      - fromGroup: ALLES-OPENAI
+
+  - type: web
+    name: ionos-8-platform
+    runtime: python
+    repo: https://github.com/gaussa72-boop/IONOS-8
+    branch: main
+    region: frankfurt
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn --bind 0.0.0.0:$PORT app:app
+    envVars:
+      - fromGroup: ALLES-OPENAI
+
+  - type: web
+    name: quantum-ai-app
+    runtime: python
+    repo: https://github.com/gaussa72-boop/Quantum.AI.
+    branch: main
+    region: frankfurt
+    plan: free
+    buildCommand: pip install --upgrade pip && pip install -r requirements.txt
+    startCommand: gunicorn --bind 0.0.0.0:$PORT app:app
+    envVars:
+      - fromGroup: ALLES-OPENAI
+
+  - type: web
+    name: quantum-k-app
+    runtime: python
+    repo: https://github.com/gaussa72-boop/Quantum.K
+    branch: main
+    region: frankfurt
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn --bind 0.0.0.0:$PORT app:app
+    envVars:
+      - fromGroup: ALLES-OPENAI
+
+  - type: web
+    name: quantum-ki-ultra-pro-v2
+    runtime: python
+    repo: https://github.com/gaussa72-boop/Quantum.KI.Ultra.Pro.V2
+    branch: main
+    region: frankfurt
+    plan: free
+    buildCommand: pip install --upgrade pip && pip install -r requirements.txt
+    startCommand: gunicorn --bind 0.0.0.0:$PORT app:app
+    envVars:
+      - fromGroup: ALLES-OPENAI
+
+  - type: web
+    name: ultra-ki-v2-app
+    runtime: python
+    repo: https://github.com/gaussa72-boop/ultra-ki-v2
+    branch: main
+    region: frankfurt
+    plan: free
+    buildCommand: pip install --upgrade pip && pip install -r requirements.txt
+    startCommand: gunicorn --bind 0.0.0.0:$PORT app:app
+    envVars:
+      - fromGroup: ALLES-OPENAI
+
+  - type: web
+    name: ultraki-ai-app
+    runtime: python
+    repo: https://github.com/gaussa72-boop/UltraKI.AI
+    branch: main
+    region: frankfurt
+    plan: free
+    buildCommand: pip install --upgrade pip && pip install -r requirements.txt
+    startCommand: gunicorn --bind 0.0.0.0:$PORT app:app
+    envVars:
+      - fromGroup: ALLES-OPENAI
+
+  - type: web
+    name: quantum-singularity
+    runtime: python
+    repo: https://github.com/gaussa72-boop/Quantum_Singularity
+    branch: main
+    region: frankfurt
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn --bind 0.0.0.0:$PORT app:app
+    envVars:
+      - fromGroup: ALLES-OPENAI
+
+  - type: web
+    name: quantum-mirror-wonderland
+    runtime: python
+    repo: https://github.com/gaussa72-boop/Quantum.MIrror.Wonderland
+    branch: main
+    region: frankfurt
+    plan: free
+    buildCommand: pip install --upgrade pip && pip install -r requirements.txt
+    startCommand: gunicorn --bind 0.0.0.0:$PORT app:app
+    envVars:
+      - fromGroup: ALLES-OPENAI
+
+  - type: web
+    name: quantum-ki-cat-chat
+    runtime: python
+    repo: https://github.com/gaussa72-boop/Quantum-KI-CAT.CHAT.
+    branch: main
+    region: frankfurt
+    plan: free
+    buildCommand: pip install --upgrade pip && pip install -r requirements.txt
+    startCommand: gunicorn --bind 0.0.0.0:$PORT app:app
+    envVars:
+      - fromGroup: ALLES-OPENAI
+
+  - type: web
+    name: ai-quantumlight
+    runtime: python
+    repo: https://github.com/gaussa72-boop/AI-Quantumlight
+    branch: main
+    region: frankfurt
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn --bind 0.0.0.0:$PORT app:app
+    envVars:
+      - fromGroup: ALLES-OPENAI
+
+  - type: web
+    name: galactic-ai-v3-app
+    runtime: python
+    repo: https://github.com/gaussa72-boop/galactic-ai-v3
+    branch: main
+    region: frankfurt
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn --bind 0.0.0.0:$PORT app:app
+    envVars:
+      - fromGroup: ALLES-OPENAI
+
+  - type: web
+    name: ultima-central-bt56
+    runtime: python
+    repo: https://github.com/gaussa72-boop/Unify-App
+    branch: main
+    region: frankfurt
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn --bind 0.0.0.0:$PORT portal_server:app
+    healthCheckPath: /health
+    envVars:
+      - fromGroup: ALLES-OPENAI
