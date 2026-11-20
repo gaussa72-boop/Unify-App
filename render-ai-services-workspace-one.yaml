@@ -1,0 +1,146 @@
+# ULTIMA shared API wiring for existing AI services in Workspace One.
+# No secret values are stored in Git. Existing services are adopted by exact name.
+services:
+  - type: web
+    name: IONOS-KI
+    runtime: python
+    repo: https://github.com/gaussa72-boop/IONOS-KI
+    branch: main
+    region: oregon
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app
+    envVars:
+      - fromGroup: ALLES-OPENAI
+
+  - type: web
+    name: Ionos-7
+    runtime: python
+    repo: https://github.com/gaussa72-boop/Quantum.KI.Ultra.Pro.V2
+    branch: main
+    region: oregon
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn IONOS-KI:app
+    envVars:
+      - fromGroup: ALLES-OPENAI
+
+  - type: web
+    name: IONOS-AI
+    runtime: python
+    repo: https://github.com/gaussa72-boop/Ultra_KI_Merge
+    branch: main
+    region: oregon
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn backend.app:app
+    envVars:
+      - fromGroup: ALLES-OPENAI
+
+  - type: web
+    name: Quantum AI-One
+    runtime: python
+    repo: https://github.com/gaussa72-boop/Quantum.AI.
+    branch: main
+    region: oregon
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app
+    envVars:
+      - fromGroup: ALLES-OPENAI
+
+  - type: web
+    name: Quantum_Singularity
+    runtime: python
+    repo: https://github.com/gaussa72-boop/Quantum_Singularity
+    branch: main
+    region: oregon
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app
+    envVars:
+      - fromGroup: ALLES-OPENAI
+
+  - type: web
+    name: Quantum.KI.Ultra.Pro.V2
+    runtime: python
+    repo: https://github.com/gaussa72-boop/Quantum.KI.Ultra.Pro.V2
+    branch: main
+    region: oregon
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app
+    envVars:
+      - fromGroup: ALLES-OPENAI
+
+  - type: web
+    name: UltraKI.AI
+    runtime: python
+    repo: https://github.com/gaussa72-boop/UltraKI.AI
+    branch: main
+    region: oregon
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app
+    envVars:
+      - fromGroup: ALLES-OPENAI
+
+  - type: web
+    name: ultra-ki-v2
+    runtime: python
+    repo: https://github.com/gaussa72-boop/ultra-ki-v2
+    branch: main
+    region: oregon
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app
+    envVars:
+      - fromGroup: ALLES-OPENAI
+
+  - type: web
+    name: Quantum.MIrror.Wonderland
+    runtime: python
+    repo: https://github.com/gaussa72-boop/Quantum.MIrror.Wonderland
+    branch: main
+    region: oregon
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app
+    envVars:
+      - fromGroup: ALLES-OPENAI
+
+  - type: web
+    name: quantum-ki-cat-chat
+    runtime: python
+    repo: https://github.com/gaussa72-boop/Quantum-KI-CAT.CHAT.
+    branch: main
+    region: oregon
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app
+    envVars:
+      - fromGroup: ALLES-OPENAI
+
+  - type: web
+    name: AI-Quantumlight
+    runtime: python
+    repo: https://github.com/gaussa72-boop/AI-Quantumlight
+    branch: main
+    region: oregon
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app
+    envVars:
+      - fromGroup: ALLES-OPENAI
+
+  - type: web
+    name: ate-rea-characterverse
+    runtime: node
+    repo: https://github.com/gaussa72-boop/ate-rea-characterverse
+    branch: main
+    region: frankfurt
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - fromGroup: ALLES-OPENAI
