@@ -50,7 +50,21 @@ def home():
 @bp.get("/api/status")
 def status():
     configured = bool(os.getenv("OPENAI_API_KEY"))
-    return jsonify(service="ULTIMA AI", version="0.1.0", status="operational", model_provider="configured" if configured else "not_configured", chat_ready=configured, agents=len(_agents), capabilities=len(_capabilities), autonomy="permission_gated", note="No shell, payment, account, publishing or destructive actions are exposed.")
+    return jsonify(service="ULTIMA AI", version="0.2.0", status="operational", model_provider="configured" if configured else "not_configured", chat_ready=configured, agents=len(_agents), capabilities=len(_capabilities), autonomy="permission_gated", website_standard="enabled", note="No shell, payment, account, publishing or destructive actions are exposed.")
+
+@bp.get("/api/website-standard")
+def website_standard():
+    """Canonical operating standard for every current and future owned website."""
+    return jsonify(
+        standard="ULTIMA_CENTRAL_WEB_STANDARD",
+        applies_to="all current and future websites and AI services owned by gaussa72-boop",
+        repository={"owner": "gaussa72-boop", "one_repository_per_product": True, "preserve_existing_repository_history": True, "default_branch": "main"},
+        hosting={"provider": "Render", "one_independent_web_service_per_website_or_AI_product": True, "auto_deploy_from_main": True, "preferred_region": "frankfurt", "health_endpoint_required": True, "deployment_must_be_verified": True},
+        environment={"preferred_environment_group": "ALLES-OPENAI", "attach_group_to_each_eligible_AI_service": True, "required_keys_when_supported": ["OPENAI_API_KEY"], "optional_keys": ["OPENAI_BASE_URL", "OPENAI_MODEL"], "secrets_in_git_or_logs": False, "copy_secret_values_between_services": False},
+        engineering={"preserve_individual_ai_personas": True, "preserve_existing_features_and_project_boundaries": True, "test_before_deploy": True, "verify_live_health_after_deploy": True, "report_unverified_work_as_pending": True},
+        governance={"production_deployments": "explicit_approval", "payments_account_changes_deletions_and_publication": "explicit_approval", "untrusted_shell_execution": False},
+        note="This endpoint publishes the required standard. Render Environment Group attachments and service creation still require supported Render account operations and per-repository runtime verification."
+    )
 
 @bp.get("/api/agents")
 def agents():
@@ -73,7 +87,7 @@ def plan():
         {"step":4,"action":"Automatisierte Tests, Sicherheits- und Regressionstests ausführen","approval":"not_required"},
         {"step":5,"action":"Deployment nur mit gültiger Projektfreigabe und Rollback-Plan","approval":"required_for_production"},
         {"step":6,"action":"Live-Healthcheck und Ergebnisprotokoll erstellen","approval":"not_required"},
-    ], guardrails=["Keine Geheimnisse in Git","Keine unkontrollierte Shell-Ausführung","Keine Zahlungen, Kontenänderungen oder Massenveröffentlichungen","Bestehende KI-Persönlichkeiten und Projektgrenzen erhalten"])
+    ], guardrails=["Keine Geheimnisse in Git","Keine unkontrollierte Shell-Ausführung","Keine Zahlungen, Kontenänderungen oder Massenveröffentlichungen","Bestehende KI-Persönlichkeiten und Projektgrenzen erhalten","ULTIMA-Webstandard für alle eigenen Websites: eigenes Repository unter gaussa72-boop, eigener Render-Webservice, ALLES-OPENAI-Environment-Group für geeignete KI-Dienste, Healthcheck, Tests und verifizierter Live-Deploy"])
 
 @bp.post("/api/chat")
 def chat():
