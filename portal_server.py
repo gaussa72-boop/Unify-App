@@ -1,5 +1,5 @@
 import os
-from flask import Flask, send_from_directory, jsonify, Response
+from flask import Flask, send_from_directory, jsonify, Response, redirect
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
