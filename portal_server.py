@@ -72,6 +72,10 @@ def autokrypt_home():
 def autokrypt_assets(filename):
     return send_from_directory(ROOT / "autokrypt", filename)
 
+@app.get("/data/<path:filename>")
+def project_data(filename):
+    return send_from_directory(ROOT / "data", filename)
+
 @app.get("/manifest.webmanifest")
 def manifest():
     return send_from_directory(ROOT, "manifest.webmanifest")
