@@ -9,7 +9,7 @@
         "account_labels": [
           "Primary"
         ],
-        "service_count": 42,
+        "service_count": 43,
         "projects": [
           {
             "id": "srv-dbttut3m8hqs73di1680",
@@ -262,6 +262,12 @@
             "name": "QuantumAI-Chat",
             "url": "https://quantumai-chat.onrender.com",
             "repository": "gaussa72-boop/Quantum.AI."
+          },
+          {
+            "id": "srv-dc0s5l49v7es739ppvdg",
+            "name": "aurealis-shopping-ai",
+            "url": "https://aurealis-shopping-ai.onrender.com",
+            "repository": "gaussa72-boop/Aurealis-Shopping-AI"
           }
         ]
       },
