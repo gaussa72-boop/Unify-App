@@ -2,6 +2,24 @@
   "schema_version": 1,
   "entries": [
     {
+      "version": "1.1.0",
+      "date": "2026-11-23",
+      "title": "Individuelle KI-Designs bewahrt und neue Funktionen integriert",
+      "description": "Die bestehenden visuellen Identitäten werden nicht vereinheitlicht. In Quantum KI Ultra Pro V2, Quantum Mirror Wonderland, AI Quantumlight, Quantum Singularity, Galactic AI V3, NeuroForge und Aurealis Creative AI wurde die bisherige einheitliche Zusatz-Schaltfläche durch einen kompakten, responsiven Funktionsstarter im jeweiligen Markenfarbton ersetzt. Er führt zum vorhandenen lokalen AI Studio sowie zum Charakter-KI-Studio und zur zentralen Update-Matrix. Layout, Typografie, Hintergründe, Animationen und individuelle KI-Persönlichkeiten der Hauptseiten bleiben unangetastet.",
+      "affected_projects": [
+        "Quantum.KI.Ultra.Pro.V2",
+        "Quantum.MIrror.Wonderland",
+        "AI-Quantumlight",
+        "Quantum_Singularity",
+        "galactic-ai-v3",
+        "Neuroforge",
+        "Aurealis-Creative-AI"
+      ],
+      "rollout_status": "code-committed-render-deploy-pending-verification",
+      "verification": "GitHub-Änderungen committed. Render-Builds und Live-Darstellung pro Projekt müssen noch einzeln geprüft werden.",
+      "design_rule": "Individuelles Branding statt Einheitsdesign"
+    },
+    {
       "id": "2026-11-23-character-studio-1",
       "date": "2026-11-23",
       "version": "1.0.0",
