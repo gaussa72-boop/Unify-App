@@ -10,15 +10,40 @@ import urllib.error
 bp = Blueprint("ultima_ai", __name__, url_prefix="/ultima-ai")
 ROOT = Path(__file__).resolve().parent
 
-@bp.after_request
-def _ai_cors(response):
-    # Public browser clients may call this rate-limited gateway; no credentials are exposed.
-    response.headers["Access-Control-Allow-Origin"] = "*"
-    response.headers["Access-Control-Allow-Headers"] = "Content-Type"
-    response.headers["Access-Control-Allow-Methods"] = "GET, POST, OPTIONS"
-    response.headers["Vary"] = "Origin"
-    return response
-_agents = [
+_AI_ALLOWED_ORIGINS = {\n    "https://ionos-8.onrender.com",
+    "https://ionos-ki.onrender.com",
+    "https://galactic-ai-v3.onrender.com",
+    "https://quantum-singularity.onrender.com",
+    "https://ai-quantumlight.onrender.com",
+    "https://quantum-ai-zeah.onrender.com",
+    "https://quantum-ai-renewed.onrender.com",
+    "https://quantumai-chat.onrender.com",
+    "https://quantum-ki-ultra-pro-v2-renewed.onrender.com",
+    "https://quantum-ki-ultra-pro-v2.onrender.com",
+    "https://ultraki-ai.onrender.com",
+    "https://quantum-ki-cat-chat.onrender.com",
+    "https://quantum-mirror-wonderland.onrender.com",
+    "https://neuroforge-2035.onrender.com",
+    "https://neuroforge-gaussa-2035.onrender.com",
+    "https://astralis-omega.onrender.com",
+    "https://quantum-super-intelligence.onrender.com",
+    "https://note-ki.onrender.com",
+    "https://rea-signature.onrender.com",
+    "https://aurealis-cyber-shield.onrender.com",
+    "https://technologisierte-einheit.onrender.com",
+    "https://aurelis-creative-ai-studio.onrender.com",
+    "https://ionos-7-gauss-portal.onrender.com",
+    "https://ipad-app-ionos-7.onrender.com",
+    "https://aurealis-shopping-ai.onrender.com",
+    "https://ionos-ai.onrender.com",
+    "https://ate-rea-vermachtnis.onrender.com",
+    "https://ate-rea-characterverse.onrender.com",
+    "https://novatube-a10l.onrender.com",
+    "https://lichtkrieger-dark-mirror-realms.onrender.com",
+    "https://ki-game-mod.onrender.com",
+    "https://quantenformel.onrender.com",
+    "https://ultima-central-45ne.onrender.com",
+    "https://ultima-unify-45ne.onrender.com",\n}\n\n@bp.after_request\ndef _ai_cors(response):\n    origin = request.headers.get("Origin", "")\n    if origin in _AI_ALLOWED_ORIGINS:\n        response.headers["Access-Control-Allow-Origin"] = origin\n        response.headers["Access-Control-Allow-Headers"] = "Content-Type"\n        response.headers["Access-Control-Allow-Methods"] = "GET, POST, OPTIONS"\n        response.headers["Vary"] = "Origin"\n    return response\n_agents = [
     {"id":"aurealis","name":"Aurealis","domain":"Orchestrierung & Wissen","persona":"Ruhig, präzise, strategisch. Koordiniert Aufgaben und erklärt Entscheidungen.","status":"active"},
     {"id":"aite","name":"AIte","domain":"Alltagsassistent & Dialog","persona":"Warm, empathisch, klar und lösungsorientiert.","status":"active"},
     {"id":"ionos","name":"IONOS-KI","domain":"Technologie & Entwicklung","persona":"Technisch gründlich, strukturiert, testgetrieben.","status":"planned"},
