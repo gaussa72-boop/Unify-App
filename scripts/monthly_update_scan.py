@@ -36,6 +36,16 @@ def inspect_repo(item: dict, source_type: str):
     repo = github_json(f"/repos/{full_name}")
     default_branch = repo.get("default_branch", "main") if isinstance(repo, dict) else "main"
     commit = github_json(f"/repos/{full_name}/commits/{default_branch}")
+    release_error = release.get("_error") if isinstance(release, dict) else None
+    if release_error and "HTTP Error 404" in release_error:
+        release_error = None  # No published release is a normal repository state.
+    errors = [
+        error for error in (
+            release_error,
+            repo.get("_error") if isinstance(repo, dict) else None,
+            commit.get("_error") if isinstance(commit, dict) else None,
+        ) if error
+    ]
     return {
         "name": item.get("name", full_name),
         "repository": full_name,
