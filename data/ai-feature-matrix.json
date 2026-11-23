@@ -134,5 +134,26 @@
   ],
   "public_url": "https://ultima-central-45ne.onrender.com/data/ai-feature-matrix.json",
   "lookup_url": "https://ultima-central-45ne.onrender.com/updates/",
-  "character_studio_url": "https://ultima-unify-45ne.onrender.com/characters/"
+  "character_studio_url": "https://ultima-unify-45ne.onrender.com/characters/",
+  "design_policy": {
+    "mode": "individual-brand-preserving",
+    "rule": "No global uniform redesign. Preserve each AI's existing layout, typography, palette, backgrounds, animation language, navigation and personality. Add shared features as compact, responsive controls styled with that AI's own design tokens.",
+    "shared_features": [
+      "character-studio",
+      "character-chat",
+      "character-import-export",
+      "update-matrix",
+      "change-log"
+    ],
+    "updated_projects": [
+      "Quantum.KI.Ultra.Pro.V2",
+      "Quantum.MIrror.Wonderland",
+      "AI-Quantumlight",
+      "Quantum_Singularity",
+      "galactic-ai-v3",
+      "Neuroforge",
+      "Aurealis-Creative-AI"
+    ],
+    "rollout_status": "partial-code-committed-awaiting-render-verification"
+  }
 }
