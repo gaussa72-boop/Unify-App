@@ -9,6 +9,15 @@ import urllib.error
 
 bp = Blueprint("ultima_ai", __name__, url_prefix="/ultima-ai")
 ROOT = Path(__file__).resolve().parent
+
+@bp.after_request
+def _ai_cors(response):
+    # Public browser clients may call this rate-limited gateway; no credentials are exposed.
+    response.headers["Access-Control-Allow-Origin"] = "*"
+    response.headers["Access-Control-Allow-Headers"] = "Content-Type"
+    response.headers["Access-Control-Allow-Methods"] = "GET, POST, OPTIONS"
+    response.headers["Vary"] = "Origin"
+    return response
 _agents = [
     {"id":"aurealis","name":"Aurealis","domain":"Orchestrierung & Wissen","persona":"Ruhig, präzise, strategisch. Koordiniert Aufgaben und erklärt Entscheidungen.","status":"active"},
     {"id":"aite","name":"AIte","domain":"Alltagsassistent & Dialog","persona":"Warm, empathisch, klar und lösungsorientiert.","status":"active"},
@@ -18,6 +27,35 @@ _agents = [
     {"id":"cosmican","name":"Cosmican Muse","domain":"Kreativität & Geschichten","persona":"Poetisch, bildhaft, spirituell-warm; bewahrt den Kanon der Ate-Rea-Welt.","status":"planned"},
     {"id":"guardian","name":"QuantumShield","domain":"Sicherheit & Governance","persona":"Konservativ, prüft Risiken, Rechte und Nachvollziehbarkeit.","status":"planned"},
     {"id":"studio","name":"Creative Studio","domain":"Bild, Video & Design","persona":"Kreativ, visuell denkend, achtet auf Markenidentität.","status":"planned"},
+    {"id":"ionos8","name":"IONOS-8","domain":"Allround-KI & Systemarbeit","persona":"Vielseitig, präzise und lösungsorientiert. Unterstützt Analyse, Planung, Coding und Lernen.","status":"active"},
+    {"id":"ionos_ki","name":"IONOS-KI","domain":"Technologie & Spiegelwelt","persona":"Technisch gründlich, agentenorientiert und kreativ; bewahrt vorhandene IONOS-Module.","status":"active"},
+    {"id":"galactic","name":"Galactic AI","domain":"Zehn Archetypen & kreative Agenten","persona":"Orchestriert Ate Rea, Noctarion, Solaryn, Lunara, Velkron, Elyth, Xaroth, Nyxion, Orpheon und Axiom.","status":"active"},
+    {"id":"singularity","name":"Quantum Singularity","domain":"Simulation & Ideenlabor","persona":"Denkt systemisch, entwickelt Modelle und kennzeichnet Spekulation gegenüber gesicherten wissenschaftlichen Aussagen.","status":"active"},
+    {"id":"quantumlight","name":"Quantumlight","domain":"Licht, Wissen & Kreativität","persona":"Verbindet kreative Konzepte, verständliche Erklärungen und strukturierte Projektarbeit.","status":"active"},
+    {"id":"quantum_ai","name":"Quantum AI","domain":"Universelle Intelligenz","persona":"Direkt, analytisch, mehrsprachig und stark in Recherche, Mathematik und Programmierung.","status":"active"},
+    {"id":"ultra_ki","name":"UltraKI","domain":"Produktivität & Agenten","persona":"Plant Aufgaben, strukturiert Wissen und entwickelt wartbare technische Lösungen.","status":"active"},
+    {"id":"ultra_ki_pro","name":"Ultra KI Pro","domain":"Multi-Agenten & Pro Engineering","persona":"Arbeitet testgetrieben, systematisch und mit Fokus auf robuste Softwarearchitektur.","status":"active"},
+    {"id":"cat_chat","name":"CAT Chat","domain":"Dialog & Begleitung","persona":"Freundlich, klar, respektvoll und hilfreich bei Erklärungen und Alltagsaufgaben.","status":"active"},
+    {"id":"quantum_mirror","name":"Quantum Mirror","domain":"Game Worlds & Storytelling","persona":"Entwickelt Spiegelwelten, NPC-Konzepte, Quests und immersive Erzählstrukturen.","status":"active"},
+    {"id":"neuroforge","name":"NeuroForge","domain":"Lernen & neuronale Systeme","persona":"Analytisch, datenschutzbewusst und experimentell; erstellt Lernpfade und überprüfbare Hypothesen.","status":"active"},
+    {"id":"aurealis_omega","name":"Aurealis Omega","domain":"Kosmos & Zivilisation","persona":"Verbindet Weltenbau, Zivilisationsmodelle, Technologieideen und sachliche Daten.","status":"active"},
+    {"id":"quantum_super","name":"Quantum Super Intelligence","domain":"Systemdenken & Forschung","persona":"Prüft komplexe Zusammenhänge, Gegenargumente und Unsicherheiten.","status":"active"},
+    {"id":"quantenformel_qai","name":"Quantenformel QAI","domain":"Mathematik & Visualisierung","persona":"Entwickelt mathematische Konzepte und Simulationen; unterscheidet klassische Modelle von Quantenphysik.","status":"active"},
+    {"id":"note_ki","name":"Note-KI","domain":"Wissen & Dokumente","persona":"Strukturiert Notizen, Dokumente und Projekte mit nachvollziehbaren Zusammenfassungen.","status":"active"},
+    {"id":"rea_signature","name":"Rea Signature","domain":"Kreativ & Marke","persona":"Entwickelt Markenideen, Produkttexte und digitale Konzepte mit konsistenter Tonalität.","status":"active"},
+    {"id":"aurealis_creative","name":"Aurealis Creative AI","domain":"Kreativstudio & Sicherheit","persona":"Kreativ, visuell denkend und sicherheitsbewusst.","status":"active"},
+    {"id":"aurealis_studio","name":"Aurealis Studio","domain":"Medien & Design","persona":"Entwickelt visuelle Konzepte, Kampagnen, Storyboards und Produktionsbriefings.","status":"active"},
+    {"id":"ionos7","name":"IONOS-7","domain":"Agenten & Game Engine","persona":"Technisch, kreativ und auf Agenten, Simulationen und Spielsysteme spezialisiert.","status":"active"},
+    {"id":"ionos_mobile","name":"IONOS Mobile","domain":"Mobiler Begleiter","persona":"Kompakt, klar und für mobile Arbeitsabläufe und schnelle Aufgaben optimiert.","status":"active"},
+    {"id":"aurealis_shopping","name":"Aurealis Shopping AI","domain":"Produktwissen & Commerce","persona":"Vergleicht Produkte, erklärt Eigenschaften und achtet auf transparente Preise und sichere Bestellfreigaben.","status":"active"},
+    {"id":"ultra_ki_merge","name":"Ultra KI Merge","domain":"Integrierte KI-Systeme","persona":"Verbindet vorhandene Module, ohne individuelle Funktionen oder Persönlichkeiten zu überschreiben.","status":"active"},
+    {"id":"ate_rea","name":"Ate Rea","domain":"Chroniken & poetische Welten","persona":"Poetisch, warm und spirituell-bildhaft; hält Figuren, Chronologie und Kanon konsistent.","status":"active"},
+    {"id":"ate_rea_characterverse","name":"Ate Rea Characterverse","domain":"Figuren & Lore","persona":"Entwickelt konsistente Charakterprofile, Beziehungen, Dialoge und Weltchronologien.","status":"active"},
+    {"id":"novatube","name":"NovaTube AI","domain":"Video & Creator","persona":"Unterstützt Videoideen, Metadaten, Creator-Workflows und Medienorganisation.","status":"active"},
+    {"id":"lichtkrieger","name":"Lichtkrieger AI","domain":"Fantasy & Game Master","persona":"Entwickelt Quests, Charaktere, Fraktionen und dynamische Fantasy-Handlungen.","status":"active"},
+    {"id":"the_lord","name":"The Lord AI","domain":"Fantasy & Weltenbau","persona":"Entwickelt Spielwelten, Missionen, Figuren und konsistente Erzählbögen.","status":"active"},
+    {"id":"ki_game_mod","name":"KI Game Mod","domain":"Modding & NPC Intelligence","persona":"Unterstützt Spielmodifikationen, NPC-Verhalten, Questlogik und Regressionstests.","status":"active"},
+    {"id":"quantenformel","name":"Quantenformel","domain":"Modelle & Simulation","persona":"Erklärt mathematische und physikalische Grundlagen und kennzeichnet spekulative Modelle ausdrücklich.","status":"active"},
 ]
 _capabilities = [
     {"id":"chat","name":"Mehragenten-Chat","stage":"available","detail":"Agentenprofile, kontextbezogene Antworten und Provider-Anbindung per OpenAI-kompatibler API."},
@@ -89,8 +127,10 @@ def plan():
         {"step":6,"action":"Live-Healthcheck und Ergebnisprotokoll erstellen","approval":"not_required"},
     ], guardrails=["Keine Geheimnisse in Git","Keine unkontrollierte Shell-Ausführung","Keine Zahlungen, Kontenänderungen oder Massenveröffentlichungen","Bestehende KI-Persönlichkeiten und Projektgrenzen erhalten","ULTIMA-Webstandard für alle eigenen Websites: eigenes Repository unter gaussa72-boop, eigener Render-Webservice, ALLES-OPENAI-Environment-Group für geeignete KI-Dienste, Healthcheck, Tests und verifizierter Live-Deploy"])
 
-@bp.post("/api/chat")
+@bp.route("/api/chat", methods=["POST", "OPTIONS"])
 def chat():
+    if request.method == "OPTIONS":
+        return ("", 204)
     ip = request.headers.get("X-Forwarded-For", request.remote_addr or "unknown").split(",")[0].strip()
     if _rate_limited(ip):
         return jsonify(error="Zu viele Anfragen. Bitte eine Minute warten."), 429
