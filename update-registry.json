@@ -198,5 +198,23 @@
       "name": "OpenAI Python SDK",
       "repository": "openai/openai-python"
     }
-  ]
+  ],
+  "shared_feature_matrix": {
+    "source": "data/ai-feature-matrix.json",
+    "changelog": "data/ai-feature-changelog.json",
+    "version": "1.0.0",
+    "feature_ids": [
+      "character-studio",
+      "character-chat",
+      "character-import-export",
+      "shared-feature-matrix",
+      "feature-change-log",
+      "persona-preservation",
+      "approval-gates"
+    ],
+    "rollout_mode": "staged-per-repository",
+    "requires_repository_inspection_and_integration_test": true,
+    "preserve_personas": true,
+    "production_deploy_requires_approval": true
+  }
 }
