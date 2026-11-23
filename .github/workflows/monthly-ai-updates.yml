@@ -1,0 +1,39 @@
+name: ULTIMA Monthly AI Updates
+
+on:
+  schedule:
+    - cron: "0 7 1 * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ultima-monthly-ai-updates
+  cancel-in-progress: false
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Scan projects and AI innovation sources
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python scripts/monthly_update_scan.py
+      - name: Commit monthly report
+        run: |
+          git config user.name "ULTIMA Update Bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add data/updates/
+          if git diff --cached --quiet; then
+            echo "No report changes to commit."
+          else
+            git commit -m "chore: monthly AI update scan report"
+            git push
+          fi
