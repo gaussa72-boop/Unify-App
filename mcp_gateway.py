@@ -6,6 +6,8 @@ No deployment, shell, payment, publishing, deletion, or account-write tools.
 import hmac
 import json
 import os
+import urllib.request
+import urllib.error
 from pathlib import Path
 from flask import Blueprint, jsonify, request
 
@@ -72,6 +74,18 @@ CAPABILITIES = [
     {"id":"media-generation","name":"Bild-, Video- und Audiogenerierung","stage":"planned","detail":"Benötigt passende Provider und autorisierte API-Verbindungen."},
     {"id":"web-research","name":"Live-Webrecherche","stage":"planned","detail":"Recherche mit Quellen- und Datumsprüfung."},
     {"id":"persistent-memory","name":"Langzeitgedächtnis","stage":"planned","detail":"Persistente Datenbank, Nutzerzustimmung, Zugriffskontrolle und Löschkonzept."},
+    {"id":"multi-agent-orchestration","name":"Multi-Agenten-Orchestrierung","stage":"prototype","detail":"Aufgaben an passende Agentenrollen routen; echte externe Agenten-APIs benötigen separate Endpunkte."},
+    {"id":"website-builder","name":"Website- und App-Generator","stage":"planned","detail":"Projektgerüste, Designsysteme, Tests und Deploy-Vorschläge mit Freigabe."},
+    {"id":"code-review","name":"Code-Review & Reparatur","stage":"planned","detail":"Fehleranalyse, Regressionstests und PR-basierte Änderungen über GitHub."},
+    {"id":"service-monitor","name":"Service-Monitoring","stage":"planned","detail":"Geplante Healthchecks, Alarmierung und Deployment-Historie."},
+    {"id":"translation","name":"Mehrsprachige Übersetzung","stage":"planned","detail":"UI- und Inhaltsübersetzung mit Terminologie-Glossar."},
+    {"id":"premium","name":"Lifetime-Premium & Rechte","stage":"planned","detail":"Entitlement-Verwaltung; Drittanbieter-API-Kosten bleiben separat."},
+    {"id":"community","name":"Community & Profile","stage":"planned","detail":"Nutzerprofile, eigene Websites, Rollen, Beiträge und Moderation."},
+    {"id":"creator-suite","name":"Creator- und Medienwerkstatt","stage":"planned","detail":"Skript, Storyboard, Video-Metadaten, Untertitel und Medien-Export."},
+    {"id":"commerce","name":"Commerce-Assistent","stage":"planned","detail":"Produktdaten, Bestellstatus und sichere Checkout-Freigaben."},
+    {"id":"security-center","name":"Security Center","stage":"planned","detail":"Geheimnisprüfung, Rechte-Audit, Abhängigkeits- und Schwachstellenberichte."},
+    {"id":"learning","name":"Lern- und Code-Akademie","stage":"planned","detail":"Personalisierte Lektionen, Übungen, Projektaufgaben und Fortschrittsübersicht."},
+    {"id":"plugin-marketplace","name":"Erweiterungs-Marktplatz","stage":"planned","detail":"Freigabepflichtige, signierte Tool-Adapter mit Versions- und Rechteprüfung."},
     {"id":"mcp","name":"ChatGPT MCP-Schnittstelle","stage":"available","detail":"Authentifizierter, read-only MCP-Zugang für Agenten, Fähigkeiten, Projektinventar und Planungsentwürfe."}
 ]
 
@@ -83,6 +97,7 @@ TOOLS = [
     _tool("list_ai_capabilities","List ULTIMA AI features and their actual implementation stages."),
     _tool("list_render_projects","Read the inventoried Render projects and their public URLs."),
     _tool("get_provider_readiness","Check whether an OpenAI-compatible provider key and base URL are configured without revealing secrets."),
+    _tool("chat_with_ultima_agent","Chat with a named ULTIMA persona through the configured OpenAI-compatible provider. Provider usage may incur charges.",{"agent_id":{"type":"string","description":"Agent ID from list_ai_agents."},"message":{"type":"string","description":"User message, maximum 6000 characters."}},["agent_id","message"]),
     _tool("create_implementation_plan","Create a non-executing implementation plan. This tool does not change code or deploy.",{"goal":{"type":"string","description":"Project goal to break into safe implementation steps."}},["goal"])
 ]
 
@@ -110,6 +125,35 @@ def _call_tool(name, args):
         return {"capabilities":CAPABILITIES,"count":len(CAPABILITIES)}
     if name == "list_render_projects":
         return _read_inventory()
+    if name == "chat_with_ultima_agent":
+        agent_id = str(args.get("agent_id",""))
+        message = str(args.get("message","")).strip()
+        agent = next((item for item in AGENTS if item["id"] == agent_id), None)
+        if not agent:
+            raise ValueError("Unknown agent_id; call list_ai_agents first")
+        if not message or len(message) > 6000:
+            raise ValueError("message must contain 1-6000 characters")
+        api_key = os.getenv("OPENAI_API_KEY","")
+        if not api_key:
+            raise ValueError("Provider not configured: set OPENAI_API_KEY in Render")
+        endpoint = os.getenv("OPENAI_BASE_URL","https://api.openai.com/v1").rstrip("/") + "/chat/completions"
+        payload = {
+            "model":os.getenv("OPENAI_MODEL","gpt-4o-mini"),
+            "messages":[
+                {"role":"system","content":"Du bist "+agent["name"]+". Fachgebiet: "+agent["domain"]+". Persönlichkeit: "+agent["persona"]+" Arbeite transparent. Behaupte keine ausgeführten externen Aktionen. Trenne Fakten, Annahmen und Ideen. Frage vor finanziellen, destruktiven, sicherheitskritischen oder externen Aktionen nach Freigabe."},
+                {"role":"user","content":message}
+            ],
+            "temperature":0.6
+        }
+        req = urllib.request.Request(endpoint,data=json.dumps(payload).encode("utf-8"),headers={"Authorization":"Bearer "+api_key,"Content-Type":"application/json"},method="POST")
+        try:
+            with urllib.request.urlopen(req,timeout=45) as response:
+                result = json.loads(response.read().decode("utf-8"))
+            return {"agent":agent["name"],"answer":result["choices"][0]["message"]["content"],"model":result.get("model",payload["model"])}
+        except urllib.error.HTTPError as exc:
+            raise ValueError("Provider request failed with HTTP "+str(exc.code))
+        except Exception:
+            raise ValueError("Provider currently unreachable")
     if name == "get_provider_readiness":
         return {
             "openai_api_key_configured":bool(os.getenv("OPENAI_API_KEY")),
