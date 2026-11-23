@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#171717"><title>ULTIMA · Updates & Innovation</title>
+<style>
+:root{color-scheme:dark;--bg:#212121;--panel:#2b2b2b;--line:#414141;--text:#ececec;--muted:#aaa;--accent:#10a37f}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:15px/1.55 system-ui,-apple-system,sans-serif}
+header{padding:24px clamp(18px,5vw,64px);border-bottom:1px solid #ffffff18;background:#171717}
+header a{color:#bdbdbd;text-decoration:none;font-size:13px}main{max-width:1120px;margin:auto;padding:36px clamp(18px,5vw,64px) 70px}
+.eyebrow{color:#aaa;letter-spacing:.13em;font-size:10px;text-transform:uppercase}h1{font-size:clamp(30px,5vw,44px);line-height:1.12;margin:10px 0}h2{font-size:19px;margin:0 0 12px}
+.lead{color:var(--muted);max-width:760px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin:24px 0}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:18px}.value{font-size:27px;font-weight:700}.muted{color:var(--muted);font-size:12px}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:20px;margin:14px 0}
+.pill{display:inline-block;border:1px solid #555;border-radius:30px;padding:4px 9px;font-size:11px;color:#ccc}
+a{color:#8bdac1}.button{display:inline-block;padding:9px 13px;background:var(--accent);color:#fff;border-radius:8px;text-decoration:none;font-size:13px}
+table{width:100%;border-collapse:collapse;font-size:13px}td,th{text-align:left;padding:10px;border-bottom:1px solid #ffffff16;vertical-align:top}th{color:#bbb}
+.notice{border-left:3px solid #d6aa5d;padding:12px 14px;background:#322d24;border-radius:7px;color:#e6d8bd;font-size:13px}
+@media(max-width:650px){table{display:block;overflow-x:auto;white-space:nowrap}}
+</style></head>
+<body>
+<header><a href="/">← ULTIMA Central</a></header>
+<main>
+<div class="eyebrow">ULTIMA NETWORK · AUTOMATISCHE WARTUNG</div>
+<h1>Updates & Innovation</h1>
+<p class="lead">Monatlicher Überblick über KI-Frameworks, neue Releases und die registrierten KI-Projekte. Der Scanner sammelt Versions- und Release-Informationen und erstellt einen nachvollziehbaren Änderungsbericht.</p>
+<div class="grid">
+<div class="card"><div class="value" id="project-count">—</div><div class="muted">KI-Projekte im Scan</div></div>
+<div class="card"><div class="value" id="source-count">—</div><div class="muted">KI-Innovationsquellen</div></div>
+<div class="card"><div class="value" id="last-run">—</div><div class="muted">Letzter Scan (UTC)</div></div>
+</div>
+<div class="panel">
+<h2>Monatlicher Ablauf</h2>
+<p class="muted">Automatischer Start am 1. jedes Monats um 07:00 UTC (08:00 MEZ / 09:00 MESZ), zusätzlich manuell über GitHub Actions.</p>
+<p><span class="pill">Release- und Versionsscan</span> <span class="pill">Innovationsquellen</span> <span class="pill">Änderungsbericht</span> <span class="pill">Dependabot-Vorschläge</span></p>
+<p><a class="button" href="https://github.com/gaussa72-boop/Unify-App/actions/workflows/monthly-ai-updates.yml" target="_blank" rel="noopener">Scan-Workflow öffnen ↗</a></p>
+</div>
+<div class="notice"><b>Kontrollierter Update-Modus:</b> Die monatliche Recherche läuft automatisch. Codeänderungen, größere Versionssprünge, neue Provider, kostenpflichtige Integrationen, Datenbankänderungen und Live-Deployments werden nicht ungeprüft ausgeführt. Sie werden als konkrete Vorschläge bzw. Pull Requests dokumentiert. Jede KI behält ihren eigenen Namen, Charakter, Systemprompt und Wissenskontext.</div>
+<div class="panel"><h2>KI-Projekte</h2><div id="projects" class="muted">Bericht wird geladen …</div></div>
+<div class="panel"><h2>Neue KI-Tools & Frameworks</h2><div id="innovations" class="muted">Bericht wird geladen …</div></div>
+<div class="panel"><h2>Änderungsberichte</h2><div id="reports" class="muted">Berichte werden geladen …</div></div>
+<p class="muted">Geschützte/externe Projekte werden nicht verändert. Insbesondere bleiben Rothshild, Lyca, BullRun Apparel, Lyca Parfum und Sneaker außerhalb dieses KI-Update-Verbunds; Autokrypt bleibt unverändert.</p>
+</main>
+<script>
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+(async()=>{try{const r=await fetch("/data/updates/latest.json",{cache:"no-store"});if(!r.ok)throw Error();const d=await r.json();
+document.getElementById("project-count").textContent=d.projects?.length??0;
+document.getElementById("source-count").textContent=d.innovation_sources?.length??0;
+document.getElementById("last-run").textContent=(d.generated_at||"").replace("T"," ").slice(0,16);
+const row=p=>'<tr><td><b>'+esc(p.name)+'</b><br><span class="muted">'+esc(p.repository)+'</span></td><td>'+esc(p.latest_release||"Kein Release-Tag")+'</td><td>'+esc(p.latest_commit||"—")+'</td><td>'+(p.error?'<span style="color:#e5a5a5">Fehler: '+esc(p.error)+'</span>':'Geprüft')+'</td></tr>';
+const table=items=>'<table><thead><tr><th>Projekt / Quelle</th><th>Letztes Release</th><th>Commit</th><th>Status</th></tr></thead><tbody>'+items.map(row).join("")+'</tbody></table>';
+document.getElementById("projects").innerHTML=table(d.projects||[]);
+document.getElementById("innovations").innerHTML=table(d.innovation_sources||[]);
+}catch(e){document.getElementById("projects").textContent="Noch kein Monatsbericht vorhanden. Der erste Bericht erscheint nach dem nächsten geplanten Scan oder einem manuellen Workflow-Lauf.";document.getElementById("innovations").textContent="Noch keine Scan-Daten vorhanden."}
+try{const r=await fetch("/data/updates/");if(r.ok){const d=await r.json();document.getElementById("reports").innerHTML=(d.files||[]).map(x=>'<p><a href="/data/updates/'+encodeURIComponent(x)+'">'+esc(x)+'</a></p>').join("")}}catch(e){}
+})();
+</script></body></html>
