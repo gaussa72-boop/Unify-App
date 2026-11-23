@@ -83,6 +83,76 @@
       "name": "AIte",
       "repository": "gaussa72-boop/AIte",
       "kind": "ai"
+    },
+    {
+      "name": "IONOS-7",
+      "repository": "gaussa72-boop/IONOS-7",
+      "kind": "ai-project"
+    },
+    {
+      "name": "iPad IONOS-7",
+      "repository": "gaussa72-boop/IPad-App.IONOS-7",
+      "kind": "ai-project"
+    },
+    {
+      "name": "Aurealis Shopping AI",
+      "repository": "gaussa72-boop/Aurealis-Shopping-AI",
+      "kind": "ai-project"
+    },
+    {
+      "name": "Ultra KI Merge",
+      "repository": "gaussa72-boop/Ultra_KI_Merge",
+      "kind": "ai-project"
+    },
+    {
+      "name": "Ate Rea Vermächtnis",
+      "repository": "gaussa72-boop/Ate-Rea-Verm-chtnis",
+      "kind": "ai-project"
+    },
+    {
+      "name": "Ate Rea Characterverse",
+      "repository": "gaussa72-boop/ate-rea-characterverse",
+      "kind": "ai-project"
+    },
+    {
+      "name": "NovaTube",
+      "repository": "gaussa72-boop/Novatube",
+      "kind": "ai-project"
+    },
+    {
+      "name": "Lichtkrieger",
+      "repository": "gaussa72-boop/Lichtkrieger",
+      "kind": "ai-project"
+    },
+    {
+      "name": "The Lord",
+      "repository": "gaussa72-boop/The-Lord",
+      "kind": "ai-project"
+    },
+    {
+      "name": "KI Game Mod",
+      "repository": "gaussa72-boop/KI-Game-Mod",
+      "kind": "ai-project"
+    },
+    {
+      "name": "Quantenformel",
+      "repository": "gaussa72-boop/Quantenformel",
+      "kind": "ai-project"
+    },
+    {
+      "name": "Rea Signature",
+      "repository": "gaussa72-boop/Rea.Signature",
+      "kind": "ai-project"
+    },
+    {
+      "name": "Aurealis Creative AI",
+      "repository": "gaussa72-boop/Aurealis-Creative-AI",
+      "kind": "ai-project"
+    },
+    {
+      "name": "Aurealis Creative Studio",
+      "repository": "gaussa72-boop/Aurelis-Creative-AI-Studio",
+      "kind": "ai-project"
     }
   ],
   "innovation_sources": [
