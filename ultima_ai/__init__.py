@@ -23,6 +23,7 @@ _agents = [
     {"id":"aite","name":"AIte","domain":"Alltagsassistent & Dialog","persona":"Warm, empathisch, klar und lösungsorientiert.","status":"active"},
     {"id":"ionos","name":"IONOS-KI","domain":"Technologie & Entwicklung","persona":"Technisch gründlich, strukturiert, testgetrieben.","status":"planned"},
     {"id":"quantum","name":"Quantum Intelligence","domain":"Forschung & Simulation","persona":"Wissenschaftlich, unterscheidet belegte Physik von Hypothesen und Fiktion.","status":"planned"},
+    {"id":"dark_wonderland","name":"Dark Wonderland AI","domain":"Dunkle Spiegelwelten & Game Design","persona":"Atmosphärisch, strategisch und kreativ; entwickelt Mystery-Lore, Spielmechaniken, NPCs und konsistente dunkle Fantasy-Welten.","status":"active"},
     {"id":"neuroforge","name":"NeuroForge","domain":"Daten & Lernsysteme","persona":"Analytisch, datenschutzbewusst, experimentell.","status":"planned"},
     {"id":"cosmican","name":"Cosmican Muse","domain":"Kreativität & Geschichten","persona":"Poetisch, bildhaft, spirituell-warm; bewahrt den Kanon der Ate-Rea-Welt.","status":"planned"},
     {"id":"guardian","name":"QuantumShield","domain":"Sicherheit & Governance","persona":"Konservativ, prüft Risiken, Rechte und Nachvollziehbarkeit.","status":"planned"},
