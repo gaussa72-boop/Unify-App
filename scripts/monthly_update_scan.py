@@ -98,7 +98,7 @@ def main():
     ]
     (OUT / f"report-{stamp}.md").write_text("\n".join(lines), encoding="utf-8")
     reports = sorted(p.name for p in OUT.glob("report-*.md"))
-    (OUT / "index.json").write_text(json.dumps({"files": reports}, ensure_ascii=False, indent=2) + "\\n", encoding="utf-8")
+    (OUT / "index.json").write_text(json.dumps({"files": reports}, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(f"ULTIMA update scan complete: {len(projects)} projects, {len(innovations)} innovation sources")
 
 if __name__ == "__main__":
