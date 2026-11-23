@@ -153,6 +153,16 @@
       "name": "Aurealis Creative Studio",
       "repository": "gaussa72-boop/Aurelis-Creative-AI-Studio",
       "kind": "ai-project"
+    },
+    {
+      "name": "Quantum Super Intelligence",
+      "repository": "gaussa72-boop/Quantum.K",
+      "kind": "ai-project"
+    },
+    {
+      "name": "Dark Wonderland",
+      "repository": "gaussa72-boop/QUANTUM-MIRROR-DARK-WONDERLAND",
+      "kind": "ai-project"
     }
   ],
   "innovation_sources": [
