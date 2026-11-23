@@ -9,7 +9,7 @@
         "account_labels": [
           "Primary"
         ],
-        "service_count": 43,
+        "service_count": 44,
         "projects": [
           {
             "id": "srv-dbttut3m8hqs73di1680",
@@ -276,6 +276,13 @@
             "name": "aurealis-shopping-ai",
             "url": "https://aurealis-shopping-ai.onrender.com",
             "repository": "gaussa72-boop/Aurealis-Shopping-AI"
+          },
+          {
+            "id": "srv-dc26o1t9el5s739qccag",
+            "name": "aurealis-omnia",
+            "url": "https://aurealis-omnia.onrender.com",
+            "repository": "gaussa72-boop/Aurealis-Creative-AI",
+            "status": "deploying"
           }
         ]
       },
