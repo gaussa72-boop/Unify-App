@@ -91,6 +91,14 @@ def service_worker():
 def icon():
     return send_from_directory(ROOT, "icon.svg")
 
+@app.get("/updates/")
+def updates_home():
+    return send_from_directory(ROOT / "updates", "index.html")
+
+@app.get("/updates/<path:filename>")
+def updates_assets(filename):
+    return send_from_directory(ROOT / "updates", filename)
+
 @app.get("/health")
 def health():
     return jsonify(status="ok", service="ultima-central", mode="portfolio-launcher", cosmican="available", identity="global-identity-api", website_registry="public", admin="separate-secure-control-center"), 200
