@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-21",
+  "generated_at": "2026-11-23",
   "purpose": "Inventory snapshot for ULTIMA AI project organization. No repositories or Render services are moved by this file.",
   "render": {
     "distinct_workspaces": [
@@ -63,7 +63,15 @@
             "id": "srv-dbrq22d6e07s73frobs0",
             "name": "ate-rea-characterverse",
             "url": "https://ate-rea-characterverse.onrender.com",
-            "repository": "gaussa72-boop/ate-rea-characterverse"
+            "repository": "gaussa72-boop/ate-rea-characterverse",
+            "subapps": [
+              {
+                "name": "Character Creator",
+                "url": "https://ate-rea-characterverse.onrender.com/creator.html",
+                "repository": "gaussa72-boop/ate-rea-characterverse",
+                "status": "code committed; deployment verification pending"
+              }
+            ]
           },
           {
             "id": "srv-dbrphst6e07s73fptetg",
