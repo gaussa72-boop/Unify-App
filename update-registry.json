@@ -1,0 +1,122 @@
+{
+  "version": 1,
+  "schedule": "monthly",
+  "timezone": "Europe/Berlin",
+  "scope": "AI and software projects only",
+  "excluded": [
+    "Rothshild",
+    "Lyca",
+    "BullRun Apparel",
+    "Lyca Parfum",
+    "Sneaker"
+  ],
+  "protected": [
+    "Itsanormalconversation/Autokrypt"
+  ],
+  "projects": [
+    {
+      "name": "ULTIMA Central",
+      "repository": "gaussa72-boop/Unify-App",
+      "kind": "central-platform"
+    },
+    {
+      "name": "IONOS-8",
+      "repository": "gaussa72-boop/IONOS-8",
+      "kind": "ai"
+    },
+    {
+      "name": "Galactic AI V3",
+      "repository": "gaussa72-boop/galactic-ai-v3",
+      "kind": "ai"
+    },
+    {
+      "name": "Quantum Singularity",
+      "repository": "gaussa72-boop/Quantum_Singularity",
+      "kind": "ai"
+    },
+    {
+      "name": "AI Quantumlight",
+      "repository": "gaussa72-boop/AI-Quantumlight",
+      "kind": "ai"
+    },
+    {
+      "name": "IONOS-KI",
+      "repository": "gaussa72-boop/IONOS-KI",
+      "kind": "ai"
+    },
+    {
+      "name": "Aurealis / Omega Aurealis",
+      "repository": "gaussa72-boop/Omega.Aurealis",
+      "kind": "ai"
+    },
+    {
+      "name": "Quantum AI",
+      "repository": "gaussa72-boop/Quantum.AI.",
+      "kind": "ai"
+    },
+    {
+      "name": "Quantum KI Ultra Pro V2",
+      "repository": "gaussa72-boop/Quantum.KI.Ultra.Pro.V2",
+      "kind": "ai"
+    },
+    {
+      "name": "UltraKI AI",
+      "repository": "gaussa72-boop/UltraKI.AI",
+      "kind": "ai"
+    },
+    {
+      "name": "Quantum KI CAT Chat",
+      "repository": "gaussa72-boop/Quantum-KI-CAT.CHAT.",
+      "kind": "ai"
+    },
+    {
+      "name": "Quantum Mirror Wonderland",
+      "repository": "gaussa72-boop/Quantum.MIrror.Wonderland",
+      "kind": "ai"
+    },
+    {
+      "name": "NeuroForge",
+      "repository": "gaussa72-boop/Neuroforge",
+      "kind": "ai"
+    },
+    {
+      "name": "AIte",
+      "repository": "gaussa72-boop/AIte",
+      "kind": "ai"
+    }
+  ],
+  "innovation_sources": [
+    {
+      "name": "Transformers",
+      "repository": "huggingface/transformers"
+    },
+    {
+      "name": "Ollama",
+      "repository": "ollama/ollama"
+    },
+    {
+      "name": "LangChain",
+      "repository": "langchain-ai/langchain"
+    },
+    {
+      "name": "LlamaIndex",
+      "repository": "run-llama/llama_index"
+    },
+    {
+      "name": "vLLM",
+      "repository": "vllm-project/vllm"
+    },
+    {
+      "name": "AutoGen",
+      "repository": "microsoft/autogen"
+    },
+    {
+      "name": "CrewAI",
+      "repository": "crewAIInc/crewAI"
+    },
+    {
+      "name": "OpenAI Python SDK",
+      "repository": "openai/openai-python"
+    }
+  ]
+}
