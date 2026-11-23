@@ -70,7 +70,14 @@ _capabilities = [
     {"id":"automation","name":"Automatisierungen","stage":"planned","detail":"Zeit- und Ereignisworkflows mit Protokoll, Limits und Abbruchschalter."},
     {"id":"quantum","name":"Quanten-Forschungslabor","stage":"experimental","detail":"Klassische Simulationen und Lernmodule; keine Behauptung eines realen Quantencomputers."},
     {"id":"marketplace","name":"Plugin-Marktplatz","stage":"planned","detail":"Signierte, einzeln berechtigte Erweiterungen mit Versionsprüfung."},
-    {"id":"mobile","name":"Mobile Companion","stage":"planned","detail":"Installierbare Web-App und spätere native Clients."},
+    {"id":"project-studios","name":"Eigene Projekt-AI-Studios","stage":"available","detail":"30 projektbezogene AI-Studio-Oberflächen mit eigenen Agenten-IDs, Arbeitsrollen, Unterpunkten und gemeinsamer Ideenbibliothek."},
+    {"id":"model-modes","name":"OpenAI-, Claude- und Gemini-Arbeitsstile","stage":"prototype","detail":"Rollenbasierte Prompt-Profile für direkte Antworten, Tiefenanalyse und multimodale Planung. Proprietäre Modellanbieter sind nur verfügbar, wenn ihre API-Zugänge separat konfiguriert sind."},
+    {"id":"project-ideas","name":"Projektideen-Bibliothek","stage":"available","detail":"Beschreibungen und Entwicklungsideen aus ULTIMA, Ate Rea, Galactic AI, Quantum Mirror, NovaTube, Webshops, Cybersecurity und weiteren Projekten."},
+    {"id":"monthly-innovation","name":"Monatliche Innovation & Updates","stage":"scheduled","detail":"Monatlicher Scan von KI-Projekten, Releases und Frameworks; Änderungen werden dokumentiert und kontrolliert vorbereitet."},
+    {"id":"documents","name":"Lokaler Dokumentenkontext","stage":"prototype","detail":"Text, Markdown, CSV und JSON können im jeweiligen AI Studio ausgewählt und in den Chat-Kontext übernommen werden."},
+    {"id":"media-generation","name":"Bild-, Video- und Audiogenerierung","stage":"planned","detail":"Benötigt je Funktion einen passenden Provider und autorisierte API-Verbindungen; die Oberfläche behauptet keine nicht vorhandene Medienintegration."},
+    {"id":"web-research","name":"Live-Webrecherche","stage":"planned","detail":"Recherche mit Quellen- und Datumsprüfung über einen separat angebundenen Suchdienst."},
+    {"id":"persistent-memory","name":"Langzeitgedächtnis","stage":"prototype","detail":"Benötigt persistente Datenbank, Benutzerzustimmung, Zugriffskontrolle und Löschkonzept."},
 ]
 _limits = {}
 def _rate_limited(key):
