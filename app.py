@@ -128,6 +128,10 @@ def save_profile():
     db.session.commit(); flash("Website-Profil gespeichert.")
     return redirect(url_for("home"))
 
+@app.get("/render-console/")
+def render_console():
+    return send_from_directory(os.path.dirname(__file__), "render-console.html")
+
 @app.get("/assistant/")
 @app.get("/ultima-ai/")
 @app.get("/ultima-ai", strict_slashes=False)
