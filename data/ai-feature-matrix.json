@@ -1,0 +1,135 @@
+{
+  "schema_version": 1,
+  "version": "1.0.0",
+  "updated_at": "2026-11-23",
+  "name": "ULTIMA Update-KI-Matrix",
+  "purpose": "Zentrale, nachvollziehbare Funktions- und Rollout-Matrix für die eigenen KI-Projekte. Sie beschreibt den gemeinsamen Standard; ein Eintrag bedeutet nicht automatisch, dass jeder externe Dienst bereits integriert oder live geprüft ist.",
+  "rollout_policy": {
+    "source_of_truth": "gaussa72-boop/Unify-App/data/ai-feature-matrix.json",
+    "distribution": "Jede eigene KI soll diese Matrix abrufen oder ihre lokale Implementierung mit derselben Feature-ID und Versionsnummer dokumentieren.",
+    "preserve_personas": true,
+    "preserve_existing_features": true,
+    "protected_projects": [
+      "Rothshild",
+      "Lyca",
+      "BullRun Apparel",
+      "Lyca Parfum",
+      "Sneaker"
+    ],
+    "unchanged_projects": [
+      "Autokrypt"
+    ],
+    "production_writes_require_approval": true,
+    "api_secrets_in_git": false
+  },
+  "features": [
+    {
+      "id": "character-studio",
+      "name": "Eigene Charakter-KIs erstellen",
+      "category": "Agenten & Persönlichkeit",
+      "description": "Benutzer können Charakter-KIs mit Name, Rolle, Persönlichkeit, Sprachstil, Fachgebieten, Hintergrundgeschichte, Zielen und Verhaltensregeln anlegen, bearbeiten, löschen, exportieren und importieren.",
+      "stage": "prototype",
+      "release": "1.0.0",
+      "rollout": "ULTIMA AI Charakterstudio; weitere KI-Dienste übernehmen das gemeinsame Charakterprofil-Schema über die Update-KI-Matrix."
+    },
+    {
+      "id": "character-chat",
+      "name": "Mit eigenen Charakter-KIs chatten",
+      "category": "Agenten & Persönlichkeit",
+      "description": "Ein gespeicherter Charakter kann ausgewählt und über den konfigurierten Modellanbieter mit seinem eigenen Persona-Kontext angesprochen werden.",
+      "stage": "prototype",
+      "release": "1.0.0",
+      "rollout": "ULTIMA AI Chat-Adapter; Provider-Schlüssel und Modellzugang bleiben erforderlich."
+    },
+    {
+      "id": "character-import-export",
+      "name": "Charaktere exportieren und importieren",
+      "category": "Agenten & Persönlichkeit",
+      "description": "Charakterprofile können als JSON gesichert und in andere kompatible KI-Studios übertragen werden.",
+      "stage": "prototype",
+      "release": "1.0.0",
+      "rollout": "Browserlokaler Export/Import im ULTIMA Charakterstudio."
+    },
+    {
+      "id": "shared-feature-matrix",
+      "name": "Gemeinsame Update-KI-Matrix",
+      "category": "Updates & Verwaltung",
+      "description": "Versionierte Feature-IDs, Beschreibungen, Status, Rollout-Ziele und Änderungsprotokolle als gemeinsame Referenz aller eigenen KI-Projekte.",
+      "stage": "available",
+      "release": "1.0.0",
+      "rollout": "Zentrale Matrix in ULTIMA Central; projektweise Adapter und Tests noch erforderlich."
+    },
+    {
+      "id": "feature-change-log",
+      "name": "Nachschlagbares Änderungsprotokoll",
+      "category": "Updates & Verwaltung",
+      "description": "Jede Matrix-Änderung wird mit Datum, Version, Beschreibung, betroffenen Projekten, Status und Prüfergebnis dokumentiert.",
+      "stage": "available",
+      "release": "1.0.0",
+      "rollout": "Updates & Innovation Seite."
+    },
+    {
+      "id": "persona-preservation",
+      "name": "Persönlichkeits- und Promptschutz",
+      "category": "Sicherheit",
+      "description": "Neue Funktionen erweitern bestehende Agenten, ohne Namen, Systemprompts, Rollen oder Projektwissen stillschweigend zu überschreiben.",
+      "stage": "available",
+      "release": "1.0.0",
+      "rollout": "Verbindliche Rollout-Regel der Update-KI-Matrix."
+    },
+    {
+      "id": "approval-gates",
+      "name": "Freigabe vor produktiven Aktionen",
+      "category": "Sicherheit",
+      "description": "Deployments, externe Veröffentlichungen, Zahlungen, Löschungen und Kontenänderungen benötigen explizite Freigabe.",
+      "stage": "available",
+      "release": "1.0.0",
+      "rollout": "Verbindlicher Plattformstandard."
+    },
+    {
+      "id": "cross-ai-adapters",
+      "name": "Gemeinsame KI-Funktionsadapter",
+      "category": "Integration",
+      "description": "Standardisierte Adapter für Chat, Charakterprofile, Fähigkeiten, Projektwissen und Statusmeldungen.",
+      "stage": "planned",
+      "release": "1.1.0",
+      "rollout": "Jede KI-API muss separat inventarisiert, angebunden und getestet werden."
+    },
+    {
+      "id": "character-cloud-sync",
+      "name": "Charaktere kontoübergreifend synchronisieren",
+      "category": "Agenten & Persönlichkeit",
+      "description": "Verschlüsselte Speicherung mit Nutzerkonto, Rollen, Export und Löschfunktion.",
+      "stage": "planned",
+      "release": "1.2.0",
+      "rollout": "Benötigt verifizierte zentrale Identität, Datenbank und Datenschutzkonzept."
+    },
+    {
+      "id": "agent-collaboration",
+      "name": "Charakter-zu-Charakter-Kollaboration",
+      "category": "Agenten & Persönlichkeit",
+      "description": "Mehrere Charaktere können in moderierten Aufgabenrunden Perspektiven austauschen und Ergebnisse zusammenführen.",
+      "stage": "planned",
+      "release": "1.2.0",
+      "rollout": "Benötigt Multi-Agenten-Orchestrierung, Limits und nachvollziehbare Gesprächsprotokolle."
+    },
+    {
+      "id": "project-discovery",
+      "name": "Automatische KI-Projekterkennung",
+      "category": "Updates & Verwaltung",
+      "description": "Neue eigene KI-Repositories und Render-Dienste werden erkannt und als Rollout-Ziele vorgeschlagen.",
+      "stage": "planned",
+      "release": "1.2.0",
+      "rollout": "Benötigt sichere GitHub- und Render-Lesezugänge sowie Registry-Abgleich."
+    }
+  ],
+  "categories": [
+    "Agenten & Persönlichkeit",
+    "Updates & Verwaltung",
+    "Integration",
+    "Sicherheit",
+    "Wissen & Gedächtnis",
+    "Medien & Kreativität",
+    "Entwicklung & Betrieb"
+  ]
+}
