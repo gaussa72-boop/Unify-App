@@ -1,0 +1,764 @@
+{
+  "updatedAt": "2026-11-23T18:50:15.148Z",
+  "renderServices": [
+    {
+      "name": "ate-rea-exchange",
+      "url": "https://ate-rea-exchange.onrender.com",
+      "repository": "gaussa72-boop/Kryptoaurora",
+      "branch": "main",
+      "type": "static_site",
+      "region": "",
+      "status": "registered",
+      "dashboardUrl": "https://dashboard.render.com/static/srv-dc28j5ec6qcc73eqh8vg"
+    },
+    {
+      "name": "ultima-media-impact-hub",
+      "url": "https://ultima-media-impact-hub.onrender.com",
+      "repository": "gaussa72-boop/Unify-App",
+      "branch": "main",
+      "type": "static_site",
+      "region": "",
+      "status": "registered",
+      "dashboardUrl": "https://dashboard.render.com/static/srv-dc27tuqfngtc73alc08g"
+    },
+    {
+      "name": "aurealis-omnia",
+      "url": "https://aurealis-omnia.onrender.com",
+      "repository": "gaussa72-boop/Aurealis-Creative-AI",
+      "branch": "main",
+      "type": "web_service",
+      "region": "frankfurt",
+      "status": "registered",
+      "dashboardUrl": "https://dashboard.render.com/web/srv-dc26o1t9el5s739qccag"
+    },
+    {
+      "name": "aurealis-shopping-ai",
+      "url": "https://aurealis-shopping-ai.onrender.com",
+      "repository": "gaussa72-boop/Aurealis-Shopping-AI",
+      "branch": "main",
+      "type": "web_service",
+      "region": "frankfurt",
+      "status": "registered",
+      "dashboardUrl": "https://dashboard.render.com/web/srv-dc0s5l49v7es739ppvdg"
+    },
+    {
+      "name": "aurelis-investment",
+      "url": "https://aurelis-investment.onrender.com",
+      "repository": "gaussa72-boop/Unify-App",
+      "branch": "main",
+      "type": "static_site",
+      "region": "",
+      "status": "registered",
+      "dashboardUrl": "https://dashboard.render.com/static/srv-dbttut3m8hqs73di1680"
+    },
+    {
+      "name": "ionos-7-gauss-portal",
+      "url": "https://ionos-7-gauss-portal.onrender.com",
+      "repository": "gaussa72-boop/IONOS-7",
+      "branch": "main",
+      "type": "web_service",
+      "region": "frankfurt",
+      "status": "registered",
+      "dashboardUrl": "https://dashboard.render.com/web/srv-dbtqiat6e07s73atg3g0"
+    },
+    {
+      "name": "quantum-mirror-dark-wonderland",
+      "url": "https://quantum-mirror-dark-wonderland-ejc3.onrender.com",
+      "repository": "gaussa72-boop/QUANTUM-MIRROR-DARK-WONDERLAND",
+      "branch": "main",
+      "type": "static_site",
+      "region": "",
+      "status": "registered",
+      "dashboardUrl": "https://dashboard.render.com/static/srv-dbtpr2l6e07s73arejug"
+    },
+    {
+      "name": "neuroforge-2035",
+      "url": "https://neuroforge-2035.onrender.com",
+      "repository": "gaussa72-boop/Neuroforge",
+      "branch": "main",
+      "type": "static_site",
+      "region": "",
+      "status": "registered",
+      "dashboardUrl": "https://dashboard.render.com/static/srv-dbtlplcipgvc73a5fieg"
+    },
+    {
+      "name": "neuroforge-gaussa-2035",
+      "url": "https://neuroforge-gaussa-2035.onrender.com",
+      "repository": "gaussa72-boop/Neuroforge",
+      "branch": "main",
+      "type": "static_site",
+      "region": "",
+      "status": "registered",
+      "dashboardUrl": "https://dashboard.render.com/static/srv-dbtlooec6qcc739frjp0"
+    },
+    {
+      "name": "neuroforge-systems-2035",
+      "url": "https://neuroforge-systems-2035.onrender.com",
+      "repository": "gaussa72-boop/Unify-App",
+      "branch": "main",
+      "type": "static_site",
+      "region": "",
+      "status": "registered",
+      "dashboardUrl": "https://dashboard.render.com/static/srv-dbtlcs6c6qcc739er8m0"
+    },
+    {
+      "name": "aurealis-cyber-shield",
+      "url": "https://aurealis-cyber-shield.onrender.com",
+      "repository": "gaussa72-boop/Aurealis-Creative-AI",
+      "branch": "main",
+      "type": "static_site",
+      "region": "",
+      "status": "registered",
+      "dashboardUrl": "https://dashboard.render.com/static/srv-dbrq82e1egvs73btl760"
+    },
+    {
+      "name": "technologisierte-einheit",
+      "url": "https://technologisierte-einheit.onrender.com",
+      "repository": "gaussa72-boop/Aurealis-Creative-AI",
+      "branch": "main",
+      "type": "static_site",
+      "region": "",
+      "status": "registered",
+      "dashboardUrl": "https://dashboard.render.com/static/srv-dbrq5vtg1s2s73d8a16g"
+    },
+    {
+      "name": "ate-rea-characterverse",
+      "url": "https://ate-rea-characterverse.onrender.com",
+      "repository": "gaussa72-boop/ate-rea-characterverse",
+      "branch": "main",
+      "type": "web_service",
+      "region": "frankfurt",
+      "status": "registered",
+      "dashboardUrl": "https://dashboard.render.com/web/srv-dbrq22d6e07s73frobs0"
+    },
+    {
+      "name": "aurelis-creative-ai-studio",
+      "url": "https://aurelis-creative-ai-studio.onrender.com",
+      "repository": "gaussa72-boop/Aurelis-Creative-AI-Studio",
+      "branch": "main",
+      "type": "static_site",
+      "region": "",
+      "status": "registered",
+      "dashboardUrl": "https://dashboard.render.com/static/srv-dbrphst6e07s73fptetg"
+    },
+    {
+      "name": "ultima-central-45ne",
+      "url": "https://ultima-central-45ne.onrender.com",
+      "repository": "gaussa72-boop/Unify-App",
+      "branch": "main",
+      "type": "static_site",
+      "region": "",
+      "status": "registered",
+      "dashboardUrl": "https://dashboard.render.com/static/srv-dbrokh9srm7s73enia70"
+    },
+    {
+      "name": "ultima-unify-45ne",
+      "url": "https://ultima-unify-45ne.onrender.com",
+      "repository": "gaussa72-boop/Unify-App",
+      "branch": "main",
+      "type": "web_service",
+      "region": "frankfurt",
+      "status": "registered",
+      "dashboardUrl": "https://dashboard.render.com/web/srv-dbroeepsrm7s73emvtmg"
+    },
+    {
+      "name": "lichtkrieger-dark-mirror-realms",
+      "url": "https://lichtkrieger-dark-mirror-realms.onrender.com",
+      "repository": "gaussa72-boop/Lichtkrieger",
+      "branch": "main",
+      "type": "static_site",
+      "region": "",
+      "status": "registered",
+      "dashboardUrl": "https://dashboard.render.com/static/srv-dbrnr48n74is739e8c70"
+    },
+    {
+      "name": "lichtkrieger-cloud-gaming",
+      "url": "https://lichtkrieger-cloud-gaming.onrender.com",
+      "repository": "gaussa72-boop/Quantum.MIrror.Wonderland",
+      "branch": "main",
+      "type": "static_site",
+      "region": "",
+      "status": "registered",
+      "dashboardUrl": "https://dashboard.render.com/static/srv-dbrnj0h5efls73dfsafg"
+    },
+    {
+      "name": "ultima-membership-api",
+      "url": "https://ultima-membership-api.onrender.com",
+      "repository": "gaussa72-boop/Quantum-Shield",
+      "branch": "main",
+      "type": "web_service",
+      "region": "frankfurt",
+      "status": "registered",
+      "dashboardUrl": "https://dashboard.render.com/web/srv-dbrkqa1srm7s73ecg5pg"
+    },
+    {
+      "name": "astralis-omega",
+      "url": "https://astralis-omega.onrender.com",
+      "repository": "gaussa72-boop/Omega.Aurealis",
+      "branch": "main",
+      "type": "static_site",
+      "region": "",
+      "status": "registered",
+      "dashboardUrl": "https://dashboard.render.com/static/srv-dbrjfotg1s2s738m3rr0"
+    },
+    {
+      "name": "novatube",
+      "url": "https://novatube-a10l.onrender.com",
+      "repository": "gaussa72-boop/Novatube",
+      "branch": "main",
+      "type": "static_site",
+      "region": "",
+      "status": "registered",
+      "dashboardUrl": "https://dashboard.render.com/static/srv-dbrfhrc9v7es73cem6p0"
+    },
+    {
+      "name": "Ate-Rea-Vermächtnis",
+      "url": "https://ate-rea-vermachtnis.onrender.com",
+      "repository": "gaussa72-boop/Ate-Rea-Verm-chtnis",
+      "branch": "main",
+      "type": "web_service",
+      "region": "frankfurt",
+      "status": "registered",
+      "dashboardUrl": "https://dashboard.render.com/web/srv-dbkf6l2fngtc73f4a040"
+    },
+    {
+      "name": "dropshift-store",
+      "url": "https://dropshift-store.onrender.com",
+      "repository": "ariandomimate-blip/Drop-shipping",
+      "branch": "main",
+      "type": "web_service",
+      "region": "frankfurt",
+      "status": "registered",
+      "dashboardUrl": "https://dashboard.render.com/web/srv-dbj792ou01pc73elgk60"
+    },
+    {
+      "name": "Quantum.AI.",
+      "url": "https://quantum-ai-zeah.onrender.com",
+      "repository": "gaussa72-boop/Quantum.AI.",
+      "branch": "main",
+      "type": "web_service",
+      "region": "oregon",
+      "status": "registered",
+      "dashboardUrl": "https://dashboard.render.com/web/srv-db55kql9fdbs73bmsk60"
+    },
+    {
+      "name": "KI-Game-Mod",
+      "url": "https://ki-game-mod.onrender.com",
+      "repository": "gaussa72-boop/KI-Game-Mod",
+      "branch": "main",
+      "type": "web_service",
+      "region": "oregon",
+      "status": "registered",
+      "dashboardUrl": "https://dashboard.render.com/web/srv-db53vtdckfvc738smj90"
+    },
+    {
+      "name": "Note-KI",
+      "url": "https://note-ki.onrender.com",
+      "repository": "gaussa72-boop/Note-KI",
+      "branch": "main",
+      "type": "web_service",
+      "region": "oregon",
+      "status": "registered",
+      "dashboardUrl": "https://dashboard.render.com/web/srv-db53v1nlk1mc738li67g"
+    },
+    {
+      "name": "IPad-App.IONOS-7",
+      "url": "https://ipad-app-ionos-7.onrender.com",
+      "repository": "gaussa72-boop/IPad-App.IONOS-7",
+      "branch": "main",
+      "type": "web_service",
+      "region": "oregon",
+      "status": "registered",
+      "dashboardUrl": "https://dashboard.render.com/web/srv-db53u90473hc739ppo00"
+    },
+    {
+      "name": "galactic-ai-v3",
+      "url": "https://galactic-ai-v3.onrender.com",
+      "repository": "gaussa72-boop/galactic-ai-v3",
+      "branch": "main",
+      "type": "web_service",
+      "region": "oregon",
+      "status": "registered",
+      "dashboardUrl": "https://dashboard.render.com/web/srv-db53rc8473hc739pfr7g"
+    },
+    {
+      "name": "Quantum.Super-Intelligence",
+      "url": "https://quantum-super-intelligence.onrender.com",
+      "repository": "gaussa72-boop/Quantum.K",
+      "branch": "main",
+      "type": "web_service",
+      "region": "oregon",
+      "status": "registered",
+      "dashboardUrl": "https://dashboard.render.com/web/srv-db52kp3rjlhs73c73gk0"
+    },
+    {
+      "name": "IONOS-8",
+      "url": "https://ionos-8.onrender.com",
+      "repository": "gaussa72-boop/IONOS-8",
+      "branch": "main",
+      "type": "web_service",
+      "region": "oregon",
+      "status": "registered",
+      "dashboardUrl": "https://dashboard.render.com/web/srv-db52k2jrjlhs73c712kg"
+    },
+    {
+      "name": "Quantum-KI-CAT.CHAT.",
+      "url": "https://quantum-ki-cat-chat.onrender.com",
+      "repository": "gaussa72-boop/Quantum-KI-CAT.CHAT.",
+      "branch": "main",
+      "type": "web_service",
+      "region": "oregon",
+      "status": "registered",
+      "dashboardUrl": "https://dashboard.render.com/web/srv-db52h1id0e5s73dvk0bg"
+    },
+    {
+      "name": "AI-Quantumlight",
+      "url": "https://ai-quantumlight.onrender.com",
+      "repository": "gaussa72-boop/AI-Quantumlight",
+      "branch": "main",
+      "type": "web_service",
+      "region": "oregon",
+      "status": "registered",
+      "dashboardUrl": "https://dashboard.render.com/web/srv-db52gg8473hc739kt79g"
+    },
+    {
+      "name": "Quantenformel",
+      "url": "https://quantenformel.onrender.com",
+      "repository": "gaussa72-boop/Quantenformel",
+      "branch": "main",
+      "type": "web_service",
+      "region": "oregon",
+      "status": "registered",
+      "dashboardUrl": "https://dashboard.render.com/web/srv-db51pd7lot8c73ddn29g"
+    },
+    {
+      "name": "Quantum_Singularity",
+      "url": "https://quantum-singularity.onrender.com",
+      "repository": "gaussa72-boop/Quantum_Singularity",
+      "branch": "main",
+      "type": "web_service",
+      "region": "oregon",
+      "status": "registered",
+      "dashboardUrl": "https://dashboard.render.com/web/srv-db51osp42hec73fdg910"
+    },
+    {
+      "name": "IONOS-AI",
+      "url": "https://ionos-ai.onrender.com",
+      "repository": "gaussa72-boop/Ultra_KI_Merge",
+      "branch": "main",
+      "type": "web_service",
+      "region": "oregon",
+      "status": "registered",
+      "dashboardUrl": "https://dashboard.render.com/web/srv-db0euftg1s2s73dpi40g"
+    },
+    {
+      "name": "rea-signature",
+      "url": "https://rea-signature.onrender.com",
+      "repository": "gaussa72-boop/Rea.Signature",
+      "branch": "main",
+      "type": "web_service",
+      "region": "frankfurt",
+      "status": "registered",
+      "dashboardUrl": "https://dashboard.render.com/web/srv-daj61n8ae00c738o0100"
+    },
+    {
+      "name": "Quantum AI-One",
+      "url": "https://quantum-ai-renewed.onrender.com",
+      "repository": "gaussa72-boop/Quantum.AI.",
+      "branch": "main",
+      "type": "web_service",
+      "region": "oregon",
+      "status": "registered",
+      "dashboardUrl": "https://dashboard.render.com/web/srv-daioo06q1p3s73cv4e00"
+    },
+    {
+      "name": "Quantum KI Ultra Pro V2",
+      "url": "https://quantum-ki-ultra-pro-v2-renewed.onrender.com",
+      "repository": "gaussa72-boop/Quantum.KI.Ultra.Pro.V2",
+      "branch": "main",
+      "type": "web_service",
+      "region": "oregon",
+      "status": "registered",
+      "dashboardUrl": "https://dashboard.render.com/web/srv-daionumk1f9s739269f0"
+    },
+    {
+      "name": "Bullrun.Apparel",
+      "url": "https://bullrun-apparel.onrender.com",
+      "repository": "gaussa72-boop/Bullrun.Apparel",
+      "branch": "main",
+      "type": "web_service",
+      "region": "oregon",
+      "status": "registered",
+      "dashboardUrl": "https://dashboard.render.com/web/srv-daik3567bikc738vqdbg"
+    },
+    {
+      "name": "Quantum.MIrror.Wonderland",
+      "url": "https://quantum-mirror-wonderland.onrender.com",
+      "repository": "gaussa72-boop/Quantum.MIrror.Wonderland",
+      "branch": "main",
+      "type": "web_service",
+      "region": "oregon",
+      "status": "registered",
+      "dashboardUrl": "https://dashboard.render.com/web/srv-d6ktoml6ubrc73ep7spg"
+    },
+    {
+      "name": "IONOS-KI",
+      "url": "https://ionos-ki.onrender.com",
+      "repository": "gaussa72-boop/IONOS-KI",
+      "branch": "main",
+      "type": "web_service",
+      "region": "oregon",
+      "status": "registered",
+      "dashboardUrl": "https://dashboard.render.com/web/srv-d6jnd99aae7s73emcab0"
+    },
+    {
+      "name": "Ionos-7",
+      "url": "https://ionos-7.onrender.com",
+      "repository": "gaussa72-boop/Quantum.KI.Ultra.Pro.V2",
+      "branch": "main",
+      "type": "web_service",
+      "region": "oregon",
+      "status": "registered",
+      "dashboardUrl": "https://dashboard.render.com/web/srv-d6f9m6ddi7vc738lmctg"
+    },
+    {
+      "name": "UltraKI.AI",
+      "url": "https://ultraki-ai.onrender.com",
+      "repository": "gaussa72-boop/UltraKI.AI",
+      "branch": "main",
+      "type": "web_service",
+      "region": "oregon",
+      "status": "registered",
+      "dashboardUrl": "https://dashboard.render.com/web/srv-d6chfafgi27c7380u620"
+    },
+    {
+      "name": "ultra-ki-v2",
+      "url": "https://ultra-ki-v2.onrender.com",
+      "repository": "gaussa72-boop/ultra-ki-v2",
+      "branch": "main",
+      "type": "web_service",
+      "region": "oregon",
+      "status": "registered",
+      "dashboardUrl": "https://dashboard.render.com/web/srv-d6cgfs8eumvs73bbebn0"
+    },
+    {
+      "name": "Quantum.KI.Ultra.Pro.V2",
+      "url": "https://quantum-ki-ultra-pro-v2.onrender.com",
+      "repository": "gaussa72-boop/Quantum.KI.Ultra.Pro.V2",
+      "branch": "main",
+      "type": "web_service",
+      "region": "oregon",
+      "status": "registered",
+      "dashboardUrl": "https://dashboard.render.com/web/srv-d6cfbjf5r7bs738raba0"
+    },
+    {
+      "name": "QuantumAI-Chat",
+      "url": "https://quantumai-chat.onrender.com",
+      "repository": "gaussa72-boop/Quantum.AI.",
+      "branch": "main",
+      "type": "static_site",
+      "region": "",
+      "status": "registered",
+      "dashboardUrl": "https://dashboard.render.com/static/srv-d6cbsj3h46gs73e5grk0"
+    }
+  ],
+  "repositories": [
+    {
+      "owner": "gaussa72-boop",
+      "name": "Quantum.K",
+      "branch": "main",
+      "url": "https://github.com/gaussa72-boop/Quantum.K"
+    },
+    {
+      "owner": "gaussa72-boop",
+      "name": "Quantum.AI.",
+      "branch": "main",
+      "url": "https://github.com/gaussa72-boop/Quantum.AI."
+    },
+    {
+      "owner": "gaussa72-boop",
+      "name": "Quantum.KI.Ultra.Pro.V2",
+      "branch": "main",
+      "url": "https://github.com/gaussa72-boop/Quantum.KI.Ultra.Pro.V2"
+    },
+    {
+      "owner": "gaussa72-boop",
+      "name": "ultra-ki-v2",
+      "branch": "main",
+      "url": "https://github.com/gaussa72-boop/ultra-ki-v2"
+    },
+    {
+      "owner": "gaussa72-boop",
+      "name": "UltraKI.AI",
+      "branch": "main",
+      "url": "https://github.com/gaussa72-boop/UltraKI.AI"
+    },
+    {
+      "owner": "gaussa72-boop",
+      "name": "IONOS-7",
+      "branch": "main",
+      "url": "https://github.com/gaussa72-boop/IONOS-7"
+    },
+    {
+      "owner": "gaussa72-boop",
+      "name": "IONOS-KI",
+      "branch": "main",
+      "url": "https://github.com/gaussa72-boop/IONOS-KI"
+    },
+    {
+      "owner": "gaussa72-boop",
+      "name": "IPad-App.IONOS-7",
+      "branch": "main",
+      "url": "https://github.com/gaussa72-boop/IPad-App.IONOS-7"
+    },
+    {
+      "owner": "gaussa72-boop",
+      "name": "Quantum.MIrror.Wonderland",
+      "branch": "main",
+      "url": "https://github.com/gaussa72-boop/Quantum.MIrror.Wonderland"
+    },
+    {
+      "owner": "gaussa72-boop",
+      "name": "AI-Quantumlight",
+      "branch": "main",
+      "url": "https://github.com/gaussa72-boop/AI-Quantumlight"
+    },
+    {
+      "owner": "gaussa72-boop",
+      "name": "Quantum-KI-CAT.CHAT.",
+      "branch": "main",
+      "url": "https://github.com/gaussa72-boop/Quantum-KI-CAT.CHAT."
+    },
+    {
+      "owner": "gaussa72-boop",
+      "name": "IONOS-8",
+      "branch": "main",
+      "url": "https://github.com/gaussa72-boop/IONOS-8"
+    },
+    {
+      "owner": "gaussa72-boop",
+      "name": "Quantum_Singularity",
+      "branch": "main",
+      "url": "https://github.com/gaussa72-boop/Quantum_Singularity"
+    },
+    {
+      "owner": "gaussa72-boop",
+      "name": "galactic-ai-v3",
+      "branch": "main",
+      "url": "https://github.com/gaussa72-boop/galactic-ai-v3"
+    },
+    {
+      "owner": "gaussa72-boop",
+      "name": "codex-relay",
+      "branch": "main",
+      "url": "https://github.com/gaussa72-boop/codex-relay"
+    },
+    {
+      "owner": "gaussa72-boop",
+      "name": "Bullrun.Apparel",
+      "branch": "main",
+      "url": "https://github.com/gaussa72-boop/Bullrun.Apparel"
+    },
+    {
+      "owner": "gaussa72-boop",
+      "name": "KI-Game-Mod",
+      "branch": "main",
+      "url": "https://github.com/gaussa72-boop/KI-Game-Mod"
+    },
+    {
+      "owner": "gaussa72-boop",
+      "name": "Quantenformel.QAI",
+      "branch": "main",
+      "url": "https://github.com/gaussa72-boop/Quantenformel.QAI"
+    },
+    {
+      "owner": "gaussa72-boop",
+      "name": "Note-KI",
+      "branch": "main",
+      "url": "https://github.com/gaussa72-boop/Note-KI"
+    },
+    {
+      "owner": "gaussa72-boop",
+      "name": "Quantenformel",
+      "branch": "main",
+      "url": "https://github.com/gaussa72-boop/Quantenformel"
+    },
+    {
+      "owner": "gaussa72-boop",
+      "name": "QUANTUM-MIRROR-DARK-WONDERLAND",
+      "branch": "main",
+      "url": "https://github.com/gaussa72-boop/QUANTUM-MIRROR-DARK-WONDERLAND"
+    },
+    {
+      "owner": "gaussa72-boop",
+      "name": "Rea.Signature",
+      "branch": "main",
+      "url": "https://github.com/gaussa72-boop/Rea.Signature"
+    },
+    {
+      "owner": "gaussa72-boop",
+      "name": "Ultra_KI_Merge",
+      "branch": "main",
+      "url": "https://github.com/gaussa72-boop/Ultra_KI_Merge"
+    },
+    {
+      "owner": "gaussa72-boop",
+      "name": "Quantum-Shield",
+      "branch": "main",
+      "url": "https://github.com/gaussa72-boop/Quantum-Shield"
+    },
+    {
+      "owner": "gaussa72-boop",
+      "name": "Ate-Rea-",
+      "branch": "main",
+      "url": "https://github.com/gaussa72-boop/Ate-Rea-"
+    },
+    {
+      "owner": "gaussa72-boop",
+      "name": "Ate-Rea-Verm-chtnis",
+      "branch": "main",
+      "url": "https://github.com/gaussa72-boop/Ate-Rea-Verm-chtnis"
+    },
+    {
+      "owner": "gaussa72-boop",
+      "name": "Novatube",
+      "branch": "main",
+      "url": "https://github.com/gaussa72-boop/Novatube"
+    },
+    {
+      "owner": "gaussa72-boop",
+      "name": "Omega.Aurealis",
+      "branch": "main",
+      "url": "https://github.com/gaussa72-boop/Omega.Aurealis"
+    },
+    {
+      "owner": "gaussa72-boop",
+      "name": "Lichtkrieger",
+      "branch": "main",
+      "url": "https://github.com/gaussa72-boop/Lichtkrieger"
+    },
+    {
+      "owner": "gaussa72-boop",
+      "name": "The-Lord",
+      "branch": "main",
+      "url": "https://github.com/gaussa72-boop/The-Lord"
+    },
+    {
+      "owner": "gaussa72-boop",
+      "name": "Unify-App",
+      "branch": "main",
+      "url": "https://github.com/gaussa72-boop/Unify-App"
+    },
+    {
+      "owner": "gaussa72-boop",
+      "name": "Aurealis-Trading",
+      "branch": "main",
+      "url": "https://github.com/gaussa72-boop/Aurealis-Trading"
+    },
+    {
+      "owner": "gaussa72-boop",
+      "name": "Kryptoaurora",
+      "branch": "main",
+      "url": "https://github.com/gaussa72-boop/Kryptoaurora"
+    },
+    {
+      "owner": "gaussa72-boop",
+      "name": "Aurealis-Creative-AI",
+      "branch": "main",
+      "url": "https://github.com/gaussa72-boop/Aurealis-Creative-AI"
+    },
+    {
+      "owner": "gaussa72-boop",
+      "name": "Aurelis-Creative-AI-Studio",
+      "branch": "main",
+      "url": "https://github.com/gaussa72-boop/Aurelis-Creative-AI-Studio"
+    },
+    {
+      "owner": "gaussa72-boop",
+      "name": "ate-rea-characterverse",
+      "branch": "main",
+      "url": "https://github.com/gaussa72-boop/ate-rea-characterverse"
+    },
+    {
+      "owner": "gaussa72-boop",
+      "name": "Neuroforge",
+      "branch": "main",
+      "url": "https://github.com/gaussa72-boop/Neuroforge"
+    },
+    {
+      "owner": "gaussa72-boop",
+      "name": "Aurealis-Shopping-AI",
+      "branch": "main",
+      "url": "https://github.com/gaussa72-boop/Aurealis-Shopping-AI"
+    },
+    {
+      "owner": "ariandomimate-blip",
+      "name": "Aktiv-Lyca",
+      "branch": "main",
+      "url": "https://github.com/ariandomimate-blip/Aktiv-Lyca"
+    },
+    {
+      "owner": "ariandomimate-blip",
+      "name": "Webshop.Parfum",
+      "branch": "main",
+      "url": "https://github.com/ariandomimate-blip/Webshop.Parfum"
+    },
+    {
+      "owner": "ariandomimate-blip",
+      "name": "sneaker",
+      "branch": "main",
+      "url": "https://github.com/ariandomimate-blip/sneaker"
+    },
+    {
+      "owner": "ariandomimate-blip",
+      "name": "rothshild-order",
+      "branch": "main",
+      "url": "https://github.com/ariandomimate-blip/rothshild-order"
+    },
+    {
+      "owner": "ariandomimate-blip",
+      "name": "Drop-shipping",
+      "branch": "main",
+      "url": "https://github.com/ariandomimate-blip/Drop-shipping"
+    },
+    {
+      "owner": "ariandomimate-blip",
+      "name": "Autokrypt-B-rse",
+      "branch": "main",
+      "url": "https://github.com/ariandomimate-blip/Autokrypt-B-rse"
+    },
+    {
+      "owner": "ariandomimate-blip",
+      "name": "Ate-Rea-Verm-chtnis-chronik",
+      "branch": "main",
+      "url": "https://github.com/ariandomimate-blip/Ate-Rea-Verm-chtnis-chronik"
+    }
+  ],
+  "cryptoProjects": [
+    {
+      "name": "ATE REA Exchange",
+      "url": "https://ate-rea-exchange.onrender.com",
+      "repo": "gaussa72-boop/Kryptoaurora"
+    },
+    {
+      "name": "Autokrypt Börse",
+      "url": "https://autokrypt-boerse.onrender.com",
+      "repo": "ariandomimate-blip/Autokrypt-B-rse"
+    },
+    {
+      "name": "Trinity Trading",
+      "url": "https://trinity-trading-k03l.onrender.com",
+      "repo": "ariandomimate-blip/Autokrypt-B-rse"
+    },
+    {
+      "name": "Aurelis Investment",
+      "url": "https://aurelis-investment.onrender.com",
+      "repo": "gaussa72-boop/Unify-App"
+    },
+    {
+      "name": "Krypto-Aurora",
+      "url": "",
+      "repo": "gaussa72-boop/Kryptoaurora"
+    }
+  ]
+}
