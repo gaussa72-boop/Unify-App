@@ -20,8 +20,8 @@
         "ULTIMA Central",
         "ULTIMA AI"
       ],
-      "rollout_status": "central-prototype",
-      "verification": "GitHub-Änderungen vorbereitet; Render-Liveprüfung nach Deployment erforderlich. Weitere KI-Repositories benötigen eigene Adapter und Integrationstests."
+      "rollout_status": "central-live-prototype",
+      "verification": "Render-Build und Deployment für ULTIMA Unify und ULTIMA Central erfolgreich; Render-Healthcheck /health antwortete HTTP 200. Der Charakterbereich ist login-geschützt. Die tatsächliche Modellantwort wurde noch nicht getestet, da Provider-Konfiguration und Nutzer-Chat separat geprüft werden müssen. Weitere KI-Repositories benötigen eigene Adapter und Integrationstests."
     }
   ]
 }
