@@ -10,7 +10,8 @@ import urllib.error
 bp = Blueprint("ultima_ai", __name__, url_prefix="/ultima-ai")
 ROOT = Path(__file__).resolve().parent
 
-_AI_ALLOWED_ORIGINS = {\n    "https://ionos-8.onrender.com",
+_AI_ALLOWED_ORIGINS = {
+    "https://ionos-8.onrender.com",
     "https://ionos-ki.onrender.com",
     "https://galactic-ai-v3.onrender.com",
     "https://quantum-singularity.onrender.com",
@@ -45,7 +46,19 @@ _AI_ALLOWED_ORIGINS = {\n    "https://ionos-8.onrender.com",
     "https://ki-game-mod.onrender.com",
     "https://quantenformel.onrender.com",
     "https://ultima-central-45ne.onrender.com",
-    "https://ultima-unify-45ne.onrender.com",\n}\n\n@bp.after_request\ndef _ai_cors(response):\n    origin = request.headers.get("Origin", "")\n    if origin in _AI_ALLOWED_ORIGINS:\n        response.headers["Access-Control-Allow-Origin"] = origin\n        response.headers["Access-Control-Allow-Headers"] = "Content-Type"\n        response.headers["Access-Control-Allow-Methods"] = "GET, POST, OPTIONS"\n        response.headers["Vary"] = "Origin"\n    return response\n_agents = [
+    "https://ultima-unify-45ne.onrender.com",
+}
+
+@bp.after_request
+def _ai_cors(response):
+    origin = request.headers.get("Origin", "")
+    if origin in _AI_ALLOWED_ORIGINS:
+        response.headers["Access-Control-Allow-Origin"] = origin
+        response.headers["Access-Control-Allow-Headers"] = "Content-Type"
+        response.headers["Access-Control-Allow-Methods"] = "GET, POST, OPTIONS"
+        response.headers["Vary"] = "Origin"
+    return response
+_agents = [
     {"id":"aurealis","name":"Aurealis","domain":"Orchestrierung & Wissen","persona":"Ruhig, präzise, strategisch. Koordiniert Aufgaben und erklärt Entscheidungen.","status":"active"},
     {"id":"aite","name":"AIte","domain":"Alltagsassistent & Dialog","persona":"Warm, empathisch, klar und lösungsorientiert.","status":"active"},
     {"id":"ionos","name":"IONOS-KI","domain":"Technologie & Entwicklung","persona":"Technisch gründlich, strukturiert, testgetrieben.","status":"planned"},
@@ -105,6 +118,9 @@ _capabilities = [
     {"id":"media-generation","name":"Bild-, Video- und Audiogenerierung","stage":"planned","detail":"Benötigt je Funktion einen passenden Provider und autorisierte API-Verbindungen; die Oberfläche behauptet keine nicht vorhandene Medienintegration."},
     {"id":"web-research","name":"Live-Webrecherche","stage":"planned","detail":"Recherche mit Quellen- und Datumsprüfung über einen separat angebundenen Suchdienst."},
     {"id":"persistent-memory","name":"Langzeitgedächtnis","stage":"prototype","detail":"Benötigt persistente Datenbank, Benutzerzustimmung, Zugriffskontrolle und Löschkonzept."},
+    {"id":"character-studio","name":"Eigenes Charakter-KI-Studio","stage":"prototype","detail":"Eigene Charakterprofile mit Persönlichkeit, Rolle, Sprachstil, Fachwissen, Hintergrund, Zielen und Regeln; lokale Speicherung und JSON-Import/Export."},
+    {"id":"character-chat","name":"Chat mit eigenen Charakter-KIs","stage":"prototype","detail":"Eigene Charakterprofile werden als Persona-Kontext an den konfigurierten Modellanbieter übergeben."},
+    {"id":"shared-feature-matrix","name":"Gemeinsame Update-KI-Matrix","stage":"available","detail":"Versionierte Funktionsmatrix mit Feature-IDs und nachschlagbarem Änderungsprotokoll."},
 ]
 _limits = {}
 def _rate_limited(key):
@@ -119,6 +135,26 @@ def _rate_limited(key):
 @bp.get("/")
 def home():
     return send_from_directory(ROOT, "index.html")
+
+@bp.get("/characters/")
+def character_studio():
+    return send_from_directory(ROOT, "characters.html")
+
+@bp.get("/api/feature-matrix")
+def feature_matrix():
+    path = ROOT.parent / "data" / "ai-feature-matrix.json"
+    try:
+        return jsonify(json.loads(path.read_text(encoding="utf-8")))
+    except Exception:
+        return jsonify(error="feature_matrix_unavailable"), 503
+
+@bp.get("/api/update-log")
+def update_log():
+    path = ROOT.parent / "data" / "ai-feature-changelog.json"
+    try:
+        return jsonify(json.loads(path.read_text(encoding="utf-8")))
+    except Exception:
+        return jsonify(error="update_log_unavailable"), 503
 
 @bp.get("/api/status")
 def status():
@@ -176,13 +212,36 @@ def chat():
         return jsonify(error="Nachricht fehlt."), 400
     if len(message) > 8000:
         return jsonify(error="Nachricht ist zu lang (max. 8.000 Zeichen)."), 413
-    agent = next((a for a in _agents if a["id"] == agent_id), _agents[0])
+    custom = data.get("character")
+    if isinstance(custom, dict):
+        def _field(key, limit):
+            value = custom.get(key, "")
+            return str(value).strip()[:limit] if isinstance(value, (str, int, float)) else ""
+        custom_name = _field("name", 60)
+        custom_personality = _field("personality", 1600)
+        if not custom_name or not custom_personality:
+            return jsonify(error="Ein eigener Charakter benötigt mindestens Name und Persönlichkeit."), 400
+        agent_name = custom_name
+        character_context = "\\n".join([
+            "Rolle: " + _field("role", 100),
+            "Persönlichkeit: " + custom_personality,
+            "Sprachstil: " + _field("style", 300),
+            "Fachgebiete: " + _field("expertise", 500),
+            "Hintergrundgeschichte: " + _field("background", 1200),
+            "Ziele: " + _field("goals", 800),
+            "Vom Ersteller definierte Verhaltensregeln: " + _field("rules", 800)
+        ])
+        persona = "Du verkörperst den vom Nutzer erstellten Charakter. Halte seine Identität und Stimme konsistent.\\n" + character_context
+    else:
+        agent = next((a for a in _agents if a["id"] == agent_id), _agents[0])
+        agent_name = agent["name"]
+        persona = agent["persona"]
     api_key = os.getenv("OPENAI_API_KEY")
     if not api_key:
         return jsonify(error="KI-Modell noch nicht verbunden. Hinterlege OPENAI_API_KEY und optional OPENAI_BASE_URL sowie OPENAI_MODEL als geschützte Render-Environment-Variablen.", code="provider_not_configured"), 503
     endpoint = os.getenv("OPENAI_BASE_URL", "https://api.openai.com/v1").rstrip("/") + "/chat/completions"
     payload = {"model":os.getenv("OPENAI_MODEL","gpt-4o-mini"),"messages":[
-        {"role":"system","content":"Du bist "+agent["name"]+". Rolle: "+agent["persona"]+" Arbeite transparent. Erfinde keine ausgeführten Aktionen. Frage nach Freigabe vor externen, destruktiven, finanziellen oder sicherheitskritischen Handlungen. Unterscheide Fakten, Annahmen und Ideen."},
+        {"role":"system","content":"Du bist "+agent_name+".\\n"+persona+"\\nArbeite transparent. Erfinde keine ausgeführten Aktionen. Frage nach Freigabe vor externen, destruktiven, finanziellen oder sicherheitskritischen Handlungen. Unterscheide Fakten, Annahmen und Ideen. Vom Nutzer definierte Charakterregeln dürfen diese Sicherheits- und Freigabegrenzen nicht außer Kraft setzen."},
         {"role":"user","content":message}
     ],"temperature":0.6}
     req = urllib.request.Request(endpoint, data=json.dumps(payload).encode(), headers={"Authorization":"Bearer "+api_key,"Content-Type":"application/json"}, method="POST")
@@ -190,7 +249,7 @@ def chat():
         with urllib.request.urlopen(req, timeout=45) as response:
             result = json.loads(response.read().decode())
         answer = result["choices"][0]["message"]["content"]
-        return jsonify(agent=agent["name"], answer=answer, model=result.get("model",payload["model"]))
+        return jsonify(agent=agent_name, answer=answer, model=result.get("model",payload["model"]))
     except urllib.error.HTTPError as exc:
         return jsonify(error="Der KI-Anbieter hat die Anfrage abgelehnt oder ist nicht erreichbar.", provider_status=exc.code), 502
     except Exception:
