@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "entries": [
+    {
+      "id": "2026-11-23-character-studio-1",
+      "date": "2026-11-23",
+      "version": "1.0.0",
+      "title": "Charakter-KI-Studio und gemeinsame Update-KI-Matrix",
+      "description": "Neues Charakterprofil-Schema für eigene KI-Figuren mit Persönlichkeit, Rolle, Sprachstil, Fachwissen, Hintergrund, Zielen und Regeln. Dazu kommen lokales Speichern, Bearbeiten, Löschen, JSON-Import/Export und Chat mit dem gewählten Charakter über den konfigurierten Modellanbieter. Die zentrale Update-KI-Matrix dokumentiert Feature-IDs, Beschreibungen, Implementierungsstatus und Rollout-Standards. Bestehende KI-Persönlichkeiten bleiben geschützt.",
+      "features": [
+        "character-studio",
+        "character-chat",
+        "character-import-export",
+        "shared-feature-matrix",
+        "feature-change-log",
+        "persona-preservation",
+        "approval-gates"
+      ],
+      "affected_projects": [
+        "ULTIMA Central",
+        "ULTIMA AI"
+      ],
+      "rollout_status": "central-prototype",
+      "verification": "GitHub-Änderungen vorbereitet; Render-Liveprüfung nach Deployment erforderlich. Weitere KI-Repositories benötigen eigene Adapter und Integrationstests."
+    }
+  ]
+}
