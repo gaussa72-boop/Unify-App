@@ -21,7 +21,7 @@ def security_headers(response):
 def home():
     html = (ROOT / "index.html").read_text(encoding="utf-8")
     nav = """
-    <a href="/ultima-ai/" style="display:inline-block;margin-left:10px;padding:8px 12px;border:1px solid #e4c477;border-radius:9px;color:#e4c477;text-decoration:none;letter-spacing:.04em;font-size:12px">ULTIMA AI ↗</a>\n    <a href="/cosmican/" style="display:inline-block;margin-left:18px;padding:8px 12px;border:1px solid #65dce0;border-radius:9px;color:#65dce0;text-decoration:none;letter-spacing:.04em;font-size:12px">COSMICAN LUX SYNDICATE ↗</a>
+    <a href="/ultima-ai/" style="display:inline-block;margin-left:10px;padding:8px 12px;border:1px solid #e4c477;border-radius:9px;color:#e4c477;text-decoration:none;letter-spacing:.04em;font-size:12px">ULTIMA AI ↗</a>\n    <a href="https://ate-rea-characterverse.onrender.com/creator.html" style="display:inline-block;margin-left:10px;padding:8px 12px;border:1px solid #65dce0;border-radius:9px;color:#65dce0;text-decoration:none;letter-spacing:.04em;font-size:12px">AI CHARACTER CREATOR ↗</a>\n    <a href="/cosmican/" style="display:inline-block;margin-left:18px;padding:8px 12px;border:1px solid #65dce0;border-radius:9px;color:#65dce0;text-decoration:none;letter-spacing:.04em;font-size:12px">COSMICAN LUX SYNDICATE ↗</a>
     <a href="https://ultima-membership-api.onrender.com/portal" style="display:inline-block;margin-left:10px;padding:8px 12px;border:1px solid #e4c477;border-radius:9px;color:#e4c477;text-decoration:none;letter-spacing:.04em;font-size:12px">ULTIMA KONTO & WEBSITE-STUDIO ↗</a>
     """
     html = html.replace("</header>", nav + "</header>", 1)
