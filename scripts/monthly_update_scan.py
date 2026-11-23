@@ -47,7 +47,7 @@ def inspect_repo(item: dict, source_type: str):
         "latest_commit": (commit.get("sha") or "")[:12] if isinstance(commit, dict) else None,
         "latest_commit_url": commit.get("html_url") if isinstance(commit, dict) else None,
         "checked_at": datetime.now(timezone.utc).isoformat(),
-        "error": next((x.get("_error") for x in (release, repo, commit) if isinstance(x, dict) and x.get("_error")), None),
+        "error": "; ".join(errors) if errors else None,
     }
 
 def main():
