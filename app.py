@@ -123,6 +123,7 @@ def save_profile():
     return redirect(url_for("home"))
 
 @app.get("/assistant/")
+@app.get("/ultima-ai", strict_slashes=False)
 def assistant_home():
     user = db.session.get(User, session.get("user_id")) if session.get("user_id") else None
     if not user:
