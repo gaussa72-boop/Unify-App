@@ -41,6 +41,23 @@ class User(db.Model):
     role = db.Column(db.String(32), nullable=False, default="USER")
     created_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc), nullable=False)
 
+
+class PremiumTrial(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"), unique=True, nullable=False, index=True)
+    started_at = db.Column(db.DateTime, nullable=False, default=lambda: datetime.now(timezone.utc))
+    ends_at = db.Column(db.DateTime, nullable=False)
+
+class PremiumPaymentRequest(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False, index=True)
+    amount_usd = db.Column(db.Numeric(10, 2), nullable=False, default=10)
+    currency = db.Column(db.String(8), nullable=False, default="USD")
+    network = db.Column(db.String(24), nullable=False, default="Bitcoin")
+    txid = db.Column(db.String(128), nullable=True)
+    status = db.Column(db.String(24), nullable=False, default="pending_review")
+    created_at = db.Column(db.DateTime, nullable=False, default=lambda: datetime.now(timezone.utc))
+
 class SiteProfile(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False, index=True)
@@ -58,13 +75,39 @@ PAGE = """
 </style><main><div class="brand">ULTIMA NETWORK · UNIFY</div><div class="hero"><div class="orb"></div><div><h1>Ein Konto. Dein Netzwerk.</h1><p>Zentrale Anmeldung und persönliche Profile für verbundene Websites.</p></div></div>
 {% for m in get_flashed_messages() %}<div class="flash">{{m}}</div>{% endfor %}
 {% if user %}
-<div class="grid"><section class="panel"><h2>Dein Profil</h2><p>{{user.email}}</p><p>Rolle: <b>{{user.role}}</b></p><p><a href="/assistant/">ULTIMA AI · Assistent öffnen ↗</a></p><form method="post" action="/logout"><input type="hidden" name="csrf_token" value="{{csrf_token()}}"><button>Abmelden</button></form></section>
+<div class="grid"><section class="panel"><h2>Dein Profil</h2><p>{{user.email}}</p><p>Rolle: <b>{{user.role}}</b></p>{% if trial_active %}<p style="color:#8dd8b6">Premium-Testphase aktiv · kostenlos bis {{trial.ends_at.strftime("%d.%m.%Y")}}</p>{% elif trial_expired %}<p style="color:#e7c879">Premium-Testphase beendet · Zahlung erforderlich</p>{% endif %}<p><a href="/assistant/">ULTIMA AI · Assistent öffnen ↗</a></p><form method="post" action="/logout"><input type="hidden" name="csrf_token" value="{{csrf_token()}}"><button>Abmelden</button></form></section>
 <section class="panel"><h2>Website-Profil speichern</h2><form method="post" action="/profile"><input type="hidden" name="csrf_token" value="{{csrf_token()}}"><label>Website-Kennung</label><input name="site_key" placeholder="z. B. lichtkrieger" required maxlength="100"><label>Profilinformationen (JSON)</label><textarea name="profile_data" rows="4" placeholder='{"anzeigename":"...","interessen":[]}'></textarea><button>Profil speichern</button></form></section></div>
 <section class="panel" style="margin-top:16px"><h2>Deine Website-Profile</h2>{% if profiles %}{% for p in profiles %}<p><b>{{p.site_key}}</b> · {{p.profile_data}}</p>{% endfor %}{% else %}<p>Noch keine Website-Profile gespeichert.</p>{% endif %}</section>
 {% else %}
 <div class="grid"><section class="panel"><h2>Konto erstellen</h2><form method="post" action="/register"><input type="hidden" name="csrf_token" value="{{csrf_token()}}"><label>E-Mail</label><input name="email" type="email" required maxlength="254"><label>Passwort (mindestens 12 Zeichen)</label><input name="password" type="password" minlength="12" required><button>Registrieren</button></form></section>
 <section class="panel"><h2>Anmelden</h2><form method="post" action="/login"><input type="hidden" name="csrf_token" value="{{csrf_token()}}"><label>E-Mail</label><input name="email" type="email" required><label>Passwort</label><input name="password" type="password" required><button>Anmelden</button></form></section></div>
-{% endif %}<p class="muted">Sicherheitsstatus: Passwörter werden gehasht gespeichert. Für produktive Nutzung folgen E-Mail-Verifizierung, MFA und die Freigabe einzelner Websites.</p></main></html>
+{% endif %}<p class="muted">Sicherheitsstatus: Passwörter werden gehasht gespeichert. Für produktive Nutzung folgen E-Mail-Verifizierung, MFA und die Freigabe einzelner Websites.</p>
+{% if trial_expired %}
+<div id="premium-modal" style="position:fixed;inset:0;background:#000b;z-index:99999;display:grid;place-items:center;padding:18px">
+<section style="width:min(520px,100%);max-height:90vh;overflow:auto;background:#111b2d;border:1px solid #e7c879;border-radius:18px;padding:24px;box-shadow:0 20px 80px #000">
+<h2 style="color:#e7c879">Deine kostenlose Premium-Zeit ist abgelaufen</h2>
+<p>Für die KI-Premiumfunktionen wird eine Zahlung von <b>10 USD pro Monat</b> angefragt. Überweise über das Bitcoin-Netzwerk an diese Wallet:</p>
+<div style="padding:12px;background:#091321;border:1px solid #263750;border-radius:10px;overflow-wrap:anywhere;font-weight:700">bc1q4q7lujkr8mcv9e7suet524uxjfwlaxm7aelq5y</div>
+<p class="muted">Bitte prüfe vor dem Senden Netzwerk und Betrag. Der USD-Preis wird nicht automatisch in BTC umgerechnet. Sende niemals BTC an eine andere Adresse.</p>
+<label for="premium-txid">Transaktions-ID (optional, falls bereits bezahlt)</label>
+<input id="premium-txid" maxlength="128" placeholder="Bitcoin TXID">
+<button type="button" id="premium-submit">Zahlungsanfrage senden</button>
+<p id="premium-result" class="muted"></p>
+{% if payment_pending %}<p style="color:#e7c879">Deine Zahlungsanfrage wartet auf manuelle Prüfung.</p>{% endif %}
+</section></div>
+<script>
+document.getElementById('premium-submit').addEventListener('click',async()=>{
+ const out=document.getElementById('premium-result'); const btn=document.getElementById('premium-submit');
+ btn.disabled=true; out.textContent='Wird gespeichert …';
+ try{
+  const r=await fetch('/api/premium/payment-request',{method:'POST',headers:{'Content-Type':'application/json','X-CSRFToken':'{{csrf_token()}}'},body:JSON.stringify({txid:document.getElementById('premium-txid').value})});
+  const d=await r.json(); out.textContent=d.message||d.error||'Anfrage konnte nicht gespeichert werden.';
+ }catch(e){out.textContent='Verbindung fehlgeschlagen. Bitte erneut versuchen.';}
+ btn.disabled=false;
+});
+</script>
+{% endif %}
+</main></html>
 """
 
 @app.context_processor
@@ -76,7 +119,11 @@ def inject_csrf():
 def home():
     user = db.session.get(User, session.get("user_id")) if session.get("user_id") else None
     profiles = SiteProfile.query.filter_by(user_id=user.id).order_by(SiteProfile.site_key).all() if user else []
-    return render_template_string(PAGE, user=user, profiles=profiles)
+    trial = PremiumTrial.query.filter_by(user_id=user.id).first() if user else None
+    trial_active = bool(trial and trial.ends_at > datetime.now(timezone.utc))
+    payment_pending = bool(user and PremiumPaymentRequest.query.filter_by(user_id=user.id, status="pending_review").first())
+    trial_expired = bool(user and trial and not trial_active)
+    return render_template_string(PAGE, user=user, profiles=profiles, trial=trial, trial_active=trial_active, trial_expired=trial_expired, payment_pending=payment_pending)
 
 @app.post("/register")
 def register():
@@ -90,9 +137,12 @@ def register():
         superadmin = os.environ.get("SUPERADMIN_EMAIL", "").strip().lower()
         role = "SUPERADMIN" if superadmin and email == superadmin else "USER"
         user = User(email=email, password_hash=bcrypt.generate_password_hash(password).decode(), role=role)
-        db.session.add(user); db.session.commit()
+        db.session.add(user); db.session.flush()
+        now = datetime.now(timezone.utc)
+        db.session.add(PremiumTrial(user_id=user.id, started_at=now, ends_at=now + timedelta(days=30)))
+        db.session.commit()
         session["user_id"] = user.id
-        flash("Konto erfolgreich erstellt.")
+        flash("Konto erfolgreich erstellt. Dein Premium-Zugang ist 30 Tage kostenlos aktiv.")
     return redirect(url_for("home"))
 
 @app.post("/login")
@@ -127,6 +177,33 @@ def save_profile():
     else: db.session.add(SiteProfile(user_id=user.id, site_key=key, profile_data=json.dumps(data, ensure_ascii=False)))
     db.session.commit(); flash("Website-Profil gespeichert.")
     return redirect(url_for("home"))
+
+@app.get("/api/premium/status")
+def premium_status():
+    user = db.session.get(User, session.get("user_id")) if session.get("user_id") else None
+    if not user: return jsonify(error="authentication_required"), 401
+    trial = PremiumTrial.query.filter_by(user_id=user.id).first()
+    if not trial:
+        return jsonify(premium=False, trial="not_eligible", message="Für dieses Konto wurde kein neuer 30-Tage-Testzeitraum registriert."), 200
+    active = trial.ends_at > datetime.now(timezone.utc)
+    pending = PremiumPaymentRequest.query.filter_by(user_id=user.id, status="pending_review").first()
+    return jsonify(premium=active, trial="active" if active else "expired", ends_at=trial.ends_at.isoformat(), payment_pending=bool(pending)), 200
+
+@app.post("/api/premium/payment-request")
+def premium_payment_request():
+    user = db.session.get(User, session.get("user_id")) if session.get("user_id") else None
+    if not user: return jsonify(error="authentication_required"), 401
+    data = request.get_json(silent=True) or {}
+    txid = str(data.get("txid", "")).strip()
+    if len(txid) > 128: return jsonify(error="Ungültige TXID."), 400
+    trial = PremiumTrial.query.filter_by(user_id=user.id).first()
+    if not trial or trial.ends_at > datetime.now(timezone.utc):
+        return jsonify(error="Die kostenlose Testphase ist noch aktiv oder nicht verfügbar."), 409
+    existing = PremiumPaymentRequest.query.filter_by(user_id=user.id, status="pending_review").first()
+    if existing: return jsonify(status="pending_review", message="Deine Zahlungsanfrage wartet bereits auf Prüfung."), 200
+    payment = PremiumPaymentRequest(user_id=user.id, amount_usd=10, txid=txid or None, status="pending_review")
+    db.session.add(payment); db.session.commit()
+    return jsonify(status="pending_review", message="Zahlungsanfrage gespeichert. Premium wird erst nach manueller Prüfung freigeschaltet."), 201
 
 @app.get("/render-console/")
 def render_console():
