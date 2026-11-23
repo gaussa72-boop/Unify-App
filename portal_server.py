@@ -48,6 +48,10 @@ def account_home():
 def admin_home():
     return send_from_directory(ROOT / "admin", "index.html")
 
+@app.get("/ai-studios/")
+def ai_studios_home():
+    return send_from_directory(ROOT / "ai-studios", "index.html")
+
 @app.get("/cosmican/")
 def cosmican_home():
     return send_from_directory(ROOT / "cosmican", "index.html")
