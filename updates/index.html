@@ -39,6 +39,9 @@ table{width:100%;border-collapse:collapse;font-size:13px}td,th{text-align:left;p
 <div class="panel"><h2>KI-Projekte</h2><div id="projects" class="muted">Bericht wird geladen …</div></div>
 <div class="panel"><h2>Neue KI-Tools & Frameworks</h2><div id="innovations" class="muted">Bericht wird geladen …</div></div>
 <div class="panel"><h2>Änderungsberichte</h2><div id="reports" class="muted">Berichte werden geladen …</div></div>
+<div class="panel"><h2>Update-KI-Matrix · gemeinsame Funktionen</h2><p class="muted">Hier findest du die versionierten Funktionen, ihre Beschreibung und den tatsächlichen Rollout-Status. Die Matrix ist der gemeinsame technische Standard für alle eigenen KI-Projekte.</p><div id="feature-matrix" class="muted">Funktionsmatrix wird geladen …</div></div>
+<div class="panel"><h2>Änderungsprotokoll · nachschlagen</h2><p class="muted">Jede Erweiterung wird mit Version, Datum, Beschreibung, betroffenen Projekten und Prüfstatus dokumentiert.</p><div id="feature-log" class="muted">Protokoll wird geladen …</div></div>
+<div class="panel"><h2>Eigene Charakter-KIs</h2><p>Erstelle individuelle KI-Charaktere, speichere ihre Profile, exportiere sie und chatte mit ihnen. Die Charakterprofile lassen sich als JSON in kompatible KI-Studios übertragen.</p><p><a class="button" href="/ultima-ai/characters/">Charakter-KI-Studio öffnen ↗</a></p></div>
 <p class="muted">Geschützte/externe Projekte werden nicht verändert. Insbesondere bleiben Rothshild, Lyca, BullRun Apparel, Lyca Parfum und Sneaker außerhalb dieses KI-Update-Verbunds; Autokrypt bleibt unverändert.</p>
 </main>
 <script>
@@ -53,5 +56,14 @@ document.getElementById("projects").innerHTML=table(d.projects||[]);
 document.getElementById("innovations").innerHTML=table(d.innovation_sources||[]);
 }catch(e){document.getElementById("projects").textContent="Noch kein Monatsbericht vorhanden. Der erste Bericht erscheint nach dem nächsten geplanten Scan oder einem manuellen Workflow-Lauf.";document.getElementById("innovations").textContent="Noch keine Scan-Daten vorhanden."}
 try{const r=await fetch("/data/updates/index.json");if(r.ok){const d=await r.json();document.getElementById("reports").innerHTML=(d.files||[]).map(x=>'<p><a href="/data/updates/'+encodeURIComponent(x)+'">'+esc(x)+'</a></p>').join("")}}catch(e){}
+
+try{
+ const m=await fetch("/data/ai-feature-matrix.json",{cache:"no-store"});
+ if(m.ok){const d=await m.json();document.getElementById("feature-matrix").innerHTML='<p><b>Version '+esc(d.version)+'</b> · '+esc(d.updated_at)+'</p>'+((d.features||[]).map(x=>'<article style="padding:10px 0;border-bottom:1px solid #ffffff18"><b>'+esc(x.name)+'</b> <span class="pill">'+esc(x.stage)+'</span><p class="muted">'+esc(x.description)+'</p><p class="muted">Rollout: '+esc(x.rollout)+'</p></article>').join(''))}
+}catch(e){document.getElementById("feature-matrix").textContent="Funktionsmatrix derzeit nicht verfügbar."}
+try{
+ const l=await fetch("/data/ai-feature-changelog.json",{cache:"no-store"});
+ if(l.ok){const d=await l.json();document.getElementById("feature-log").innerHTML=(d.entries||[]).map(x=>'<article style="padding:12px 0;border-bottom:1px solid #ffffff18"><b>'+esc(x.title)+'</b> <span class="pill">v'+esc(x.version)+'</span><p class="muted">'+esc(x.date)+' · '+esc(x.rollout_status)+'</p><p>'+esc(x.description)+'</p><p class="muted">Betroffene Projekte: '+esc((x.affected_projects||[]).join(", "))+'</p><p class="muted">Prüfung: '+esc(x.verification)+'</p></article>').join('')||"Noch keine Einträge."}
+}catch(e){document.getElementById("feature-log").textContent="Änderungsprotokoll derzeit nicht verfügbar."}
 })();
 </script></body></html>
