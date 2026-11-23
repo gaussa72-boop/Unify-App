@@ -52,6 +52,6 @@ const table=items=>'<table><thead><tr><th>Projekt / Quelle</th><th>Letztes Relea
 document.getElementById("projects").innerHTML=table(d.projects||[]);
 document.getElementById("innovations").innerHTML=table(d.innovation_sources||[]);
 }catch(e){document.getElementById("projects").textContent="Noch kein Monatsbericht vorhanden. Der erste Bericht erscheint nach dem nächsten geplanten Scan oder einem manuellen Workflow-Lauf.";document.getElementById("innovations").textContent="Noch keine Scan-Daten vorhanden."}
-try{const r=await fetch("/data/updates/");if(r.ok){const d=await r.json();document.getElementById("reports").innerHTML=(d.files||[]).map(x=>'<p><a href="/data/updates/'+encodeURIComponent(x)+'">'+esc(x)+'</a></p>').join("")}}catch(e){}
+try{const r=await fetch("/data/updates/index.json");if(r.ok){const d=await r.json();document.getElementById("reports").innerHTML=(d.files||[]).map(x=>'<p><a href="/data/updates/'+encodeURIComponent(x)+'">'+esc(x)+'</a></p>').join("")}}catch(e){}
 })();
 </script></body></html>
