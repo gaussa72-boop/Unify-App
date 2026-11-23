@@ -21,6 +21,12 @@ app.config["SESSION_COOKIE_SECURE"] = os.environ.get("RENDER", "") == "true"
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 csrf = CSRFProtect(app)
+
+# Authenticated, read-only MCP endpoint for ChatGPT and approved MCP clients.
+from mcp_gateway import bp as mcp_bp
+app.register_blueprint(mcp_bp)
+csrf.exempt(mcp_bp)
+
 app.config["WTF_CSRF_TIME_LIMIT"] = 12 * 60 * 60  # Flask-WTF expects seconds, not datetime.timedelta
 
 @app.errorhandler(CSRFError)
@@ -123,6 +129,7 @@ def save_profile():
     return redirect(url_for("home"))
 
 @app.get("/assistant/")
+@app.get("/ultima-ai/")
 @app.get("/ultima-ai", strict_slashes=False)
 def assistant_home():
     user = db.session.get(User, session.get("user_id")) if session.get("user_id") else None
