@@ -78,6 +78,8 @@ _REMOTE_AGENTS = {
     "note_ki": "https://note-ki.onrender.com",
     "galactic": "https://galactic-ai-v3.onrender.com",
     "ultra_ki_merge": "https://ionos-ai.onrender.com",
+    "ate_rea_characterverse": "https://ate-rea-characterverse.onrender.com",
+    "aurealis_shopping": "https://aurealis-shopping-ai.onrender.com",
 }
 
 
