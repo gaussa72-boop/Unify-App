@@ -254,3 +254,8 @@ def chat():
         return jsonify(error="Der KI-Anbieter hat die Anfrage abgelehnt oder ist nicht erreichbar.", provider_status=exc.code), 502
     except Exception:
         return jsonify(error="KI-Anbieter derzeit nicht erreichbar. Bitte Konfiguration und Logs prüfen."), 502
+
+
+# Multi-agent collaboration is analysis-only; privileged operations remain approval-gated.
+from .agent_network import register_routes as _register_agent_network_routes
+_register_agent_network_routes(bp, _agents)
