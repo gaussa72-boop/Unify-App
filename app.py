@@ -315,6 +315,9 @@ def health():
     except Exception:
         return jsonify(status="degraded", database="unavailable"), 503
 
+from network_social import register_social
+register_social(app, db, User)
+
 with app.app_context():
     db.create_all()
     # Keep the configured ULTIMA master account privileged even when it
