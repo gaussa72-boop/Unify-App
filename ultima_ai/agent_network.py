@@ -74,6 +74,7 @@ _REMOTE_AGENTS = {
     "quantum": "https://quantum-singularity.onrender.com",
     "quantum_super": "https://quantum-super-intelligence.onrender.com",
     "ultra_ki": "https://ultraki-ai.onrender.com",
+    "ultra_ki_v2": "https://ultra-ki-v2.onrender.com",
     "ki_game_mod": "https://ki-game-mod.onrender.com",
     "note_ki": "https://note-ki.onrender.com",
     "galactic": "https://galactic-ai-v3.onrender.com",

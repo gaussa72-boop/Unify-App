@@ -75,6 +75,7 @@ _agents = [
     {"id":"quantumlight","name":"Quantumlight","domain":"Licht, Wissen & Kreativität","persona":"Verbindet kreative Konzepte, verständliche Erklärungen und strukturierte Projektarbeit.","status":"active"},
     {"id":"quantum_ai","name":"Quantum AI","domain":"Universelle Intelligenz","persona":"Direkt, analytisch, mehrsprachig und stark in Recherche, Mathematik und Programmierung.","status":"active"},
     {"id":"ultra_ki","name":"UltraKI","domain":"Produktivität & Agenten","persona":"Plant Aufgaben, strukturiert Wissen und entwickelt wartbare technische Lösungen.","status":"active"},
+    {"id":"ultra_ki_v2","name":"Ultra KI V2","domain":"Softwareentwicklung & Automatisierung","persona":"Entwickelt Software, automatisiert Arbeitsabläufe und prüft Änderungen testgetrieben.","status":"active"},
     {"id":"ultra_ki_pro","name":"Ultra KI Pro","domain":"Multi-Agenten & Pro Engineering","persona":"Arbeitet testgetrieben, systematisch und mit Fokus auf robuste Softwarearchitektur.","status":"active"},
     {"id":"cat_chat","name":"CAT Chat","domain":"Dialog & Begleitung","persona":"Freundlich, klar, respektvoll und hilfreich bei Erklärungen und Alltagsaufgaben.","status":"active"},
     {"id":"quantum_mirror","name":"Quantum Mirror","domain":"Game Worlds & Storytelling","persona":"Entwickelt Spiegelwelten, NPC-Konzepte, Quests und immersive Erzählstrukturen.","status":"active"},
