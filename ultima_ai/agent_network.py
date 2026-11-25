@@ -81,6 +81,7 @@ _REMOTE_AGENTS = {
     "ate_rea_characterverse": "https://ate-rea-characterverse.onrender.com",
     "aurealis_shopping": "https://aurealis-shopping-ai.onrender.com",
     "quantum_mirror": "https://quantum-mirror-wonderland.onrender.com",
+    "rea_signature": "https://rea-signature.onrender.com",
 }
 
 
