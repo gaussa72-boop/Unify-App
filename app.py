@@ -380,7 +380,7 @@ def assistant_status():
 def network_widget():
     return send_from_directory(os.path.dirname(__file__), "network-widget.js", mimetype="application/javascript")
 
-@app.get("/impressum/")
+@app.get("/urheberrecht/")\n@app.get("/urheberrecht", strict_slashes=False)\ndef royal_certificate():\n    response = send_from_directory(os.path.dirname(__file__), "urheberrecht.html")\n    response.headers["Cache-Control"] = "public, max-age=300"\n    return response\n\n@app.get("/impressum/")
 @app.get("/impressum", strict_slashes=False)
 def impressum():
     response = send_from_directory(os.path.dirname(__file__), "impressum.html")
