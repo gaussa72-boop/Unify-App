@@ -122,6 +122,8 @@ _capabilities = [
     {"id":"character-chat","name":"Chat mit eigenen Charakter-KIs","stage":"prototype","detail":"Eigene Charakterprofile werden als Persona-Kontext an den konfigurierten Modellanbieter übergeben."},
     {"id":"shared-feature-matrix","name":"Gemeinsame Update-KI-Matrix","stage":"available","detail":"Versionierte Funktionsmatrix mit Feature-IDs und nachschlagbarem Änderungsprotokoll."},
 ]
+_capabilities.append({"id":"multi-agent-collaboration","name":"ULTIMA Multi-Agenten-Team","stage":"available","detail":"Bis zu vier registrierte Fachagenten analysieren parallel; ULTIMA synthetisiert die Ergebnisse. Externe Aktionen bleiben freigabepflichtig."})
+
 _limits = {}
 def _rate_limited(key):
     now = time.time()
