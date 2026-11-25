@@ -61,6 +61,9 @@ def _provider_call(agent_name, persona, goal, api_key, endpoint, model, timeout=
 
 
 def register_routes(bp, registry):
+    from .agent_control import register_control_routes
+    register_control_routes(bp)
+
     @bp.get("/api/agent-network/status")
     def agent_network_status():
         configured = bool(os.getenv("OPENAI_API_KEY", "").strip())
@@ -71,7 +74,10 @@ def register_routes(bp, registry):
             provider_configured=configured,
             registered_agents=len(registry),
             execution="analysis_only",
-            persistent_memory=False,
+            persistent_memory=__import__("ultima_ai.agent_store", fromlist=["persistent_storage"]).persistent_storage(),
+            task_history=True,
+            approval_queue=True,
+            authenticated_agent_message_bus=True,
             hardware_control=False,
             note="Agenten können gemeinsam analysieren. Codeänderungen, GitHub-Schreibzugriffe, Deployments, Zahlungen und Hardwaresteuerung sind getrennte, freigabepflichtige Integrationen."
         )
@@ -145,15 +151,32 @@ def register_routes(bp, registry):
         except (HTTPError, URLError, TimeoutError, ValueError, KeyError):
             final = "Die Fachbeiträge liegen vor. Eine zusätzliche Zusammenführung durch ULTIMA war nicht verfügbar. Bitte lies die Einzelbeiträge."
 
+        result = {
+            "coordinator": "ULTIMA",
+            "mode": "collaborative_analysis",
+            "approval_required_for_actions": True,
+            "executed_actions": [],
+            "agents": contributions,
+            "unavailable_agents": failures,
+            "synthesis": final,
+            "next_step": "Ergebnis prüfen und konkrete Änderungen separat freigeben."
+        }
+        task_id = None
+        persistent = False
+        try:
+            from . import agent_store
+            task = agent_store.create_task(goal, result)
+            task_id = task["id"]
+            persistent = agent_store.persistent_storage()
+        except Exception:
+            # Analysis remains available if the optional task store is not configured.
+            pass
+
         return jsonify(
             ok=True,
-            coordinator="ULTIMA",
-            mode="collaborative_analysis",
-            approval_required_for_actions=True,
-            executed_actions=[],
-            persistent_memory=False,
-            agents=contributions,
-            unavailable_agents=failures,
-            synthesis=final,
-            next_step="Ergebnis prüfen und konkrete Änderungen separat freigeben."
+            **result,
+            task_id=task_id,
+            persistent_memory=persistent,
+            storage_note=("PostgreSQL persistent" if persistent else
+                          "SQLite fallback; Render-Dateisystem kann flüchtig sein")
         ), 200
