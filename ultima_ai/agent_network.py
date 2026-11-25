@@ -16,11 +16,13 @@ def _selected_agents(registry, requested):
     defaults = ["aurealis", "ionos7", "neuroforge", "guardian"]
     ids = requested if isinstance(requested, list) else defaults
     chosen, seen = [], set()
-    for raw in ids[:4]:
+    for raw in ids[:20]:
         key = str(raw)[:80]
         if key in by_id and key not in seen:
             chosen.append(by_id[key])
             seen.add(key)
+            if len(chosen) >= 4:
+                break
     return chosen or [by_id[key] for key in defaults if key in by_id][:4]
 
 
