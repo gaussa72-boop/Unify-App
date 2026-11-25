@@ -322,6 +322,9 @@ def health():
 from network_social import register_social
 register_social(app, db, User)
 
+from auth_recovery import register_auth_recovery
+register_auth_recovery(app, db, User, bcrypt)
+
 with app.app_context():
     db.create_all()
     # Keep the configured ULTIMA master account privileged even when it
