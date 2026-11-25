@@ -122,6 +122,8 @@ _capabilities = [
     {"id":"character-chat","name":"Chat mit eigenen Charakter-KIs","stage":"prototype","detail":"Eigene Charakterprofile werden als Persona-Kontext an den konfigurierten Modellanbieter übergeben."},
     {"id":"shared-feature-matrix","name":"Gemeinsame Update-KI-Matrix","stage":"available","detail":"Versionierte Funktionsmatrix mit Feature-IDs und nachschlagbarem Änderungsprotokoll."},
 ]
+_capabilities.append({"id":"multi-agent-collaboration","name":"ULTIMA Multi-Agenten-Team","stage":"available","detail":"Bis zu vier registrierte Fachagenten analysieren parallel; ULTIMA synthetisiert die Ergebnisse. Externe Aktionen bleiben freigabepflichtig."})
+
 _limits = {}
 def _rate_limited(key):
     now = time.time()
@@ -254,3 +256,8 @@ def chat():
         return jsonify(error="Der KI-Anbieter hat die Anfrage abgelehnt oder ist nicht erreichbar.", provider_status=exc.code), 502
     except Exception:
         return jsonify(error="KI-Anbieter derzeit nicht erreichbar. Bitte Konfiguration und Logs prüfen."), 502
+
+
+# Multi-agent collaboration is analysis-only; privileged operations remain approval-gated.
+from .agent_network import register_routes as _register_agent_network_routes
+_register_agent_network_routes(bp, _agents)
