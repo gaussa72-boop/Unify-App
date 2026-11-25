@@ -58,6 +58,12 @@ class PremiumPaymentRequest(db.Model):
     status = db.Column(db.String(24), nullable=False, default="pending_review")
     created_at = db.Column(db.DateTime, nullable=False, default=lambda: datetime.now(timezone.utc))
 
+def utc_aware(value):
+    if value is None:
+        return None
+    return value.replace(tzinfo=timezone.utc) if value.tzinfo is None else value.astimezone(timezone.utc)
+
+
 class SiteProfile(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False, index=True)
@@ -120,7 +126,7 @@ def home():
     user = db.session.get(User, session.get("user_id")) if session.get("user_id") else None
     profiles = SiteProfile.query.filter_by(user_id=user.id).order_by(SiteProfile.site_key).all() if user else []
     trial = PremiumTrial.query.filter_by(user_id=user.id).first() if user else None
-    trial_active = bool(trial and trial.ends_at > datetime.now(timezone.utc))
+    trial_active = bool(trial and utc_aware(trial.ends_at) > datetime.now(timezone.utc))
     payment_pending = bool(user and PremiumPaymentRequest.query.filter_by(user_id=user.id, status="pending_review").first())
     trial_expired = bool(user and trial and not trial_active)
     return render_template_string(PAGE, user=user, profiles=profiles, trial=trial, trial_active=trial_active, trial_expired=trial_expired, payment_pending=payment_pending)
