@@ -26,3 +26,13 @@ This first release can chat and plan. It does not execute shell commands, arbitr
 
 ## Maturity
 Available = implemented in this release; Prototype = partial foundation; Planned = not yet integrated; Experimental = isolated research concept.
+
+
+## Multi-agent collaboration (implemented on feature branch)
+- ULTIMA exposes `GET /ultima-ai/api/agent-network/status` and `POST /ultima-ai/api/collaborate`.
+- Up to four registered specialist personas analyse one task concurrently through the configured OpenAI-compatible provider; ULTIMA then synthesizes their contributions.
+- The ULTIMA AI page includes an **Agententeam** action.
+- This is collaborative analysis, not autonomous code execution. The endpoint does not access GitHub, Render, wallets, mining hardware, payment systems, or user devices.
+- Production writes, commits to protected branches, merges, deployments, financial actions and hardware control remain separate, explicitly approved integrations.
+- The endpoint is stateless. Persistent shared memory and durable task history require a configured persistent database and retention/deletion policy.
+- Tests: `python -m unittest discover -s tests`.
