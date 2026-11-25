@@ -117,6 +117,20 @@ document.getElementById('premium-submit').addEventListener('click',async()=>{
 </main></html>
 """
 
+@app.after_request
+def inject_network_launcher(response):
+    # Make the central social network reachable from every HTML page served by ULTIMA.
+    if response.mimetype == "text/html" and response.status_code == 200:
+        try:
+            body = response.get_data(as_text=True)
+            if "ultima-social-launcher" not in body and "</body>" in body:
+                body = body.replace("</body>", '<script src="/network-widget.js" defer></script></body>', 1)
+                response.set_data(body)
+        except Exception:
+            pass
+    return response
+
+
 @app.context_processor
 def inject_csrf():
     from flask_wtf.csrf import generate_csrf
