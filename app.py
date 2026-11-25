@@ -80,7 +80,7 @@ PAGE = """
 <section class="panel" style="margin-top:16px"><h2>Deine Website-Profile</h2>{% if profiles %}{% for p in profiles %}<p><b>{{p.site_key}}</b> · {{p.profile_data}}</p>{% endfor %}{% else %}<p>Noch keine Website-Profile gespeichert.</p>{% endif %}</section>
 {% else %}
 <div class="grid"><section class="panel"><h2>Konto erstellen</h2><form method="post" action="/register"><input type="hidden" name="csrf_token" value="{{csrf_token()}}"><label>E-Mail</label><input name="email" type="email" required maxlength="254"><label>Passwort (mindestens 12 Zeichen)</label><input name="password" type="password" minlength="12" required><button>Registrieren</button></form></section>
-<section class="panel"><h2>Anmelden</h2><form method="post" action="/login"><input type="hidden" name="csrf_token" value="{{csrf_token()}}"><label>E-Mail</label><input name="email" type="email" required><label>Passwort</label><input name="password" type="password" required><button>Anmelden</button></form></section></div>
+<section class="panel"><h2>Anmelden</h2><form method="post" action="/login"><input type="hidden" name="csrf_token" value="{{csrf_token()}}"><label>E-Mail</label><input name="email" type="email" required><label>Passwort</label><input name="password" type="password" required><button>Anmelden</button><p class="muted"><a href="/forgot-password">Passwort vergessen?</a></p></form></section></div>
 {% endif %}<p class="muted">Sicherheitsstatus: Passwörter werden gehasht gespeichert. Für produktive Nutzung folgen E-Mail-Verifizierung, MFA und die Freigabe einzelner Websites.</p>
 {% if trial_expired %}
 <div id="premium-modal" style="position:fixed;inset:0;background:#000b;z-index:99999;display:grid;place-items:center;padding:18px">
