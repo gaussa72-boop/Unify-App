@@ -123,8 +123,11 @@ def inject_network_launcher(response):
     if response.mimetype == "text/html" and response.status_code == 200:
         try:
             body = response.get_data(as_text=True)
-            if "ultima-social-launcher" not in body and "</body>" in body:
-                body = body.replace("</body>", '<script src="/network-widget.js" defer></script></body>', 1)
+            if "</body>" in body:
+                if "ultima-social-launcher" not in body:
+                    body = body.replace("</body>", '<script src="/network-widget.js" defer></script></body>', 1)
+                if 'href="/impressum/"' not in body:
+                    body = body.replace("</body>", '<footer style="padding:18px 24px;text-align:center;color:#b9ad9a;font:13px system-ui;border-top:1px solid #735637"><a href="/impressum/" style="color:#e5bd79">Impressum · Projektbeschreibung · © Adriano Luca Gauß</a></footer></body>', 1)
                 response.set_data(body)
         except Exception:
             pass
@@ -374,6 +377,13 @@ def assistant_status():
 @app.get("/network-widget.js")
 def network_widget():
     return send_from_directory(os.path.dirname(__file__), "network-widget.js", mimetype="application/javascript")
+
+@app.get("/impressum/")
+@app.get("/impressum", strict_slashes=False)
+def impressum():
+    response = send_from_directory(os.path.dirname(__file__), "impressum.html")
+    response.headers["Cache-Control"] = "public, max-age=300"
+    return response
 
 @app.get("/health")
 def health():
