@@ -77,7 +77,7 @@ PAGE = """
 <title>ULTIMA · Unify</title>
 <style>
 :root{color-scheme:dark;--bg:#080d18;--panel:#111b2d;--line:#263750;--gold:#e7c879;--cyan:#5ce1e6;--muted:#a8b5c9}
-*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% -20%,#1d3451 0,transparent 55%),var(--bg);color:#f3f6fb;font:16px system-ui}main{max-width:980px;margin:7vh auto;padding:24px}.brand{letter-spacing:.28em;color:var(--gold);font-size:13px}.hero{display:flex;gap:18px;align-items:center;margin:18px 0 30px}.orb{width:64px;height:64px;border:1px solid var(--cyan);border-radius:50%;box-shadow:0 0 32px #5ce1e655,inset 0 0 24px #5ce1e633;flex:none}.orb:after{content:"";display:block;width:12px;height:12px;margin:25px;background:var(--gold);border-radius:50%;box-shadow:0 0 18px var(--gold)}h1{font-size:clamp(30px,6vw,54px);margin:0}p{color:var(--muted)}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}.panel{background:#111b2ddd;border:1px solid var(--line);border-radius:18px;padding:22px;box-shadow:0 16px 50px #0004}input,textarea{width:100%;margin:8px 0 14px;padding:13px;border-radius:10px;border:1px solid var(--line);background:#091321;color:white}button{padding:12px 18px;border:0;border-radius:10px;background:linear-gradient(100deg,var(--gold),#f4e5b4);color:#171a21;font-weight:700;cursor:pointer}.muted{font-size:13px;color:var(--muted)}a{color:var(--cyan)}.flash{color:var(--gold);margin:10px 0}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% -20%,#754b2c 0,transparent 45%),radial-gradient(ellipse at 90% 40%,#3b261b 0,transparent 35%),linear-gradient(135deg,#080a12,#17121a 55%,#090c14);color:#f3e9d5;font:16px system-ui;position:relative;overflow-x:hidden}body:before,body:after{content:'⚙';position:fixed;z-index:-1;color:#c08b52;opacity:.13;font-size:420px;line-height:1;pointer-events:none;animation:gearspin 90s linear infinite}body:before{left:-120px;top:10vh}body:after{content:'⚙';right:-110px;bottom:-80px;font-size:360px;animation-direction:reverse}@keyframes gearspin{to{transform:rotate(360deg)}}main{max-width:980px;margin:7vh auto;padding:24px}.brand{letter-spacing:.28em;color:var(--gold);font-size:13px}.hero{display:flex;gap:18px;align-items:center;margin:18px 0 30px}.orb{width:64px;height:64px;border:1px solid var(--cyan);border-radius:50%;box-shadow:0 0 32px #5ce1e655,inset 0 0 24px #5ce1e633;flex:none}.orb:after{content:"";display:block;width:12px;height:12px;margin:25px;background:var(--gold);border-radius:50%;box-shadow:0 0 18px var(--gold)}h1{font-size:clamp(30px,6vw,54px);margin:0;color:#f4e8d3;text-shadow:0 3px 20px #c18b4a55}.brand{color:#e2bd7d}p{color:var(--muted)}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}.panel{background:linear-gradient(145deg,#241b18ed,#111622f2 65%,#17131a);border:1px solid #8c673e;border-radius:12px;padding:22px;box-shadow:0 18px 55px #0009,inset 0 1px #e4c18a22;position:relative}.panel:before{content:'✧';position:absolute;right:16px;top:10px;color:#d6ad6e88;font-size:20px}input,textarea{width:100%;margin:8px 0 14px;padding:13px;border-radius:10px;border:1px solid var(--line);background:#091321;color:white}button{padding:12px 18px;border:1px solid #c59a5b;border-radius:5px;background:linear-gradient(100deg,#9b6b3c,#ead09a);color:#17100b;font-weight:700;cursor:pointer;box-shadow:0 4px 14px #0005}.muted{font-size:13px;color:var(--muted)}a{color:var(--cyan)}.flash{color:var(--gold);margin:10px 0}
 </style><main><div class="brand">ULTIMA NETWORK · UNIFY</div><div class="hero"><div class="orb"></div><div><h1>Ein Konto. Dein Netzwerk.</h1><p>Zentrale Anmeldung und persönliche Profile für verbundene Websites.</p></div></div>
 {% for m in get_flashed_messages() %}<div class="flash">{{m}}</div>{% endfor %}
 {% if user %}
@@ -87,7 +87,7 @@ PAGE = """
 <section class="panel" style="margin-top:16px"><h2>Deine Website-Profile</h2>{% if profiles %}{% for p in profiles %}<p><b>{{p.site_key}}</b> · {{p.profile_data}}</p>{% endfor %}{% else %}<p>Noch keine Website-Profile gespeichert.</p>{% endif %}</section>
 {% else %}
 <div class="grid"><section class="panel"><h2>Konto erstellen</h2><form method="post" action="/register"><input type="hidden" name="csrf_token" value="{{csrf_token()}}"><label>E-Mail</label><input name="email" type="email" required maxlength="254"><label>Passwort (mindestens 12 Zeichen)</label><input name="password" type="password" minlength="12" required><button>Registrieren</button></form></section>
-<section class="panel"><h2>Anmelden</h2><form method="post" action="/login"><input type="hidden" name="csrf_token" value="{{csrf_token()}}"><label>E-Mail</label><input name="email" type="email" required><label>Passwort</label><input name="password" type="password" required><button>Anmelden</button><p class="muted"><a href="/forgot-password">Passwort vergessen?</a></p></form></section></div>
+<section class="panel"><h2>Anmelden</h2><form method="post" action="/login"><input type="hidden" name="csrf_token" value="{{csrf_token()}}"><input type="hidden" name="next" value="{{request.args.get('next', '/')}}"><label>E-Mail</label><input name="email" type="email" required><label>Passwort</label><input name="password" type="password" required><button>Anmelden</button><p class="muted"><a href="/forgot-password">Passwort vergessen?</a></p></form></section></div>
 {% endif %}<p class="muted">Sicherheitsstatus: Passwörter werden gehasht gespeichert. Für produktive Nutzung folgen E-Mail-Verifizierung, MFA und die Freigabe einzelner Websites.</p>
 {% if trial_expired %}
 <div id="premium-modal" style="position:fixed;inset:0;background:#000b;z-index:99999;display:grid;place-items:center;padding:18px">
@@ -166,13 +166,48 @@ def register():
         flash("Konto erfolgreich erstellt. Dein Premium-Zugang ist 30 Tage kostenlos aktiv.")
     return redirect(url_for("home"))
 
+
+class AdminBootstrapUsed(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    token_hash = db.Column(db.String(64), unique=True, nullable=False)
+    used_at = db.Column(db.DateTime(timezone=True), nullable=False, default=lambda: datetime.now(timezone.utc))
+
+
+@app.route("/admin-setup/<token>", methods=["GET", "POST"])
+def admin_setup(token):
+    import hashlib, hmac
+    configured = os.environ.get("ULTIMA_ADMIN_SETUP_TOKEN", "")
+    owner_email = os.environ.get("SUPERADMIN_EMAIL", "").strip().lower()
+    digest = hashlib.sha256(token.encode()).hexdigest()
+    valid = bool(configured and owner_email and hmac.compare_digest(token, configured))
+    if valid and AdminBootstrapUsed.query.filter_by(token_hash=digest).first():
+        valid = False
+    owner = User.query.filter(db.func.lower(User.email) == owner_email).first() if owner_email else None
+    if not valid or not owner:
+        return "<h1>Setup-Link ungültig oder bereits verwendet.</h1>", 410
+    if request.method == "POST":
+        password = request.form.get("password", "")
+        confirm = request.form.get("confirm", "")
+        if len(password) < 12 or password != confirm:
+            flash("Passwörter müssen übereinstimmen und mindestens 12 Zeichen lang sein.")
+            return redirect(request.url)
+        owner.password_hash = bcrypt.generate_password_hash(password).decode()
+        owner.role = "SUPERADMIN"
+        db.session.add(AdminBootstrapUsed(token_hash=digest))
+        db.session.commit()
+        session.clear(); session["user_id"] = owner.id
+        flash("Superadmin-Zugang eingerichtet. Du bist angemeldet.")
+        return redirect(url_for("home"))
+    return render_template_string("""<!doctype html><html lang=de><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'><title>ULTIMA · Admin Setup</title><style>body{background:radial-gradient(ellipse at top,#65452c,#090d17 70%);color:#f5e9d2;font:16px system-ui;display:grid;place-items:center;min-height:100vh}.panel{width:min(440px,92vw);padding:28px;background:#171b25;border:1px solid #b58a51;border-radius:12px}input{display:block;width:100%;box-sizing:border-box;margin:12px 0;padding:13px;background:#090f1a;color:white;border:1px solid #86643e;border-radius:5px}button{padding:12px 18px;background:#e7c879;border:0;border-radius:5px;font-weight:bold}</style><section class=panel><h1>ULTIMA · Superadmin einrichten</h1><p>Lege ein neues Passwort für das konfigurierte Administratorkonto fest.</p>{% for m in get_flashed_messages() %}<p>{{m}}</p>{% endfor %}<form method=post><input type=hidden name=csrf_token value="{{csrf_token()}}"><label>Neues Passwort (mindestens 12 Zeichen)</label><input type=password name=password minlength=12 required autocomplete=new-password><label>Passwort wiederholen</label><input type=password name=confirm minlength=12 required autocomplete=new-password><button>Superadmin-Zugang aktivieren</button></form></section></html>""")
 @app.post("/login")
 def login():
     email = request.form.get("email", "").strip().lower()
     user = User.query.filter_by(email=email).first()
     if user and bcrypt.check_password_hash(user.password_hash, request.form.get("password", "")):
         session.clear(); session["user_id"] = user.id
-        return redirect(url_for("home"))
+        target = request.args.get("next") or request.form.get("next") or "/"
+        if not target.startswith("/") or target.startswith("//"): target = "/"
+        return redirect(target)
     flash("Anmeldung fehlgeschlagen.")
     return redirect(url_for("home"))
 
