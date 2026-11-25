@@ -60,6 +60,43 @@ def _provider_call(agent_name, persona, goal, api_key, endpoint, model, timeout=
     return content.strip()[:9000]
 
 
+# Built-in service map for the active specialist backends. Each service must
+# have ULTIMA_AGENT_SHARED_TOKEN configured before it can accept agent requests.
+_REMOTE_AGENTS = {
+    "aurealis": "https://aurealis-omnia.onrender.com",
+    "ionos7": "https://ionos-7-gauss-portal.onrender.com",
+    "ionos_ki": "https://ionos-ki.onrender.com",
+    "ultra_ki_pro": "https://quantum-ki-ultra-pro-v2-renewed.onrender.com",
+    "quantum_ai": "https://quantum-ai-zeah.onrender.com",
+}
+
+
+def _agent_call(agent, goal, api_key, endpoint, model):
+    base = _REMOTE_AGENTS.get(str(agent.get("id") or ""))
+    if not base:
+        return _provider_call(
+            str(agent.get("name") or agent["id"]),
+            str(agent.get("persona") or agent.get("domain") or ""),
+            goal, api_key, endpoint, model
+        )
+    token = os.getenv("ULTIMA_AGENT_SHARED_TOKEN", "").strip()
+    if not token:
+        raise ValueError("agent_shared_token_not_configured")
+    req = Request(
+        base + "/api/agent/analyze",
+        data=json.dumps({"task": goal}, ensure_ascii=False).encode("utf-8"),
+        headers={"X-ULTIMA-AGENT-TOKEN": token, "Content-Type": "application/json"},
+        method="POST"
+    )
+    with urlopen(req, timeout=45) as response:
+        result = json.loads(response.read().decode("utf-8"))
+    answer = result.get("answer")
+    if not isinstance(answer, str) or not answer.strip():
+        raise ValueError("remote_agent_empty_response")
+    return answer.strip()[:9000]
+
+
+
 def register_routes(bp, registry):
     from .agent_control import register_control_routes
     register_control_routes(bp)
@@ -73,6 +110,7 @@ def register_routes(bp, registry):
             collaboration_endpoint="/ultima-ai/api/collaborate",
             provider_configured=configured,
             registered_agents=len(registry),
+            remote_agent_services=sorted(_REMOTE_AGENTS.keys()),
             execution="analysis_only",
             persistent_memory=__import__("ultima_ai.agent_store", fromlist=["persistent_storage"]).persistent_storage(),
             task_history=True,
@@ -81,6 +119,27 @@ def register_routes(bp, registry):
             hardware_control=False,
             note="Agenten können gemeinsam analysieren. Codeänderungen, GitHub-Schreibzugriffe, Deployments, Zahlungen und Hardwaresteuerung sind getrennte, freigabepflichtige Integrationen."
         )
+
+
+    @bp.get("/api/agent-network/health")
+    def agent_network_health():
+        token = os.getenv("ULTIMA_AGENT_SHARED_TOKEN", "").strip()
+        if not token:
+            return jsonify(ok=False, error="ULTIMA_AGENT_SHARED_TOKEN_not_configured",
+                           agents=[{"id": key, "status": "not_configured"} for key in _REMOTE_AGENTS]), 503
+        checks = []
+        for agent_id, base in _REMOTE_AGENTS.items():
+            try:
+                req = Request(base + "/api/agent/health",
+                              headers={"X-ULTIMA-AGENT-TOKEN": token}, method="GET")
+                with urlopen(req, timeout=8) as response:
+                    data = json.loads(response.read().decode("utf-8"))
+                checks.append({"id": agent_id, "status": "ready" if data.get("status") == "ready" else "degraded",
+                               "service": base, "agent": data.get("name")})
+            except Exception:
+                checks.append({"id": agent_id, "status": "unreachable", "service": base})
+        ready = sum(1 for item in checks if item["status"] == "ready")
+        return jsonify(ok=ready == len(checks), ready=ready, total=len(checks), agents=checks), 200
 
     @bp.post("/api/collaborate")
     def collaborate():
@@ -110,12 +169,8 @@ def register_routes(bp, registry):
 
         with ThreadPoolExecutor(max_workers=min(4, len(chosen))) as pool:
             futures = {
-                pool.submit(
-                    _provider_call,
-                    str(agent.get("name") or agent["id"]),
-                    str(agent.get("persona") or agent.get("domain") or ""),
-                    goal, api_key, endpoint, model
-                ): agent for agent in chosen
+                pool.submit(_agent_call, agent, goal, api_key, endpoint, model): agent
+                for agent in chosen
             }
             for future in as_completed(futures):
                 agent = futures[future]
