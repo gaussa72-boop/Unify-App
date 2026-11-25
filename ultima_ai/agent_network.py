@@ -13,7 +13,7 @@ _hits = {}
 
 def _selected_agents(registry, requested):
     by_id = {str(item.get("id")): item for item in registry if item.get("id")}
-    defaults = ["aurealis", "ionos7", "neuroforge", "guardian"]
+    defaults = ["aurealis", "ionos7", "ionos_ki", "ultra_ki_pro"]
     ids = requested if isinstance(requested, list) else defaults
     chosen, seen = [], set()
     for raw in ids[:20]:
@@ -68,6 +68,16 @@ _REMOTE_AGENTS = {
     "ionos_ki": "https://ionos-ki.onrender.com",
     "ultra_ki_pro": "https://quantum-ki-ultra-pro-v2-renewed.onrender.com",
     "quantum_ai": "https://quantum-ai-zeah.onrender.com",
+    "ionos8": "https://ionos-8.onrender.com",
+    "cat_chat": "https://quantum-ki-cat-chat.onrender.com",
+    "quantumlight": "https://ai-quantumlight.onrender.com",
+    "quantum": "https://quantum-singularity.onrender.com",
+    "quantum_super": "https://quantum-super-intelligence.onrender.com",
+    "ultra_ki": "https://ultraki-ai.onrender.com",
+    "ki_game_mod": "https://ki-game-mod.onrender.com",
+    "note_ki": "https://note-ki.onrender.com",
+    "galactic": "https://galactic-ai-v3.onrender.com",
+    "ultra_ki_merge": "https://ionos-ai.onrender.com",
 }
 
 
