@@ -126,6 +126,8 @@ def inject_network_launcher(response):
             if "</body>" in body:
                 if "ultima-social-launcher" not in body:
                     body = body.replace("</body>", '<script src="/network-widget.js" defer></script></body>', 1)
+                if 'href="/urheberrecht/"' not in body:
+                    body = body.replace("</body>", '<footer style="padding:18px 24px;text-align:center;color:#b9ad9a;font:13px system-ui;border-top:1px solid #735637"><a href="/urheberrecht/" style="color:#e5bd79">✦ Königliches Urheberrechts-Zertifikat · © Adriano Luca Gauß</a></footer></body>', 1)
                 if 'href="/impressum/"' not in body:
                     body = body.replace("</body>", '<footer style="padding:18px 24px;text-align:center;color:#b9ad9a;font:13px system-ui;border-top:1px solid #735637"><a href="/impressum/" style="color:#e5bd79">Impressum · Projektbeschreibung · © Adriano Luca Gauß</a></footer></body>', 1)
                 response.set_data(body)
