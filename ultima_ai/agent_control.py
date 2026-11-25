@@ -29,6 +29,25 @@ def register_control_routes(bp):
         except Exception:
             return jsonify(error="agent_store_unavailable"), 503
 
+    @bp.post("/api/approvals")
+    def agent_approval_create():
+        if not authorized():
+            return jsonify(error="admin_authorization_required"), 401
+        data = request.get_json(silent=True) or {}
+        action = str(data.get("action") or "").strip()[:120]
+        details = data.get("details")
+        if not action or not isinstance(details, dict):
+            return jsonify(error="action_and_object_details_required"), 400
+        if len(str(details)) > 12000:
+            return jsonify(error="details_too_large"), 413
+        try:
+            approval = agent_store.create_approval(
+                str(data.get("task_id") or "")[:80] or None, action, details
+            )
+            return jsonify(ok=True, approval=approval), 201
+        except Exception:
+            return jsonify(error="agent_store_unavailable"), 503
+
     @bp.post("/api/approvals/<approval_id>/decision")
     def agent_approval_decision(approval_id):
         if not authorized():
