@@ -212,6 +212,11 @@ def admin_setup(token):
         return redirect(url_for("home"))
     return render_template_string("""<!doctype html><html lang=de><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'><title>ULTIMA · Admin Setup</title><style>body{background:radial-gradient(ellipse at top,#65452c,#090d17 70%);color:#f5e9d2;font:16px system-ui;display:grid;place-items:center;min-height:100vh}.panel{width:min(440px,92vw);padding:28px;background:#171b25;border:1px solid #b58a51;border-radius:12px}input{display:block;width:100%;box-sizing:border-box;margin:12px 0;padding:13px;background:#090f1a;color:white;border:1px solid #86643e;border-radius:5px}button{padding:12px 18px;background:#e7c879;border:0;border-radius:5px;font-weight:bold}</style><section class=panel><h1>ULTIMA · Superadmin einrichten</h1><p>Lege ein neues Passwort für {{owner_email}} fest. Falls das Konto noch nicht existiert, wird es dabei angelegt.</p>{% for m in get_flashed_messages() %}<p>{{m}}</p>{% endfor %}<form method=post><input type=hidden name=csrf_token value="{{csrf_token()}}"><label>Neues Passwort (mindestens 12 Zeichen)</label><input type=password name=password minlength=12 required autocomplete=new-password><label>Passwort wiederholen</label><input type=password name=confirm minlength=12 required autocomplete=new-password><button>Superadmin-Zugang aktivieren</button></form></section></html>""", owner_email=owner_email)
 
+@app.get("/login")
+def login_page():
+    # Browser navigation to /login should display the central login page, not return 405.
+    return redirect(url_for("home"))
+
 @app.post("/login")
 def login():
     email = request.form.get("email", "").strip().lower()
