@@ -212,7 +212,7 @@ def admin_setup(token):
             owner.role = "SUPERADMIN"
         db.session.add(AdminBootstrapUsed(token_hash=digest))
         db.session.commit()
-        session.clear(); session["user_id"] = owner.id
+        session.clear(); session["user_id"] = owner.id; session["role"] = "SUPERADMIN"
         flash("Superadmin-Zugang eingerichtet. Du bist angemeldet.")
         return redirect(url_for("home"))
     return render_template_string("""<!doctype html><html lang=de><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'><title>ULTIMA · Admin Setup</title><style>body{background:radial-gradient(ellipse at top,#65452c,#090d17 70%);color:#f5e9d2;font:16px system-ui;display:grid;place-items:center;min-height:100vh}.panel{width:min(440px,92vw);padding:28px;background:#171b25;border:1px solid #b58a51;border-radius:12px}input{display:block;width:100%;box-sizing:border-box;margin:12px 0;padding:13px;background:#090f1a;color:white;border:1px solid #86643e;border-radius:5px}button{padding:12px 18px;background:#e7c879;border:0;border-radius:5px;font-weight:bold}</style><section class=panel><h1>ULTIMA · Superadmin einrichten</h1><p>Lege ein neues Passwort für {{owner_email}} fest. Falls das Konto noch nicht existiert, wird es dabei angelegt.</p>{% for m in get_flashed_messages() %}<p>{{m}}</p>{% endfor %}<form method=post><input type=hidden name=csrf_token value="{{csrf_token()}}"><label>Neues Passwort (mindestens 12 Zeichen)</label><input type=password name=password minlength=12 required autocomplete=new-password><label>Passwort wiederholen</label><input type=password name=confirm minlength=12 required autocomplete=new-password><button>Superadmin-Zugang aktivieren</button></form></section></html>""", owner_email=owner_email)
@@ -227,7 +227,7 @@ def login():
     email = request.form.get("email", "").strip().lower()
     user = User.query.filter_by(email=email).first()
     if user and bcrypt.check_password_hash(user.password_hash, request.form.get("password", "")):
-        session.clear(); session["user_id"] = user.id
+        session.clear(); session["user_id"] = user.id; session["role"] = user.role
         target = request.args.get("next") or request.form.get("next") or "/"
         if not target.startswith("/") or target.startswith("//"): target = "/"
         return redirect(target)
@@ -283,6 +283,18 @@ def premium_payment_request():
     payment = PremiumPaymentRequest(user_id=user.id, amount_usd=10, txid=txid or None, status="pending_review")
     db.session.add(payment); db.session.commit()
     return jsonify(status="pending_review", message="Zahlungsanfrage gespeichert. Premium wird erst nach manueller Prüfung freigeschaltet."), 201
+
+
+@app.get("/update-matrix/")
+def update_matrix_dashboard():
+    user = db.session.get(User, session.get("user_id")) if session.get("user_id") else None
+    if not user:
+        return redirect(url_for("home"))
+    if user.role != "SUPERADMIN":
+        return jsonify(error="superadmin_required"), 403
+    response = send_from_directory(os.path.dirname(__file__), "update-matrix.html")
+    response.headers["Cache-Control"] = "no-store"
+    return response
 
 @app.get("/render-console/")
 def render_console():
