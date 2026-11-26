@@ -99,6 +99,14 @@ def service_worker():
 def icon():
     return send_from_directory(ROOT, "icon.svg")
 
+@app.get("/ideas/")
+def ideas_home():
+    return send_from_directory(ROOT / "ideas", "index.html")
+
+@app.get("/ideas/<path:filename>")
+def ideas_assets(filename):
+    return send_from_directory(ROOT / "ideas", filename)
+
 @app.get("/updates/")
 def updates_home():
     return send_from_directory(ROOT / "updates", "index.html")
