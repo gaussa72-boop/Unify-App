@@ -7,7 +7,7 @@ agents. A human owner must approve and deploy each target service separately.
 from __future__ import annotations
 import hashlib, hmac, json, os, sqlite3, time, urllib.request, urllib.error
 from pathlib import Path
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify, request, session
 
 bp = Blueprint("update_matrix", __name__)
 ROOT = Path(__file__).resolve().parent
