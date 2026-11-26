@@ -5,10 +5,16 @@ on:
   workflow_dispatch:
 jobs:
   generate-proposals:
-    if: ${{ secrets.ULTIMA_UPDATE_MATRIX_TOKEN != '' }}
     runs-on: ubuntu-latest
     steps:
+      - name: Check matrix token availability
+        id: check
+        env:
+          MATRIX_TOKEN: ${{ secrets.ULTIMA_UPDATE_MATRIX_TOKEN }}
+        run: |
+          if [ -n "$MATRIX_TOKEN" ]; then echo "enabled=true" >> "$GITHUB_OUTPUT"; else echo "enabled=false" >> "$GITHUB_OUTPUT"; echo "ULTIMA_UPDATE_MATRIX_TOKEN secret is not configured; generation skipped."; fi
       - name: Generate scoped proposals
+        if: ${{ steps.check.outputs.enabled == 'true' }}
         env:
           MATRIX_TOKEN: ${{ secrets.ULTIMA_UPDATE_MATRIX_TOKEN }}
           MATRIX_URL: https://ultima-unify-45ne.onrender.com
@@ -31,6 +37,7 @@ jobs:
               -o "matrix-reports/${agents[$i]}.json"
           done
       - uses: actions/upload-artifact@v4
+        if: ${{ steps.check.outputs.enabled == 'true' }}
         with:
           name: ultima-update-proposals
           path: matrix-reports/
