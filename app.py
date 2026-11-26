@@ -129,7 +129,7 @@ def inject_network_launcher(response):
                 if 'href="/urheberrecht/"' not in body:
                     body = body.replace("</body>", '<footer style="padding:18px 24px;text-align:center;color:#b9ad9a;font:13px system-ui;border-top:1px solid #735637"><a href="/urheberrecht/" style="color:#e5bd79">✦ Königliches Urheberrechts-Zertifikat · © Adriano Luca Gauß</a></footer></body>', 1)
                 if 'href="/impressum/"' not in body:
-                    body = body.replace("</body>", '<footer style="padding:18px 24px;text-align:center;color:#b9ad9a;font:13px system-ui;border-top:1px solid #735637"><a href="/impressum/" style="color:#e5bd79">Impressum · Projektbeschreibung · © Adriano Luca Gauß</a></footer></body>', 1)
+                    body = body.replace("</body>", '<footer style="padding:18px 24px;text-align:center;color:#b9ad9a;font:13px system-ui;border-top:1px solid #735637;display:flex;justify-content:center;gap:18px;flex-wrap:wrap"><a href="/impressum/" style="color:#e5bd79">Impressum · Projektbeschreibung · © Adriano Luca Gauß</a><a href="/premium-uebersicht/" style="color:#5ce1e6">KI-Premium-Übersicht · Preise & Laufzeiten</a></footer></body>', 1)
                 response.set_data(body)
         except Exception:
             pass
@@ -393,6 +393,14 @@ def impressum():
     response = send_from_directory(os.path.dirname(__file__), "impressum.html")
     response.headers["Cache-Control"] = "public, max-age=300"
     return response
+
+@app.get("/premium-uebersicht/")
+@app.get("/premium-uebersicht", strict_slashes=False)
+def premium_overview():
+    response = send_from_directory(os.path.dirname(__file__), "premium-uebersicht.html")
+    response.headers["Cache-Control"] = "no-store"
+    return response
+
 
 @app.get("/health")
 def health():
