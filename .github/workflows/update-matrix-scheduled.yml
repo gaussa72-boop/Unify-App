@@ -1,0 +1,37 @@
+name: ULTIMA scheduled agent proposals
+on:
+  schedule:
+    - cron: "30 3 * * 1"
+  workflow_dispatch:
+jobs:
+  generate-proposals:
+    if: ${{ secrets.ULTIMA_UPDATE_MATRIX_TOKEN != '' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Generate scoped proposals
+        env:
+          MATRIX_TOKEN: ${{ secrets.ULTIMA_UPDATE_MATRIX_TOKEN }}
+          MATRIX_URL: https://ultima-unify-45ne.onrender.com
+        run: |
+          set -euo pipefail
+          mkdir -p matrix-reports
+          agents=("omnia_mining" "aurelis_investment" "ate_rea_exchange" "krypto_aurora")
+          tasks=(
+            "Review mining status, pool integration readiness, block archive reliability, and safety controls. Do not enable payouts or claim simulated rewards as real."
+            "Review the investment portal for broken navigation, stale information, accessibility, security, and transparent risk disclosures. Do not make investment recommendations."
+            "Review the exchange frontend for broken links, input validation, API safety, and transaction-state clarity. Do not execute trades or transfers."
+            "Review the meme-coin research area for token-data provenance, liquidity-risk disclosures, and safe analysis UX. Do not execute trades."
+          )
+          for i in "${!agents[@]}"; do
+            curl --fail-with-body --silent --show-error \
+              -H "Authorization: Bearer $MATRIX_TOKEN" \
+              -H "Content-Type: application/json" \
+              -d "$(jq -n --arg id "${agents[$i]}" --arg task "${tasks[$i]}" '{agent_id:$id,task:$task}')" \
+              "$MATRIX_URL/api/update-matrix/proposals/generate" \
+              -o "matrix-reports/${agents[$i]}.json"
+          done
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ultima-update-proposals
+          path: matrix-reports/
+          retention-days: 30
