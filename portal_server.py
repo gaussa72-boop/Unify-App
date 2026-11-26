@@ -8,6 +8,9 @@ app = Flask(__name__, static_folder=None)
 from ultima_ai import bp as ultima_ai_bp
 app.register_blueprint(ultima_ai_bp)
 
+from update_matrix import bp as update_matrix_bp
+app.register_blueprint(update_matrix_bp)
+
 @app.after_request
 def security_headers(response):
     response.headers.setdefault("X-Content-Type-Options", "nosniff")
