@@ -27,6 +27,11 @@ from mcp_gateway import bp as mcp_bp
 app.register_blueprint(mcp_bp)
 csrf.exempt(mcp_bp)
 
+# ULTIMA Update Matrix: authenticated, proposal-only agent orchestration.
+from update_matrix import bp as update_matrix_bp
+app.register_blueprint(update_matrix_bp)
+csrf.exempt(update_matrix_bp)
+
 app.config["WTF_CSRF_TIME_LIMIT"] = 12 * 60 * 60  # Flask-WTF expects seconds, not datetime.timedelta
 
 @app.errorhandler(CSRFError)
