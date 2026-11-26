@@ -32,6 +32,11 @@ from update_matrix import bp as update_matrix_bp
 app.register_blueprint(update_matrix_bp)
 csrf.exempt(update_matrix_bp)
 
+# ULTIMA Telegram Hub webhook (token is supplied later via Render environment variables).
+from telegram_hub import bp as telegram_bp
+app.register_blueprint(telegram_bp)
+csrf.exempt(telegram_bp)
+
 app.config["WTF_CSRF_TIME_LIMIT"] = 12 * 60 * 60  # Flask-WTF expects seconds, not datetime.timedelta
 
 @app.errorhandler(CSRFError)
