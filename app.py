@@ -389,9 +389,18 @@ def login():
     email = request.form.get("email", "").strip().lower()
     user = User.query.filter_by(email=email).first()
     if user and bcrypt.check_password_hash(user.password_hash, request.form.get("password", "")):
-        session.clear(); session["user_id"] = user.id; session["role"] = user.role
+        # The configured owner receives the canonical role at login as well as
+        # at startup, so an older database row cannot accidentally lose access.
+        owner_email = os.environ.get("SUPERADMIN_EMAIL", "gaussa72@gmail.com").strip().lower()
+        if email == owner_email and user.role != "SUPERADMIN":
+            user.role = "SUPERADMIN"
+            db.session.commit()
+        session.clear()
+        session["user_id"] = user.id
+        session["role"] = "SUPERADMIN" if email == owner_email else user.role
         target = request.args.get("next") or request.form.get("next") or "/"
-        if not target.startswith("/") or target.startswith("//"): target = "/"
+        if not target.startswith("/") or target.startswith("//"):
+            target = "/"
         return redirect(target)
     flash("Anmeldung fehlgeschlagen.")
     return redirect(url_for("home"))
