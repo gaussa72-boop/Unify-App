@@ -7,7 +7,7 @@ _WEBHOOK_REGISTERED = False
 API_BASE = os.environ.get("ULTIMA_MEMBERSHIP_API_URL", "https://ultima-membership-api.onrender.com").rstrip("/")
 PORTAL = os.environ.get("ULTIMA_PORTAL_URL", "https://ultima-unify-45ne.onrender.com/")
 APPLY = API_BASE + "/membership-apply"
-NETWORK = os.environ.get("ULTIMA_NETWORK_URL", "https://ultima-unify-45ne.onrender.com/network/")
+NETWORK = os.environ.get("ULTIMA_NETWORK_URL", "https://aurealis-network.onrender.com/")
 
 SITES = [
  ("ULTIMA Central","https://ultima-central-45ne.onrender.com/"),
