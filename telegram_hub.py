@@ -231,7 +231,8 @@ def _register_webhook_once():
    {"command":"support","description":"ULTIMA Support kontaktieren"},
    {"command":"donate","description":"Humanitäre Hilfe"},
    {"command":"id","description":"Eigene Telegram-ID anzeigen"},
-   {"command":"status","description":"Bot-Status anzeigen"},\n    {"command":"commerce","description":"Bestellungen und Rechnungen · Superadmin"},
+   {"command":"status","description":"Bot-Status anzeigen"},
+   {"command":"commerce","description":"Bestellungen und Rechnungen · Superadmin"},
     {"command":"publicbot","description":"Status des Besucherbots · Superadmin"},
    {"command":"help","description":"Hilfe anzeigen"}
   ]})
