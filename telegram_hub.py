@@ -1,5 +1,5 @@
 """ULTIMA Telegram hub: navigation and role-gated links; sensitive operations remain in authenticated admin web pages."""
-import json, os, urllib.request, hmac
+import json, os, urllib.request, hmac, html
 from flask import Blueprint, request, jsonify
 
 bp = Blueprint("ultima_telegram", __name__)
@@ -144,7 +144,7 @@ def _ids(key):
 
 def _role(user_id, username=None):
  value=str(user_id or "")
- usernames={x.strip().lstrip("@").casefold() for x in os.environ.get("ULTIMA_TELEGRAM_SUPERADMIN_USERNAMES","ari_phenex").split(",") if x.strip()}
+ usernames={x.strip().lstrip("@").casefold() for x in os.environ.get("ULTIMA_TELEGRAM_SUPERADMIN_USERNAMES","").split(",") if x.strip()}
  if value in _ids("ULTIMA_TELEGRAM_SUPERADMIN_IDS") or (username or "").lstrip("@").casefold() in usernames: return "superadmin"
  if value in _ids("ULTIMA_TELEGRAM_ADMIN_IDS"): return "admin"
  if value in _ids("ULTIMA_TELEGRAM_MENTOR_IDS"): return "mentor"
@@ -194,11 +194,14 @@ def _directory(chat_id,title,entries,role):
    name,description,url=entry
   else:
    name,url=entry
-   description="Anwendung öffnen"
-  rows.append([{"text":name[:48]+" ↗","url":url}])
-  lines.append("• "+name+"\n  "+description)
+   description="Website öffnen"
+  safe_name=html.escape(str(name))
+  safe_desc=html.escape(str(description))
+  safe_url=html.escape(str(url),quote=True)
+  rows.append([{"text":str(name)[:48]+" ↗","url":url}])
+  lines.append('• <a href="'+safe_url+'">'+safe_name+'</a> — '+safe_desc)
  rows.append([{"text":"⬅ Hauptmenü","callback_data":"home"}])
- _send(chat_id,title+"\n\n"+"\n".join(lines),{"inline_keyboard":rows})
+ _api("sendMessage",{"chat_id":chat_id,"text":title+"\\n\\n"+"\\n".join(lines),"parse_mode":"HTML","disable_web_page_preview":True,"reply_markup":{"inline_keyboard":rows}})
 
 def _register_webhook_once():
  global _WEBHOOK_REGISTERED
@@ -227,7 +230,7 @@ def _register_webhook_once():
    {"command":"support","description":"ULTIMA Support kontaktieren"},
    {"command":"donate","description":"Humanitäre Hilfe"},
    {"command":"id","description":"Eigene Telegram-ID anzeigen"},
-   {"command":"status","description":"Bot-Status anzeigen"},
+   {"command":"status","description":"Bot-Status anzeigen"},\n    {"command":"commerce","description":"Bestellungen und Rechnungen · Superadmin"},\n    {"command":"publicbot","description":"Status des Besucherbots · Superadmin"},
    {"command":"help","description":"Hilfe anzeigen"}
   ]})
   _api("setChatMenuButton",{"menu_button":{"type":"web_app","text":"Aurealis Network","web_app":{"url":NETWORK}}})
@@ -389,11 +392,14 @@ def _public_directory(chat_id, title, entries):
    name,description,url=entry
   else:
    name,url=entry
-   description="Plattform öffnen"
-  rows.append([{"text":name[:48]+" ↗","url":url}])
-  lines.append("• "+name+" — "+description)
+   description="Website öffnen"
+  safe_name=html.escape(str(name))
+  safe_desc=html.escape(str(description))
+  safe_url=html.escape(str(url),quote=True)
+  rows.append([{"text":str(name)[:48]+" ↗","url":url}])
+  lines.append('• <a href="'+safe_url+'">'+safe_name+'</a> — '+safe_desc)
  rows.append([{"text":"⬅ Hauptmenü","callback_data":"pub_home"}])
- _public_send(chat_id,title+"\n\n"+"\n".join(lines),{"inline_keyboard":rows})
+ _public_api("sendMessage",{"chat_id":chat_id,"text":title+"\\n\\n"+"\\n".join(lines),"parse_mode":"HTML","disable_web_page_preview":True,"reply_markup":{"inline_keyboard":rows}})
 
 def _register_public_webhook_once():
  global _PUBLIC_BOT_REGISTERED, _PUBLIC_BOT_ERROR
