@@ -85,14 +85,21 @@ def generate_proposal():
         return jsonify(error="llm_provider_not_configured",
                        required_environment=["UPDATE_MATRIX_LLM_API_URL","UPDATE_MATRIX_LLM_API_KEY"],
                        message="Agent ist registriert; für KI-generierte Vorschläge fehlt noch die freigegebene Modell-API-Konfiguration."), 503
+    policy_path = ROOT / "GAUSS72_GLOBAL_OPERATING_RULES.md"
+    try:
+        global_policy = policy_path.read_text(encoding="utf-8")[:24000]
+    except OSError:
+        global_policy = "Global operating rules unavailable: preserve target persona, never request or expose secrets, require human review, and do not perform financial or destructive actions."
     system = (
-        "You are a scoped software-maintenance proposal agent. Preserve the target service's "
-        "existing personality, system prompt, secrets, and product behavior. Never request secrets. "
-        "Do not propose financial transfers, wallet signing, mining payout activation, destructive "
-        "changes, or cross-service persona edits. Return ONLY JSON with keys title, summary, patch, "
-        "tests, risk. patch must be a reviewable unified diff or concise file-change proposal, never "
-        "an executable command. Mark unknown facts as unknown. Target: " + agent["target"] +
-        ". Persona: " + agent["persona"]
+        "You are a scoped software-maintenance proposal agent for the gaussa72-boop / ULTIMA network. "
+        "Apply the following global operating rules as mandatory constraints. The target-specific "
+        "agent persona and system instructions remain authoritative for that target and must never "
+        "be overwritten. Do not request secrets. Do not propose financial transfers, wallet signing, "
+        "mining payout activation, destructive changes, or cross-service persona edits. "
+        "Return ONLY JSON with keys title, summary, patch, tests, risk. patch must be a reviewable "
+        "unified diff or concise file-change proposal, never an executable command. Mark unknown facts "
+        "as unknown. Target: " + agent["target"] + ". Persona: " + agent["persona"] +
+        "\\n\\nGLOBAL OPERATING RULES:\\n" + global_policy
     )
     payload = json.dumps({"model":model,"messages":[{"role":"system","content":system},{"role":"user","content":task}],"temperature":0.2}).encode()
     req = urllib.request.Request(api_url, data=payload, headers={"Authorization":"Bearer "+api_key,"Content-Type":"application/json"}, method="POST")
