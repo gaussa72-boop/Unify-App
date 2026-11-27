@@ -152,7 +152,8 @@ def _menu(role):
   [{"text":"🌌 Aurealis Network · Mini App","web_app":{"url":NETWORK}}],
   [{"text":"♡ Humanitäre Spendenaktion","url":NETWORK.rstrip("/")+"/#donate"}],
   [{"text":"💬 Mentor kontaktieren · Arian_Phenex","url":"https://t.me/Arian_Phenex"}],
-  [{"text":"📝 Mitgliedschaft beantragen","url":APPLY}],
+  [{"text":"📝 Zentralen Website-Zugang beantragen","url":PORTAL}],
+  [{"text":"💳 Mitgliedschaft beantragen","url":APPLY}],
   [{"text":"⏱ 1 Tag KI & Programme testen","url":PORTAL}],
   [{"text":"👤 ULTIMA Profil & Konto","url":PORTAL}],
   [{"text":"🔄 Update Matrix","url":PORTAL.rstrip("/")+"/update-matrix/"}],
@@ -160,6 +161,7 @@ def _menu(role):
  if role in {"mentor","admin","superadmin"}: rows.append([{"text":"🎓 Mentor-Bereich","url":API_BASE+"/admin/mentors"}])
  if role in {"admin","superadmin"}:
   rows.append([{"text":"🛠 Verwaltungszentrale","url":API_BASE+"/admin"}])
+  rows.append([{"text":"🔐 Zugangsanträge freigeben","url":PORTAL.rstrip("/")+"/admin/applications/"}])
   rows.append([{"text":"🧩 Einzelne Websites verwalten","callback_data":"site_admins"}])
   rows.append([{"text":"🛍 Einzelne Webshops verwalten","callback_data":"shop_admins"}])
  if role=="superadmin":
