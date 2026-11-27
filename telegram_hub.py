@@ -152,7 +152,7 @@ def _menu(role):
   [{"text":"🌌 Aurealis Network · Mini App","web_app":{"url":NETWORK}}],
   [{"text":"♡ Humanitäre Spendenaktion","url":NETWORK.rstrip("/")+"/#donate"}],
   [{"text":"💬 Mentor kontaktieren · Arian_Phenex","url":"https://t.me/Arian_Phenex"}],
-  [{"text":"📝 Zentralen Website-Zugang beantragen","url":PORTAL}],
+  [{"text":"📝 Zentralen Website-Zugang beantragen","url":PORTAL.rstrip("/")+"/register"}],
   [{"text":"💳 Mitgliedschaft beantragen","url":APPLY}],
   [{"text":"⏱ 1 Tag KI & Programme testen","url":PORTAL}],
   [{"text":"👤 ULTIMA Profil & Konto","url":PORTAL}],
