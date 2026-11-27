@@ -86,6 +86,23 @@ class SiteProfile(db.Model):
     updated_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc))
     __table_args__ = (db.UniqueConstraint("user_id", "site_key", name="uq_user_site_profile"),)
 
+
+
+class RegistrationApplication(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    full_name = db.Column(db.String(160), nullable=False)
+    email = db.Column(db.String(254), nullable=False, index=True)
+    phone = db.Column(db.String(40), nullable=False)
+    postal_address = db.Column(db.String(500), nullable=False)
+    password_hash = db.Column(db.String(128), nullable=False)
+    profile_data = db.Column(db.Text, nullable=False, default="{}")
+    status = db.Column(db.String(24), nullable=False, default="pending", index=True)
+    decision_note = db.Column(db.String(1000), nullable=False, default="")
+    created_at = db.Column(db.DateTime, nullable=False, default=lambda: datetime.now(timezone.utc))
+    reviewed_at = db.Column(db.DateTime, nullable=True)
+    reviewed_by = db.Column(db.String(254), nullable=True)
+
+
 PAGE = """
 <!doctype html><html lang="de"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>ULTIMA · Unify</title>
@@ -100,9 +117,9 @@ PAGE = """
 <section class="panel"><h2>Website-Profil speichern</h2><form method="post" action="/profile"><input type="hidden" name="csrf_token" value="{{csrf_token()}}"><label>Website-Kennung</label><input name="site_key" placeholder="z. B. lichtkrieger" required maxlength="100"><label>Profilinformationen (JSON)</label><textarea name="profile_data" rows="4" placeholder='{"anzeigename":"...","interessen":[]}'></textarea><button>Profil speichern</button></form></section></div>
 <section class="panel" style="margin-top:16px"><h2>Deine Website-Profile</h2>{% if profiles %}{% for p in profiles %}<p><b>{{p.site_key}}</b> · {{p.profile_data}}</p>{% endfor %}{% else %}<p>Noch keine Website-Profile gespeichert.</p>{% endif %}</section>
 {% else %}
-<div class="grid"><section class="panel"><h2>Konto erstellen</h2><form method="post" action="/register"><input type="hidden" name="csrf_token" value="{{csrf_token()}}"><label>E-Mail</label><input name="email" type="email" required maxlength="254"><label>Passwort (mindestens 12 Zeichen)</label><input name="password" type="password" minlength="12" required><button>Registrieren</button></form></section>
+<div class="grid"><section class="panel"><h2>Zugang beantragen</h2><p>Alle Zugänge zu verbundenen ULTIMA-Websites werden erst nach persönlicher Freigabe durch den Superadministrator aktiviert.</p><form method="post" action="/register"><input type="hidden" name="csrf_token" value="{{csrf_token()}}"><label>Vor- und Nachname</label><input name="full_name" required maxlength="160" autocomplete="name"><label>E-Mail-Adresse</label><input name="email" type="email" required maxlength="254" autocomplete="email"><label>Telefonnummer</label><input name="phone" type="tel" required maxlength="40" autocomplete="tel"><label>Vollständige Anschrift</label><input name="postal_address" required maxlength="500" autocomplete="street-address"><label>Passwort (mindestens 12 Zeichen)</label><input name="password" type="password" minlength="12" required autocomplete="new-password"><label>Profil: Interessen, Träume, Ziele und gewünschte Eigenschaften</label><textarea name="profile_data" rows="5" maxlength="5000" placeholder="Welche Interessen, Ziele, Träume und Profilmerkmale möchtest du hinterlegen?"></textarea><label><input type="checkbox" name="privacy_consent" value="yes" required style="width:auto"> Ich stimme der Verarbeitung meiner Angaben zur Prüfung des Zugangs zu und habe die Datenschutzhinweise gelesen.</label><button>Zugang beantragen</button></form><p class="muted">Dein Konto wird erst nach Freigabe erstellt. Die Angaben werden nicht automatisch veröffentlicht.</p></section>
 <section class="panel"><h2>Anmelden</h2><form method="post" action="/login"><input type="hidden" name="csrf_token" value="{{csrf_token()}}"><input type="hidden" name="next" value="{{request.args.get('next', '/')}}"><label>E-Mail</label><input name="email" type="email" required><label>Passwort</label><input name="password" type="password" required><button>Anmelden</button><p class="muted"><a href="/forgot-password">Passwort vergessen?</a></p></form></section></div>
-{% endif %}<p class="muted">Sicherheitsstatus: Passwörter werden gehasht gespeichert. Für produktive Nutzung folgen E-Mail-Verifizierung, MFA und die Freigabe einzelner Websites.</p>
+{% endif %}<p class="muted">Sicherheitsstatus: Zugang nur nach manueller Freigabe. Passwörter werden ausschließlich gehasht gespeichert. Die Freigabe gilt zunächst für ULTIMA Unify; andere Websites müssen den zentralen Zugang zusätzlich technisch prüfen.</p>
 {% if trial_expired %}
 <div id="premium-modal" style="position:fixed;inset:0;background:#000b;z-index:99999;display:grid;place-items:center;padding:18px">
 <section style="width:min(520px,100%);max-height:90vh;overflow:auto;background:#111b2d;border:1px solid #e7c879;border-radius:18px;padding:24px;box-shadow:0 20px 80px #000">
@@ -168,22 +185,120 @@ def home():
 @app.post("/register")
 def register():
     email = request.form.get("email", "").strip().lower()
+    full_name = request.form.get("full_name", "").strip()[:160]
+    phone = request.form.get("phone", "").strip()[:40]
+    postal_address = request.form.get("postal_address", "").strip()[:500]
     password = request.form.get("password", "")
-    if len(password) < 12:
-        flash("Bitte ein Passwort mit mindestens 12 Zeichen verwenden.")
-    elif not email or User.query.filter_by(email=email).first():
-        flash("E-Mail ungültig oder bereits registriert.")
+    profile = request.form.get("profile_data", "").strip()[:5000]
+    if request.form.get("privacy_consent") != "yes":
+        flash("Bitte bestätige die Datenschutzhinweise.")
+    elif not all([email, full_name, phone, postal_address]) or len(password) < 12:
+        flash("Bitte alle Pflichtfelder ausfüllen und ein Passwort mit mindestens 12 Zeichen wählen.")
+    elif User.query.filter_by(email=email).first() or RegistrationApplication.query.filter_by(email=email, status="pending").first():
+        flash("Für diese E-Mail existiert bereits ein Konto oder ein offener Antrag.")
     else:
-        superadmin = os.environ.get("SUPERADMIN_EMAIL", "").strip().lower()
-        role = "SUPERADMIN" if superadmin and email == superadmin else "USER"
-        user = User(email=email, password_hash=bcrypt.generate_password_hash(password).decode(), role=role)
-        db.session.add(user); db.session.flush()
-        now = datetime.now(timezone.utc)
-        db.session.add(PremiumTrial(user_id=user.id, started_at=now, ends_at=now + timedelta(days=30)))
+        application = RegistrationApplication(
+            full_name=full_name, email=email, phone=phone, postal_address=postal_address,
+            password_hash=bcrypt.generate_password_hash(password).decode(),
+            profile_data=profile, status="pending"
+        )
+        db.session.add(application)
         db.session.commit()
-        session["user_id"] = user.id
-        flash("Konto erfolgreich erstellt. Dein Premium-Zugang ist 30 Tage kostenlos aktiv.")
+        # Email delivery is attempted only when SMTP is explicitly configured.
+        try:
+            import smtplib
+            from email.message import EmailMessage
+            host = os.environ.get("SMTP_HOST", "")
+            sender = os.environ.get("SMTP_FROM", "")
+            if host and sender:
+                msg = EmailMessage()
+                msg["Subject"] = "Neuer ULTIMA-Zugangsantrag"
+                msg["From"] = sender
+                msg["To"] = os.environ.get("SUPERADMIN_EMAIL", "ariandomimate@gmail.com")
+                msg.set_content(
+                    "Neuer Antrag wartet auf Freigabe in /admin/applications/\n\n"
+                    f"Name: {full_name}\nE-Mail: {email}\nTelefon: {phone}\nAdresse: {postal_address}\n"
+                    f"Profilangaben: {profile}\nAntragsnummer: {application.id}"
+                )
+                with smtplib.SMTP(host, int(os.environ.get("SMTP_PORT", "587")), timeout=15) as smtp:
+                    smtp.starttls()
+                    smtp.login(os.environ.get("SMTP_USER", ""), os.environ.get("SMTP_PASSWORD", ""))
+                    smtp.send_message(msg)
+        except Exception:
+            app.logger.exception("Registration notification email could not be delivered")
+        flash("Dein Antrag wurde gespeichert und wartet auf die persönliche Freigabe. Du kannst dich noch nicht anmelden.")
     return redirect(url_for("home"))
+
+
+def require_superadmin():
+    current = db.session.get(User, session.get("user_id")) if session.get("user_id") else None
+    configured_email = os.environ.get("SUPERADMIN_EMAIL", "ariandomimate@gmail.com").strip().lower()
+    if not current or current.role != "SUPERADMIN" or current.email.lower() != configured_email:
+        return None
+    return current
+
+
+@app.get("/admin/applications/")
+def registration_applications():
+    admin = require_superadmin()
+    if not admin:
+        return redirect(url_for("home"))
+    rows = RegistrationApplication.query.order_by(RegistrationApplication.created_at.desc()).limit(200).all()
+    return render_template_string("""<!doctype html><html lang="de"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ULTIMA · Zugangsanträge</title><style>
+    body{background:#080d18;color:#f4ead8;font:15px system-ui;margin:0;padding:24px}main{max-width:1050px;margin:auto}article{background:#111b2d;border:1px solid #705b3a;border-radius:14px;padding:18px;margin:14px 0}input,textarea{width:100%;box-sizing:border-box;background:#091321;color:white;border:1px solid #40506b;padding:10px;margin:6px 0}button{padding:10px 16px;margin:6px 8px 0 0;background:#e7c879;border:0;border-radius:6px;font-weight:bold}.reject{background:#62414a;color:white}.muted{color:#a8b5c9}pre{white-space:pre-wrap;overflow-wrap:anywhere}
+    </style><main><h1>ULTIMA · Zugangsanträge</h1><p class="muted">Angemeldet als {{admin.email}} · Nur du kannst Anträge freigeben.</p><p><a href="/" style="color:#5ce1e6">Zurück zum Portal</a></p>
+    {% for a in rows %}<article><h2>#{{a.id}} · {{a.full_name}}</h2><p>Status: <b>{{a.status}}</b> · {{a.created_at.strftime("%d.%m.%Y %H:%M UTC")}}</p><p>E-Mail: {{a.email}}<br>Telefon: {{a.phone}}<br>Adresse: {{a.postal_address}}</p><h3>Profilangaben · Interessen · Träume · Ziele</h3><pre>{{a.profile_data}}</pre>{% if a.status == "pending" %}<form method="post" action="/admin/applications/{{a.id}}/decision"><input type="hidden" name="csrf_token" value="{{csrf_token()}}"><label>Notiz (optional)</label><input name="decision_note" maxlength="1000"><button name="decision" value="approve">Freigeben</button><button class="reject" name="decision" value="reject">Ablehnen</button></form>{% else %}<p class="muted">Entscheidung: {{a.decision_note}} · {{a.reviewed_by or ""}}</p>{% endif %}</article>{% else %}<p>Keine Anträge vorhanden.</p>{% endfor %}</main></html>""", rows=rows, admin=admin)
+
+
+@app.post("/admin/applications/<int:application_id>/decision")
+def decide_registration(application_id):
+    admin = require_superadmin()
+    if not admin:
+        return jsonify(error="superadmin_required"), 403
+    application = db.session.get(RegistrationApplication, application_id)
+    if not application or application.status != "pending":
+        flash("Antrag nicht gefunden oder bereits entschieden.")
+        return redirect(url_for("registration_applications"))
+    decision = request.form.get("decision")
+    note = request.form.get("decision_note", "").strip()[:1000]
+    if decision == "approve":
+        if User.query.filter_by(email=application.email).first():
+            flash("Für diese E-Mail existiert bereits ein Konto. Antrag nicht freigegeben.")
+            return redirect(url_for("registration_applications"))
+        user = User(email=application.email, password_hash=application.password_hash, role="USER")
+        db.session.add(user)
+        db.session.flush()
+        now = datetime.now(timezone.utc)
+        db.session.add(PremiumTrial(user_id=user.id, started_at=now, ends_at=now + timedelta(days=1)))
+        application.status = "approved"
+        application.decision_note = note or "Freigegeben"
+    elif decision == "reject":
+        application.status = "rejected"
+        application.decision_note = note or "Abgelehnt"
+    else:
+        return jsonify(error="invalid_decision"), 400
+    application.reviewed_at = datetime.now(timezone.utc)
+    application.reviewed_by = admin.email
+    db.session.commit()
+    # Notify applicant only if SMTP is configured; do not claim delivery otherwise.
+    try:
+        import smtplib
+        from email.message import EmailMessage
+        host, sender = os.environ.get("SMTP_HOST", ""), os.environ.get("SMTP_FROM", "")
+        if host and sender:
+            msg = EmailMessage()
+            msg["Subject"] = "Dein ULTIMA-Zugangsantrag: " + application.status
+            msg["From"] = sender
+            msg["To"] = application.email
+            msg.set_content("Dein Antrag wurde " + ("freigegeben." if decision == "approve" else "abgelehnt.") + "\n" + note)
+            with smtplib.SMTP(host, int(os.environ.get("SMTP_PORT", "587")), timeout=15) as smtp:
+                smtp.starttls()
+                smtp.login(os.environ.get("SMTP_USER", ""), os.environ.get("SMTP_PASSWORD", ""))
+                smtp.send_message(msg)
+    except Exception:
+        app.logger.exception("Applicant notification email could not be delivered")
+    flash("Antrag wurde " + ("freigegeben." if decision == "approve" else "abgelehnt."))
+    return redirect(url_for("registration_applications"))
 
 
 class AdminBootstrapUsed(db.Model):
@@ -196,7 +311,7 @@ class AdminBootstrapUsed(db.Model):
 def admin_setup(token):
     import hashlib, hmac
     configured = os.environ.get("ULTIMA_ADMIN_SETUP_TOKEN", "")
-    owner_email = os.environ.get("SUPERADMIN_EMAIL", "").strip().lower()
+    owner_email = os.environ.get("SUPERADMIN_EMAIL", "ariandomimate@gmail.com").strip().lower()
     digest = hashlib.sha256(token.encode()).hexdigest()
     valid = bool(configured and owner_email and hmac.compare_digest(token, configured))
     if valid and AdminBootstrapUsed.query.filter_by(token_hash=digest).first():
@@ -451,7 +566,7 @@ with app.app_context():
     db.create_all()
     # Keep the configured ULTIMA master account privileged even when it
     # was registered before SUPERADMIN_EMAIL was configured.
-    owner_email = os.environ.get("SUPERADMIN_EMAIL", "").strip().lower()
+    owner_email = os.environ.get("SUPERADMIN_EMAIL", "ariandomimate@gmail.com").strip().lower()
     if owner_email:
         owner = User.query.filter(db.func.lower(User.email) == owner_email).first()
         if owner and owner.role != "SUPERADMIN":
