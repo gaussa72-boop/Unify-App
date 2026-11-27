@@ -393,7 +393,7 @@ def login_page():
 @app.post("/login")
 def login():
     email = request.form.get("email", "").strip().lower()
-    user = User.query.filter_by(email=email).first()
+    user = User.query.filter(db.func.lower(User.email) == email).first()
     if user and bcrypt.check_password_hash(user.password_hash, request.form.get("password", "")):
         # The configured owner receives the canonical role at login as well as
         # at startup, so an older database row cannot accidentally lose access.
@@ -618,6 +618,10 @@ register_social(app, db, User)
 
 from auth_recovery import register_auth_recovery
 register_auth_recovery(app, db, User, bcrypt)
+
+# Secure finance dashboard, invoice ledger and shop checkout-event ingestion.
+from commerce_admin import register_commerce_admin
+register_commerce_admin(app, db, require_superadmin)
 
 with app.app_context():
     db.create_all()
