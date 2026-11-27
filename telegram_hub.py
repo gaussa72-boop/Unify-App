@@ -239,7 +239,9 @@ def _register_webhook_once():
   return
 
 @bp.before_app_request
-def register_webhook_on_first_request(): _register_webhook_once()
+def register_webhook_on_first_request():
+ _register_webhook_once()
+ _register_public_webhook_once()
 
 @bp.post("/telegram/webhook")
 def telegram_webhook():
