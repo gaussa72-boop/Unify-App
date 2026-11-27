@@ -112,8 +112,8 @@ PAGE = """
 </style><main><div class="brand">ULTIMA NETWORK · UNIFY</div><div class="hero"><div class="orb"></div><div><h1>Ein Konto. Dein Netzwerk.</h1><p>Zentrale Anmeldung und persönliche Profile für verbundene Websites.</p></div></div>
 {% for m in get_flashed_messages() %}<div class="flash">{{m}}</div>{% endfor %}
 {% if user %}
-<div class="grid"><section class="panel"><h2>Dein Profil</h2><p>{{user.email}}</p><p>Rolle: <b>{{user.role}}</b></p>{% if trial_active %}<p style="color:#8dd8b6">Premium-Testphase aktiv · kostenlos bis {{trial.ends_at.strftime("%d.%m.%Y")}}</p>{% elif trial_expired %}<p style="color:#e7c879">Premium-Testphase beendet · Zahlung erforderlich</p>{% endif %}<p><a href="/assistant/">ULTIMA AI · Assistent öffnen ↗</a></p><p><a href="/network/">ULTIMA Social · Community & Messenger ↗</a></p>
-<p><a href="https://ate-rea-characterverse.onrender.com/avatar.html">3D Avatar-Singularität · CharakterVerse ↗</a></p>{% if user.role == "SUPERADMIN" and user.email|lower == "ariandomimate@gmail.com" %}<p><a href="/admin/applications/">Zugangsanträge verwalten ↗</a></p>{% endif %}<form method="post" action="/logout"><input type="hidden" name="csrf_token" value="{{csrf_token()}}"><button>Abmelden</button></form></section>
+<div class="grid"><section class="panel"><h2>Dein Profil</h2><p>{{user.email}}</p><p>Rolle: <b>{{user.role}}</b></p>{% if trial_active and user.role == "SUPERADMIN" %}<p style="color:#8dd8b6">Master Premium · lebenslang · Superadmin-Zugriff</p>{% elif trial_active %}<p style="color:#8dd8b6">Premium-Testphase aktiv · kostenlos bis {{trial.ends_at.strftime("%d.%m.%Y")}}</p>{% elif trial_expired %}<p style="color:#e7c879">Premium-Testphase beendet · Zahlung erforderlich</p>{% endif %}<p><a href="/assistant/">ULTIMA AI · Assistent öffnen ↗</a></p><p><a href="/network/">ULTIMA Social · Community & Messenger ↗</a></p>
+<p><a href="https://ate-rea-characterverse.onrender.com/avatar.html">3D Avatar-Singularität · CharakterVerse ↗</a></p>{% if user.role == "SUPERADMIN" %}<p><a href="/admin/applications/">Zugangsanträge verwalten ↗</a></p><p><a href="/admin/system/mail-status/">E-Mail-Weiterleitung prüfen ↗</a></p>{% endif %}<form method="post" action="/logout"><input type="hidden" name="csrf_token" value="{{csrf_token()}}"><button>Abmelden</button></form></section>
 <section class="panel"><h2>Website-Profil speichern</h2><form method="post" action="/profile"><input type="hidden" name="csrf_token" value="{{csrf_token()}}"><label>Website-Kennung</label><input name="site_key" placeholder="z. B. lichtkrieger" required maxlength="100"><label>Profilinformationen (JSON)</label><textarea name="profile_data" rows="4" placeholder='{"anzeigename":"...","interessen":[]}'></textarea><button>Profil speichern</button></form></section></div>
 <section class="panel" style="margin-top:16px"><h2>Deine Website-Profile</h2>{% if profiles %}{% for p in profiles %}<p><b>{{p.site_key}}</b> · {{p.profile_data}}</p>{% endfor %}{% else %}<p>Noch keine Website-Profile gespeichert.</p>{% endif %}</section>
 {% else %}
@@ -177,9 +177,10 @@ def home():
     user = db.session.get(User, session.get("user_id")) if session.get("user_id") else None
     profiles = SiteProfile.query.filter_by(user_id=user.id).order_by(SiteProfile.site_key).all() if user else []
     trial = PremiumTrial.query.filter_by(user_id=user.id).first() if user else None
-    trial_active = bool(trial and utc_aware(trial.ends_at) > datetime.now(timezone.utc))
+    lifetime_master = is_lifetime_superadmin(user)
+    trial_active = bool(lifetime_master or (trial and utc_aware(trial.ends_at) > datetime.now(timezone.utc)))
     payment_pending = bool(user and PremiumPaymentRequest.query.filter_by(user_id=user.id, status="pending_review").first())
-    trial_expired = bool(user and trial and not trial_active)
+    trial_expired = bool(user and trial and not trial_active and not lifetime_master)
     return render_template_string(PAGE, user=user, profiles=profiles, trial=trial, trial_active=trial_active, trial_expired=trial_expired, payment_pending=payment_pending)
 
 @app.get("/register")
@@ -230,7 +231,7 @@ def register():
                 msg = EmailMessage()
                 msg["Subject"] = "Neuer ULTIMA-Zugangsantrag"
                 msg["From"] = sender
-                msg["To"] = os.environ.get("SUPERADMIN_EMAIL", "ariandomimate@gmail.com")
+                msg["To"] = os.environ.get("APPLICATION_NOTIFICATION_EMAIL", "ariandomimate@gmail.com").strip()
                 msg.set_content(
                     "Neuer Antrag wartet auf Freigabe in /admin/applications/\n\n"
                     f"Name: {full_name}\nE-Mail: {email}\nTelefon: {phone}\nAdresse: {postal_address}\n"
@@ -246,12 +247,33 @@ def register():
     return redirect(url_for("home"))
 
 
+def is_lifetime_superadmin(user):
+    configured_email = os.environ.get("SUPERADMIN_EMAIL", "gaussa72@gmail.com").strip().lower()
+    return bool(user and user.role == "SUPERADMIN" and user.email.lower() == configured_email)
+
+
 def require_superadmin():
     current = db.session.get(User, session.get("user_id")) if session.get("user_id") else None
-    configured_email = os.environ.get("SUPERADMIN_EMAIL", "ariandomimate@gmail.com").strip().lower()
+    configured_email = os.environ.get("SUPERADMIN_EMAIL", "gaussa72@gmail.com").strip().lower()
     if not current or current.role != "SUPERADMIN" or current.email.lower() != configured_email:
         return None
     return current
+
+
+@app.get("/admin/system/mail-status/")
+def admin_mail_status():
+    admin = require_superadmin()
+    if not admin:
+        return redirect(url_for("home"))
+    configured = {
+        "SMTP_HOST": bool(os.environ.get("SMTP_HOST", "").strip()),
+        "SMTP_FROM": bool(os.environ.get("SMTP_FROM", "").strip()),
+        "SMTP_USER": bool(os.environ.get("SMTP_USER", "").strip()),
+        "SMTP_PASSWORD": bool(os.environ.get("SMTP_PASSWORD", "").strip()),
+        "Empfänger": os.environ.get("APPLICATION_NOTIFICATION_EMAIL", "ariandomimate@gmail.com").strip(),
+    }
+    ready = all(configured.get(key) for key in ("SMTP_HOST", "SMTP_FROM", "SMTP_USER", "SMTP_PASSWORD"))
+    return render_template_string("""<!doctype html><html lang="de"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ULTIMA · Mailstatus</title><style>body{background:#080d18;color:#f4ead8;font:16px system-ui;padding:24px}main{max-width:720px;margin:auto;background:#111b2d;border:1px solid #8c673e;border-radius:14px;padding:24px}li{margin:12px 0}.ok{color:#8dd8b6}.bad{color:#e7c879}a{color:#5ce1e6}</style><main><h1>E-Mail-Weiterleitung</h1><p>Empfänger für neue Zugangs- und Mitgliedschaftsanträge: <b>{{configured["Empfänger"]}}</b></p><p class="{{'ok' if ready else 'bad'}}">{{"SMTP vollständig konfiguriert" if ready else "SMTP nicht vollständig konfiguriert – Weiterleitung kann noch nicht garantiert werden."}}</p><ul>{% for key,value in configured.items() if key != "Empfänger" %}<li>{{key}}: <b class="{{'ok' if value else 'bad'}}">{{"hinterlegt" if value else "fehlt"}}</b></li>{% endfor %}</ul><p>Es werden keine Passwörter, Passwort-Hashes oder sonstige Zugangsdaten per E-Mail versendet.</p><a href="/">Zurück zum Portal</a></main></html>""", configured=configured, ready=ready)
 
 
 @app.get("/admin/applications/")
@@ -327,7 +349,7 @@ class AdminBootstrapUsed(db.Model):
 def admin_setup(token):
     import hashlib, hmac
     configured = os.environ.get("ULTIMA_ADMIN_SETUP_TOKEN", "")
-    owner_email = os.environ.get("SUPERADMIN_EMAIL", "ariandomimate@gmail.com").strip().lower()
+    owner_email = os.environ.get("SUPERADMIN_EMAIL", "gaussa72@gmail.com").strip().lower()
     digest = hashlib.sha256(token.encode()).hexdigest()
     valid = bool(configured and owner_email and hmac.compare_digest(token, configured))
     if valid and AdminBootstrapUsed.query.filter_by(token_hash=digest).first():
@@ -401,9 +423,11 @@ def save_profile():
 def premium_status():
     user = db.session.get(User, session.get("user_id")) if session.get("user_id") else None
     if not user: return jsonify(error="authentication_required"), 401
+    if is_lifetime_superadmin(user):
+        return jsonify(premium=True, lifetime=True, tier="MASTER", trial="lifetime", role="SUPERADMIN", payment_required=False), 200
     trial = PremiumTrial.query.filter_by(user_id=user.id).first()
     if not trial:
-        return jsonify(premium=False, trial="not_eligible", message="Für dieses Konto wurde kein neuer 30-Tage-Testzeitraum registriert."), 200
+        return jsonify(premium=False, lifetime=False, trial="not_eligible", message="Für dieses Konto wurde kein neuer 30-Tage-Testzeitraum registriert."), 200
     active = trial.ends_at > datetime.now(timezone.utc)
     pending = PremiumPaymentRequest.query.filter_by(user_id=user.id, status="pending_review").first()
     return jsonify(premium=active, trial="active" if active else "expired", ends_at=trial.ends_at.isoformat(), payment_pending=bool(pending)), 200
@@ -412,6 +436,8 @@ def premium_status():
 def premium_payment_request():
     user = db.session.get(User, session.get("user_id")) if session.get("user_id") else None
     if not user: return jsonify(error="authentication_required"), 401
+    if is_lifetime_superadmin(user):
+        return jsonify(error="Für dein Superadmin-Masterkonto ist lebenslanges Premium bereits aktiv.", premium=True, lifetime=True), 409
     data = request.get_json(silent=True) or {}
     txid = str(data.get("txid", "")).strip()
     if len(txid) > 128: return jsonify(error="Ungültige TXID."), 400
@@ -582,7 +608,7 @@ with app.app_context():
     db.create_all()
     # Keep the configured ULTIMA master account privileged even when it
     # was registered before SUPERADMIN_EMAIL was configured.
-    owner_email = os.environ.get("SUPERADMIN_EMAIL", "ariandomimate@gmail.com").strip().lower()
+    owner_email = os.environ.get("SUPERADMIN_EMAIL", "gaussa72@gmail.com").strip().lower()
     if owner_email:
         owner = User.query.filter(db.func.lower(User.email) == owner_email).first()
         if owner and owner.role != "SUPERADMIN":
