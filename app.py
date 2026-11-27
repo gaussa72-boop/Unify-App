@@ -37,6 +37,10 @@ from telegram_hub import bp as telegram_bp
 app.register_blueprint(telegram_bp)
 csrf.exempt(telegram_bp)
 
+# Standalone Aurealis Network social site and Telegram Mini App.
+from network_site import bp as network_bp
+app.register_blueprint(network_bp)
+
 app.config["WTF_CSRF_TIME_LIMIT"] = 12 * 60 * 60  # Flask-WTF expects seconds, not datetime.timedelta
 
 @app.errorhandler(CSRFError)
