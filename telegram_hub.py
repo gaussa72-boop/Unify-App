@@ -53,6 +53,61 @@ SHOPS = [
  ("Rothshild · Royal Palace", "https://royal-palace-4r57.onrender.com/"),
  ("Rothshild · Business Real Estate", "https://business-real-estate-membership-wswk.onrender.com/"),
 ]
+SITE_ADMIN_LINKS = [
+ ("Astralis Omega", "astralis-omega"),
+ ("NovaTube", "novatube"),
+ ("Ate Rea Vermächtnis", "ate-rea-vermachtnis"),
+ ("DropShift Store", "dropshift-store"),
+ ("Quantum.AI", "quantum-ai"),
+ ("KI Game Mod", "ki-game-mod"),
+ ("Note-KI", "note-ki"),
+ ("iPad App IONOS-7", "ipad-app-ionos-7"),
+ ("Galactic AI V3", "galactic-ai-v3"),
+ ("Quantum Super Intelligence", "quantum-super-intelligence"),
+ ("IONOS-8", "ionos-8"),
+ ("Quantum KI CAT Chat", "quantum-ki-cat-chat"),
+ ("AI Quantumlight", "ai-quantumlight"),
+ ("Quantenformel", "quantenformel"),
+ ("Quantum Singularity", "quantum-singularity"),
+ ("IONOS AI", "ionos-ai"),
+ ("Rea Signature", "rea-signature"),
+ ("Quantum AI-One", "quantum-ai-one"),
+ ("Quantum KI Ultra Pro V2 (Renewed)", "quantum-ki-ultra-pro-v2-renewed"),
+ ("BullRun Apparel", "bullrun-apparel"),
+ ("Quantum Mirror Wonderland", "quantum-mirror-wonderland"),
+ ("IONOS-KI", "ionos-ki"),
+ ("IONOS-7", "ionos-7"),
+ ("UltraKI.AI", "ultraki-ai"),
+ ("Ultra KI V2", "ultra-ki-v2"),
+ ("Quantum KI Ultra Pro V2", "quantum-ki-ultra-pro-v2"),
+ ("QuantumAI Chat", "quantumai-chat"),
+ ("Trinity Trading", "trinity-trading"),
+ ("Aktiv Lyca", "aktiv-lyca-rgds"),
+ ("Sneaker Store", "sneaker-store"),
+ ("Webshop Parfum", "webshop-parfum"),
+ ("Aktiv Lyca", "aktiv-lyca-rnmc"),
+ ("Rothshild · Royal Palace", "royal-palace-4r57"),
+ ("Rothshild · Business Real Estate", "business-real-estate-membership"),
+ ("LICHTKRIEGER Cloud Gaming", "lichtkrieger"),
+ ("ULTIMA Central Public Portal", "ultima-central-portal"),
+ ("ULTIMA Unify Account Hub", "ultima-unify-portal"),
+ ("NeuroForge Systems", "neuroforge"),
+ ("Aurelis Creative AI Studio", "aurelis-creative-ai-studio"),
+ ("Ate Rea CharacterVerse", "ate-rea-characterverse"),
+ ("IONOS-7 MasterCat Portal", "ionos-7-gauss-portal"),
+ ("NeuroForge Systems", "neuroforge-gaussa-2035"),
+ ("Galactic AI", "galactic-ai-v3-app"),
+]
+SHOP_ADMIN_LINKS = [
+ ("DropShift Store", "dropshift-store"),
+ ("BullRun Apparel", "bullrun-apparel"),
+ ("Aktiv Lyca", "aktiv-lyca-rgds"),
+ ("Sneaker Store", "sneaker-store"),
+ ("Webshop Parfum", "webshop-parfum"),
+ ("Aktiv Lyca", "aktiv-lyca-rnmc"),
+ ("Rothshild · Royal Palace", "royal-palace-4r57"),
+ ("Rothshild · Business Real Estate", "business-real-estate-membership"),
+]
 
 def _token():
  return os.environ.get("TELEGRAM_BOT_TOKEN","").strip()
@@ -85,7 +140,10 @@ def _menu(role):
   [{"text":"🔄 Update Matrix","url":PORTAL.rstrip("/")+"/update-matrix/"}],
  ]
  if role in {"mentor","admin","superadmin"}: rows.append([{"text":"🎓 Mentor-Bereich","url":API_BASE+"/admin/mentors"}])
- if role in {"admin","superadmin"}: rows.append([{"text":"🛠 Verwaltungszentrale","url":API_BASE+"/admin"}])
+ if role in {"admin","superadmin"}:
+  rows.append([{"text":"🛠 Verwaltungszentrale","url":API_BASE+"/admin"}])
+  rows.append([{"text":"🧩 Einzelne Websites verwalten","callback_data":"site_admins"}])
+  rows.append([{"text":"🛍 Einzelne Webshops verwalten","callback_data":"shop_admins"}])
  if role=="superadmin":
   rows.extend([
    [{"text":"🛡 Cyber Shield","url":API_BASE+"/cyber-shield"}],
@@ -151,6 +209,12 @@ def telegram_webhook():
   elif data=="games":
    _directory(chat_id,"GAMES & GAME-ENGINES",[("Quantum Mirror Wonderland","https://quantum-mirror-wonderland.onrender.com/"),("LICHTKRIEGER Cloud Gaming","https://lichtkrieger-cloud-gaming.onrender.com/"),("KI Game Mod","https://ki-game-mod.onrender.com/"),("Astralis Omega","https://astralis-omega.onrender.com/")],role)
   elif data=="shops": _directory(chat_id,"WEBSHOPS · ZENTRALE SHOP-ÜBERSICHT",SHOPS,role)
+  elif data=="site_admins" and role in {"admin","superadmin"}:
+   entries=[(name,API_BASE+"/admin/site/"+slug) for name,slug in SITE_ADMIN_LINKS]
+   _directory(chat_id,"WEBSITE-VERWALTUNG · ADMIN LOGIN ERFORDERLICH",entries,role)
+  elif data=="shop_admins" and role in {"admin","superadmin"}:
+   entries=[(name,API_BASE+"/admin/site/"+slug) for name,slug in SHOP_ADMIN_LINKS]
+   _directory(chat_id,"WEBSHOP-VERWALTUNG · ADMIN LOGIN ERFORDERLICH",entries,role)
   elif data=="home": _send(chat_id,"ULTIMA Central · Hauptmenü",_menu(role))
  return jsonify(ok=True)
 
