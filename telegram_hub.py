@@ -44,6 +44,7 @@ SITES = [
  ("Galactic AI", "https://galactic-ai-v3-app.onrender.com/"),
 ]
 SHOPS = [
+ ("DropShift Store", "https://dropshift-store.onrender.com/"),
  ("BullRun Apparel", "https://bullrun-apparel.onrender.com/"),
  ("Aktiv Lyca", "https://aktiv-lyca-rgds.onrender.com/"),
  ("Sneaker Store", "https://sneaker-store-bow5.onrender.com/"),
