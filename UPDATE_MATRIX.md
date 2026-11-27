@@ -47,3 +47,11 @@ All endpoints require `Authorization: Bearer <ULTIMA_UPDATE_MATRIX_TOKEN>`.
 - Telegram hub directory has been expanded to the registered active websites/programs and all registered shop entries; menu includes application, profile, 24-hour trial entry, Update Matrix, and role-gated mentor/admin/superadmin links.
 - Telegram superadmin/admin/mentor numeric ID allowlists must be configured in Render before privileged Telegram menus become available. Do not infer or guess IDs.
 - Rollout scope so far: central membership API and ULTIMA Telegram hub only. Each downstream frontend must still be checked for membership-widget embed, SSO flow and route-level access enforcement; do not assume every website has been integrated merely because it appears in the central registry.
+
+## Aurealis Finance rollout (2026-11-27)
+- Added per-account finance tables to the central ULTIMA membership API: provider consent requests, invoice records, additional costs (collection/Inkasso, reminders, fees, interest), payment state and financing plan.
+- Added authenticated user APIs with strict owner scoping. Users can only read or change their own invoices and plans.
+- Added manual invoice entry, paid button, additional-cost controls and monthly repayment estimate to the ULTIMA account dashboard.
+- Added a superadmin finance overview that exposes aggregate counts only, not personal mailbox content.
+- Added Finance navigation to Aurealis Shopping AI.
+- Email import from Gmail, Outlook, iCloud Mail and Hostinger remains gated until each provider's OAuth client, callback, state validation, least-privilege scopes, encrypted token storage, attachment scanning and end-to-end tests are configured. No mailbox password is collected; no email has been read yet.
