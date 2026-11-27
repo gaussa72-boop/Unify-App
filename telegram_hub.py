@@ -9,6 +9,8 @@ API_BASE = os.environ.get("ULTIMA_MEMBERSHIP_API_URL", "https://ultima-membershi
 PORTAL = os.environ.get("ULTIMA_PORTAL_URL", "https://ultima-unify-45ne.onrender.com/")
 APPLY = API_BASE + "/membership-apply"
 NETWORK = os.environ.get("ULTIMA_NETWORK_URL", "https://aurealis-network.onrender.com/")
+SUPPORT_URL = os.environ.get("ULTIMA_SUPPORT_URL", "https://t.me/Ari_phenex")
+SUPPORT_NAME = os.environ.get("ULTIMA_SUPPORT_NAME", "Arian · @Ari_phenex")
 
 SITES = [
  ("Astralis Game Engine","https://astralis-game-engine.onrender.com/"),
@@ -155,7 +157,8 @@ def _menu(role):
   [{"text":"🛍 Webshops","callback_data":"shops"}],
   [{"text":"🌌 Aurealis Network · Mini App","web_app":{"url":NETWORK}}],
   [{"text":"♡ Humanitäre Spendenaktion","url":NETWORK.rstrip("/")+"/#donate"}],
-  [{"text":"💬 Mentor kontaktieren · Arian_Phenex","url":"https://t.me/Arian_Phenex"}],
+  [{"text":"🛟 Support kontaktieren · Arian","url":SUPPORT_URL}],
+  [{"text":"🎓 Mentor kontaktieren","url":SUPPORT_URL}],
   [{"text":"📝 Zentralen Website-Zugang beantragen","url":PORTAL.rstrip("/")+"/register"}],
   [{"text":"💳 Mitgliedschaft beantragen","url":APPLY}],
   [{"text":"⏱ 1 Tag KI & Programme testen","url":PORTAL}],
@@ -215,6 +218,7 @@ def _register_webhook_once():
    {"command":"games","description":"Games und Engines"},
    {"command":"register","description":"Zentralen Zugang beantragen"},
    {"command":"mentor","description":"Mentor kontaktieren"},
+   {"command":"support","description":"ULTIMA Support kontaktieren"},
    {"command":"donate","description":"Humanitäre Hilfe"},
    {"command":"id","description":"Eigene Telegram-ID anzeigen"},
    {"command":"status","description":"Bot-Status anzeigen"},
@@ -280,8 +284,8 @@ def telegram_webhook():
    ],role)
   elif chat_id and command=="/register":
    _send(chat_id,"Zentralen Website-Zugang beantragen:",{"inline_keyboard":[[{"text":"Zugang beantragen ↗","url":PORTAL.rstrip("/")+"/register"}],[{"text":"⬅ Hauptmenü","callback_data":"home"}]]})
-  elif chat_id and command=="/mentor":
-   _send(chat_id,"Mentor-Kontakt: @Arian_Phenex. Der Kontaktlink öffnet Telegram; eine Mentor-Rolle wird separat durch den Superadministrator vergeben.",{"inline_keyboard":[[{"text":"Mentor-Chat öffnen ↗","url":"https://t.me/Arian_Phenex"}]]})
+  elif chat_id and command in ("/mentor","/support"):
+   _send(chat_id,"🛟 ULTIMA SUPPORT\\n\\nDein Supportkontakt: "+SUPPORT_NAME+". Tippe auf den Button, um den Telegram-Chat zu öffnen. Teile dort keine Passwörter, Bot-Tokens oder privaten Wallet-Schlüssel.",{"inline_keyboard":[[{"text":"Support-Chat öffnen ↗","url":SUPPORT_URL}],[{"text":"⬅ Hauptmenü","callback_data":"home"}]]})
   elif chat_id and command=="/donate":
    _send(chat_id,"Humanitäre Spendenaktion: Informationen und Kontakt. Eine Zahlungsannahme wird erst aktiviert, wenn Empfänger und Zahlungsweg verifiziert sind.",{"inline_keyboard":[[{"text":"Spendenaktion ansehen ↗","url":NETWORK.rstrip("/")+"/#donate"}]]})
   elif chat_id and command=="/status":
@@ -318,10 +322,12 @@ def telegram_webhook():
   elif data=="shop_admins" and role in {"admin","superadmin"}:
    entries=[(name,API_BASE+"/admin/site/"+slug) for name,slug in SHOP_ADMIN_LINKS]
    _directory(chat_id,"WEBSHOP-VERWALTUNG · ADMIN LOGIN ERFORDERLICH",entries,role)
+  elif data=="support":
+   _send(chat_id,"🛟 ULTIMA SUPPORT\\n\\nDirekter Kontakt: "+SUPPORT_NAME+". Öffne den Chat über den Button. Bitte sende niemals Passwörter, Bot-Tokens oder private Wallet-Schlüssel.",{"inline_keyboard":[[{"text":"Support-Chat öffnen ↗","url":SUPPORT_URL}],[{"text":"⬅ Hauptmenü","callback_data":"home"}]]})
   elif data=="home": _send(chat_id,"ULTIMA Central · Hauptmenü",_menu(role))
  return jsonify(ok=True)
 
 @bp.get("/telegram/status")
 def telegram_status():
  configured=bool(_token() and os.environ.get("TELEGRAM_WEBHOOK_SECRET") and os.environ.get("TELEGRAM_PUBLIC_URL"))
- return jsonify(bot="ULTIMA Central",username="Ultima_Unify_Bot",token_configured=bool(_token()),webhook_configured=_WEBHOOK_REGISTERED,webhook_error=_WEBHOOK_ERROR,ready=configured and _WEBHOOK_REGISTERED,configured_roles={"superadmin":bool(_ids("ULTIMA_TELEGRAM_SUPERADMIN_IDS")),"admin":bool(_ids("ULTIMA_TELEGRAM_ADMIN_IDS")),"mentor":bool(_ids("ULTIMA_TELEGRAM_MENTOR_IDS"))},membership_application=APPLY,network=NETWORK,mentor_contact="https://t.me/Arian_Phenex"),200
+ return jsonify(bot="ULTIMA Central",username="Ultima_Unify_Bot",token_configured=bool(_token()),webhook_configured=_WEBHOOK_REGISTERED,webhook_error=_WEBHOOK_ERROR,ready=configured and _WEBHOOK_REGISTERED,configured_roles={"superadmin":bool(_ids("ULTIMA_TELEGRAM_SUPERADMIN_IDS")),"admin":bool(_ids("ULTIMA_TELEGRAM_ADMIN_IDS")),"mentor":bool(_ids("ULTIMA_TELEGRAM_MENTOR_IDS"))},membership_application=APPLY,network=NETWORK,mentor_contact=SUPPORT_URL,support_contact=SUPPORT_URL),200
