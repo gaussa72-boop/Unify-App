@@ -55,3 +55,11 @@ Gültig ab 2026-11-27 für alle vom Betreiber gaussa72-boop kontrollierten oder 
 
 ## Berichtsformat
 Jede Update-Matrix-Runde muss ausweisen: geprüfte Repositories/Services, ausgeschlossene oder nicht erreichbare Ziele, Änderungen/Commits, Tests, Deployment-IDs und Live-Verifikation, Sicherheits-/Kompatibilitätsrisiken, offene Secrets/Provider-Setup und Rollback-Status. Nicht geprüfte Ziele ausdrücklich als ungeprüft markieren.
+
+## Membership, applications and time-limited access
+- Public registration for each active, membership-enabled website requires a membership application and explicit approval before account creation/access. Site-specific approved applications and global network applications are distinct scopes.
+- Existing owner/admin/mentor roles must not be accidentally demoted; role grants remain server-side and audited.
+- Approved members may start one network-wide 24-hour AI trial once per verified account. Trial expiry and reuse prevention are enforced by the central membership database, not Telegram UI.
+- Holiday full-access test days are separately controlled in the ULTIMA admin page. Only preconfigured Baden-Württemberg public-holiday dates may be toggled by the superadmin; the override expires automatically at midnight Europe/Berlin and does not bypass membership approval or grant admin roles.
+- Telegram navigation includes all active website/program links and the registered webshop directory. Superadmin/admin/mentor menus require allowlisted numeric Telegram user IDs; a bot username or chat name is never sufficient proof of role.
+- Telegram webhook requires a configured secret token. Bot token, webhook secret, owner Telegram IDs and other credentials remain in Render secret environment variables, never in Git.
