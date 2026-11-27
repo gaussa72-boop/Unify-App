@@ -420,6 +420,7 @@ def _register_public_webhook_once():
  secret=os.environ.get(PUBLIC_BOT_SECRET_ENV,"").strip()
  base=os.environ.get("TELEGRAM_PUBLIC_URL","").strip().rstrip("/")
  if not token or not secret or not base:
+  print("ULTIMA public Telegram setup incomplete: token="+str(bool(token))+", secret="+str(bool(secret))+", public_url="+str(bool(base)))
   return
  try:
   _public_api("setWebhook",{"url":base+"/telegram/public-webhook","secret_token":secret,"allowed_updates":["message","callback_query"],"drop_pending_updates":False})
@@ -537,4 +538,4 @@ def telegram_status():
    if wh.get("last_error_message"): remote_error=wh.get("last_error_message")
   except Exception as exc:
    remote_error=type(exc).__name__+": "+str(exc)[:200]
- return jsonify(bot="ULTIMA Central",username=remote_username or "Ultima_Unify_Bot",token_configured=bool(_token()),telegram_api_ok=api_ok,webhook_configured=bool(remote_webhook),webhook_url=remote_webhook,pending_updates=pending_updates,remote_error=remote_error,webhook_error=_WEBHOOK_ERROR,ready=configured and api_ok and bool(remote_webhook) and remote_webhook.endswith("/telegram/webhook"),configured_roles={"superadmin":bool(_ids("ULTIMA_TELEGRAM_SUPERADMIN_IDS")) or bool(os.environ.get("ULTIMA_TELEGRAM_SUPERADMIN_USERNAMES","ari_phenex")),"admin":bool(_ids("ULTIMA_TELEGRAM_ADMIN_IDS")),"mentor":bool(_ids("ULTIMA_TELEGRAM_MENTOR_IDS"))},membership_application=APPLY,network=NETWORK,mentor_contact=SUPPORT_URL,support_contact=SUPPORT_URL),200
+ return jsonify(bot="ULTIMA Admin Bot",username=remote_username or "Ultima_Unify_Bot",token_configured=bool(_token()),telegram_api_ok=api_ok,webhook_configured=bool(remote_webhook),webhook_url=remote_webhook,pending_updates=pending_updates,remote_error=remote_error,webhook_error=_WEBHOOK_ERROR,ready=configured and api_ok and bool(remote_webhook) and remote_webhook.endswith("/telegram/webhook"),public_bot={"token_configured":bool(_public_token()),"webhook_registered":_PUBLIC_BOT_REGISTERED,"setup_error":_PUBLIC_BOT_ERROR},configured_roles={"superadmin":bool(_ids("ULTIMA_TELEGRAM_SUPERADMIN_IDS")) or bool(os.environ.get("ULTIMA_TELEGRAM_SUPERADMIN_USERNAMES","")),"admin":bool(_ids("ULTIMA_TELEGRAM_ADMIN_IDS")),"mentor":bool(_ids("ULTIMA_TELEGRAM_MENTOR_IDS"))},membership_application=APPLY,network=NETWORK,mentor_contact=SUPPORT_URL,support_contact=SUPPORT_URL),200
