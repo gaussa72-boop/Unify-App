@@ -337,6 +337,166 @@ def telegram_webhook():
   elif data=="home": _send(chat_id,"ULTIMA Central · Hauptmenü",_menu(role))
  return jsonify(ok=True)
 
+
+
+# Separate public-facing bot. It deliberately has no role lookup and no admin callbacks.
+_PUBLIC_BOT_REGISTERED = False
+_PUBLIC_BOT_ERROR = ""
+PUBLIC_SUPPORT_URL = os.environ.get("ULTIMA_PUBLIC_SUPPORT_URL", "https://t.me/Ari_phenex")
+PUBLIC_BOT_TOKEN_ENV = "ULTIMA_PUBLIC_BOT_TOKEN"
+PUBLIC_BOT_SECRET_ENV = "ULTIMA_PUBLIC_BOT_WEBHOOK_SECRET"
+
+def _public_token():
+ return os.environ.get(PUBLIC_BOT_TOKEN_ENV, "").strip()
+
+def _public_api(method, payload):
+ token = _public_token()
+ if not token: raise RuntimeError(PUBLIC_BOT_TOKEN_ENV + " fehlt")
+ req = urllib.request.Request(
+  "https://api.telegram.org/bot" + token + "/" + method,
+  data=json.dumps(payload).encode(),
+  headers={"Content-Type":"application/json"},
+  method="POST"
+ )
+ with urllib.request.urlopen(req, timeout=12) as response:
+  result = json.loads(response.read().decode())
+  if not result.get("ok"): raise RuntimeError(result.get("description", "Telegram API error"))
+  return result
+
+def _public_send(chat_id, message, markup=None):
+ payload={"chat_id":chat_id,"text":message,"disable_web_page_preview":True}
+ if markup: payload["reply_markup"]=markup
+ _public_api("sendMessage",payload)
+
+def _public_home_markup():
+ return {"inline_keyboard":[
+  [{"text":"🧠 KI-Systeme","callback_data":"pub_ais"},{"text":"🌐 Websites","callback_data":"pub_sites"}],
+  [{"text":"🎮 Games & Engines","callback_data":"pub_games"},{"text":"🛍 Webshops","callback_data":"pub_shops"}],
+  [{"text":"🚀 Aurealis Network · Mini App","web_app":{"url":NETWORK}}],
+  [{"text":"📝 Zugang beantragen","url":PORTAL.rstrip("/")+"/register"}],
+  [{"text":"⭐ Mitgliedschaft & Testzugang","url":APPLY}],
+  [{"text":"♡ Humanitäre Spendenaktion","url":NETWORK.rstrip("/")+"/#donate"}],
+  [{"text":"🛟 Support · Arian Phenex","url":PUBLIC_SUPPORT_URL}],
+ ]}
+
+def _public_directory(chat_id, title, entries):
+ rows=[]
+ lines=[]
+ for entry in entries:
+  if len(entry)==3:
+   name,description,url=entry
+  else:
+   name,url=entry
+   description="Plattform öffnen"
+  rows.append([{"text":name[:48]+" ↗","url":url}])
+  lines.append("• "+name+" — "+description)
+ rows.append([{"text":"⬅ Hauptmenü","callback_data":"pub_home"}])
+ _public_send(chat_id,title+"\n\n"+"\n".join(lines),{"inline_keyboard":rows})
+
+def _register_public_webhook_once():
+ global _PUBLIC_BOT_REGISTERED, _PUBLIC_BOT_ERROR
+ if _PUBLIC_BOT_REGISTERED: return
+ token=_public_token()
+ secret=os.environ.get(PUBLIC_BOT_SECRET_ENV,"").strip()
+ base=os.environ.get("TELEGRAM_PUBLIC_URL","").strip().rstrip("/")
+ if not token or not secret or not base:
+  return
+ try:
+  _public_api("setWebhook",{"url":base+"/telegram/public-webhook","secret_token":secret,"allowed_updates":["message","callback_query"],"drop_pending_updates":False})
+  _public_api("setMyDescription",{"description":"Willkommen bei ULTIMA: Entdecke KI-Systeme, Websites, Games, Webshops und das Aurealis Network. Beantrage einen Zugang, informiere dich über Mitgliedschaften und Testmöglichkeiten oder kontaktiere unseren Support Arian Phenex. Dieser Bot bietet ausschließlich Funktionen für Besucher und Mitglieder."})
+  _public_api("setMyShortDescription",{"short_description":"ULTIMA entdecken: KI, Websites, Games, Shops, Community und Support."})
+  _public_api("setMyCommands",{"commands":[
+   {"command":"start","description":"Willkommen und Hauptmenü"},
+   {"command":"menu","description":"Hauptmenü öffnen"},
+   {"command":"ais","description":"KI-Systeme entdecken"},
+   {"command":"sites","description":"Websites und Programme"},
+   {"command":"games","description":"Games und Game-Engines"},
+   {"command":"shops","description":"Webshops öffnen"},
+   {"command":"register","description":"Zugang beantragen"},
+   {"command":"support","description":"Support Arian Phenex"},
+   {"command":"donate","description":"Humanitäre Spendenaktion"},
+   {"command":"help","description":"Hilfe und Funktionen"}
+  ]})
+  _public_api("setChatMenuButton",{"menu_button":{"type":"web_app","text":"Aurealis Network","web_app":{"url":NETWORK}}})
+  _PUBLIC_BOT_REGISTERED=True
+  print("ULTIMA public Telegram bot registered")
+ except Exception as exc:
+  _PUBLIC_BOT_ERROR=type(exc).__name__+": "+str(exc)[:200]
+  print("ULTIMA public Telegram setup failed: "+_PUBLIC_BOT_ERROR)
+
+@bp.post("/telegram/public-webhook")
+def telegram_public_webhook():
+ expected=os.environ.get(PUBLIC_BOT_SECRET_ENV,"").strip()
+ supplied=request.headers.get("X-Telegram-Bot-Api-Secret-Token","")
+ if not expected or not supplied or not hmac.compare_digest(expected,supplied):
+  return jsonify(ok=False),403
+ update=request.get_json(silent=True) or {}
+ message=update.get("message") or {}
+ callback=update.get("callback_query") or {}
+ if message:
+  chat_id=(message.get("chat") or {}).get("id")
+  text=(message.get("text") or "").strip()
+  command=(text.split()[0].split("@")[0].lower() if text.startswith("/") else "")
+  if not chat_id: return jsonify(ok=True)
+  if command in ("/start","/menu","/help",""):
+   _public_send(chat_id,"✨ WILLKOMMEN BEI ULTIMA ✨\n\nEntdecke ein vernetztes Angebot aus künstlicher Intelligenz, digitalen Plattformen, Games und Webshops.\n\n🧠 KI-SYSTEME\nAurealis, Quantum AI, NeuroForge, IONOS-KI, AI Quantumlight und weitere Projekte.\n\n🌐 WEBSITES & PROGRAMME\nDigitale Dienste, kreative Werkzeuge und Forschungsprojekte.\n\n🎮 GAMES\nSpielwelten und Game-Engines.\n\n🛍 WEBSHOPS\nLyca, ATG Parfum, BullRun, Sneaker, DropShift und weitere Shops.\n\n⭐ ZUGANG & TESTS\nZugang beantragen und verfügbare Testmöglichkeiten entdecken.\n\n🛟 SUPPORT\nArian Phenex hilft bei Fragen. Dieser Bot enthält bewusst keine Admin- oder Verwaltungsfunktionen.",_public_home_markup())
+  elif command=="/ais":
+   _public_directory(chat_id,"🧠 KI-SYSTEME",[
+    ("Aurealis OMNIA","Zentrale KI und kreative Assistenz","https://aurealis-omnia.onrender.com/"),
+    ("Aurealis Creative AI Studio","Kreativwerkzeuge und Content","https://aurelis-creative-ai-studio.onrender.com/"),
+    ("Quantum AI Ultra Pro","KI-Plattform","https://quantum-ki-ultra-pro-v2.onrender.com/"),
+    ("Quantum AI One","KI-Assistent","https://quantum-ai-renewed.onrender.com/"),
+    ("NeuroForge","KI- und Innovationssysteme","https://neuroforge-2035.onrender.com/"),
+    ("IONOS-KI","KI-Plattform","https://ionos-ki.onrender.com/"),
+    ("AI Quantumlight","Quantumlight-Projekt","https://ai-quantumlight.onrender.com/"),
+    ("Ate Rea CharacterVerse","Charakter-KI","https://ate-rea-characterverse.onrender.com/")
+   ])
+  elif command=="/sites": _public_directory(chat_id,"🌐 WEBSITES & PROGRAMME",SITES)
+  elif command=="/games":
+   _public_directory(chat_id,"🎮 GAMES & GAME-ENGINES",[
+    ("Astralis Game Engine","Entwicklungsumgebung und Spiele","https://astralis-game-engine.onrender.com/"),
+    ("Quantum Mirror Wonderland","Interaktive Spielwelt","https://quantum-mirror-wonderland.onrender.com/"),
+    ("Lichtkrieger Cloud Gaming","Cloud Gaming","https://lichtkrieger-cloud-gaming.onrender.com/"),
+    ("The Lord Agent Network","Agenten- und Spielnetzwerk","https://the-lord-agent-network.onrender.com/")
+   ])
+  elif command=="/shops": _public_directory(chat_id,"🛍 WEBSHOPS",SHOPS)
+  elif command=="/register":
+   _public_send(chat_id,"Zugang zu ULTIMA beantragen:",{"inline_keyboard":[[{"text":"Zugang beantragen ↗","url":PORTAL.rstrip("/")+"/register"}],[{"text":"⬅ Hauptmenü","callback_data":"pub_home"}]]})
+  elif command in ("/support","/mentor"):
+   _public_send(chat_id,"🛟 SUPPORT · ARIAN PHENEX\n\nÖffne den Telegram-Chat mit Arian Phenex. Bitte sende niemals Passwörter, Bot-Tokens oder private Wallet-Schlüssel.",{"inline_keyboard":[[{"text":"Arian Phenex kontaktieren ↗","url":PUBLIC_SUPPORT_URL}],[{"text":"⬅ Hauptmenü","callback_data":"pub_home"}]]})
+  elif command=="/donate":
+   _public_send(chat_id,"♡ HUMANITÄRE SPENDENAKTION\n\nInformationen zur Initiative findest du im Aurealis Network. Zahlungswege werden dort transparent ausgewiesen.",{"inline_keyboard":[[{"text":"Spendenaktion ansehen ↗","url":NETWORK.rstrip("/")+"/#donate"}],[{"text":"⬅ Hauptmenü","callback_data":"pub_home"}]]})
+  else:
+   _public_send(chat_id,"Nutze /menu, /ais, /sites, /games, /shops, /register, /support oder /donate.",_public_home_markup())
+ elif callback:
+  try: _public_api("answerCallbackQuery",{"callback_query_id":callback.get("id","")})
+  except Exception: pass
+  chat_id=(callback.get("message") or {}).get("chat",{}).get("id")
+  data=callback.get("data","")
+  if chat_id:
+   if data=="pub_home": _public_send(chat_id,"ULTIMA · Besucher-Hauptmenü",_public_home_markup())
+   elif data=="pub_ais":
+    _public_directory(chat_id,"🧠 KI-SYSTEME",[
+     ("Aurealis OMNIA","Zentrale KI und kreative Assistenz","https://aurealis-omnia.onrender.com/"),
+     ("Aurealis Creative AI Studio","Kreativwerkzeuge und Content","https://aurelis-creative-ai-studio.onrender.com/"),
+     ("Quantum AI Ultra Pro","KI-Plattform","https://quantum-ki-ultra-pro-v2.onrender.com/"),
+     ("Quantum AI One","KI-Assistent","https://quantum-ai-renewed.onrender.com/"),
+     ("NeuroForge","KI- und Innovationssysteme","https://neuroforge-2035.onrender.com/"),
+     ("IONOS-KI","KI-Plattform","https://ionos-ki.onrender.com/"),
+     ("AI Quantumlight","Quantumlight-Projekt","https://ai-quantumlight.onrender.com/"),
+     ("Ate Rea CharacterVerse","Charakter-KI","https://ate-rea-characterverse.onrender.com/")
+    ])
+   elif data=="pub_sites": _public_directory(chat_id,"🌐 WEBSITES & PROGRAMME",SITES)
+   elif data=="pub_games":
+    _public_directory(chat_id,"🎮 GAMES & GAME-ENGINES",[
+     ("Astralis Game Engine","Entwicklungsumgebung und Spiele","https://astralis-game-engine.onrender.com/"),
+     ("Quantum Mirror Wonderland","Interaktive Spielwelt","https://quantum-mirror-wonderland.onrender.com/"),
+     ("Lichtkrieger Cloud Gaming","Cloud Gaming","https://lichtkrieger-cloud-gaming.onrender.com/"),
+     ("The Lord Agent Network","Agenten- und Spielnetzwerk","https://the-lord-agent-network.onrender.com/")
+    ])
+   elif data=="pub_shops": _public_directory(chat_id,"🛍 WEBSHOPS",SHOPS)
+ return jsonify(ok=True)
+
 @bp.get("/telegram/status")
 def telegram_status():
  _register_webhook_once()
