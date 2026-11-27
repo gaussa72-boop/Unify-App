@@ -179,9 +179,18 @@ def _send(chat_id,message,markup=None):
  _api("sendMessage",payload)
 
 def _directory(chat_id,title,entries,role):
- rows=[[{"text":name[:55]+" ↗","url":url}] for name,url in entries]
+ rows=[]
+ lines=[]
+ for entry in entries:
+  if len(entry)==3:
+   name,description,url=entry
+  else:
+   name,url=entry
+   description="Anwendung öffnen"
+  rows.append([{"text":name[:48]+" ↗","url":url}])
+  lines.append("• "+name+"\\n  "+description)
  rows.append([{"text":"⬅ Hauptmenü","callback_data":"home"}])
- _send(chat_id,title+"\n\n"+"\n".join("• "+name for name,url in entries),{"inline_keyboard":rows})
+ _send(chat_id,title+"\\n\\n"+"\\n".join(lines),{"inline_keyboard":rows})
 
 def _register_webhook_once():
  global _WEBHOOK_REGISTERED
@@ -191,6 +200,21 @@ def _register_webhook_once():
  if not base or not secret: return
  try:
   _api("setWebhook",{"url":base+"/telegram/webhook","secret_token":secret,"allowed_updates":["message","callback_query"],"drop_pending_updates":False})
+  _api("setMyCommands",{"commands":[
+   {"command":"start","description":"ULTIMA Hauptmenü öffnen"},
+   {"command":"menu","description":"Hauptmenü anzeigen"},
+   {"command":"ais","description":"KI-Systeme anzeigen"},
+   {"command":"sites","description":"Websites und Programme"},
+   {"command":"shops","description":"Webshops öffnen"},
+   {"command":"games","description":"Games und Engines"},
+   {"command":"register","description":"Zentralen Zugang beantragen"},
+   {"command":"mentor","description":"Mentor kontaktieren"},
+   {"command":"donate","description":"Humanitäre Hilfe"},
+   {"command":"id","description":"Eigene Telegram-ID anzeigen"},
+   {"command":"status","description":"Bot-Status anzeigen"},
+   {"command":"help","description":"Hilfe anzeigen"}
+  ]})
+  _api("setChatMenuButton",{"menu_button":{"type":"web_app","text":"Aurealis Network","web_app":{"url":NETWORK}}})
   _WEBHOOK_REGISTERED=True
  except Exception: return
 
@@ -210,11 +234,52 @@ def telegram_webhook():
   user_id=(message.get("from") or {}).get("id")
   text=(message.get("text") or "").strip()
   role=_role(user_id)
-  if chat_id and (text=="/start" or text.startswith("/start ") or text in ("/menu","/help")):
-   _send(chat_id,"Willkommen bei ULTIMA Central. Deine Rolle: "+role+". Wähle einen Bereich:",_menu(role))
-  elif chat_id and text=="/id":
-   _send(chat_id,"Deine Telegram-ID: "+str(user_id)+"\nNur direkt an den Betreiber senden, wenn du freigeschaltet werden sollst.")
-  elif chat_id: _send(chat_id,"Bitte nutze die Menü-Buttons oder /menu.",_menu(role))
+  command=(text.split()[0].split("@")[0].lower() if text.startswith("/") else "")
+  if chat_id and command in ("/start","/menu","/help"):
+   _send(chat_id,"Willkommen bei ULTIMA Central.\\nDeine erkannte Rolle: "+role+".\\nWähle einen Bereich oder öffne Aurealis Network über das Menü unten.",_menu(role))
+  elif chat_id and command=="/id":
+   _send(chat_id,"Deine Telegram-ID: "+str(user_id)+"\\nSende diese Nummer nur direkt an den Superadministrator, wenn du eine Rolle beantragst.")
+  elif chat_id and command=="/ais":
+   _directory(chat_id,"KI-SYSTEME",[
+    ("Aurealis OMNIA","Kreative KI und zentraler Assistent","https://aurealis-omnia.onrender.com/"),
+    ("Aurealis Creative AI Studio","Kreativwerkzeuge und Content-Studio","https://aurelis-creative-ai-studio.onrender.com/"),
+    ("Quantum AI Ultra Pro","KI-Plattform und Werkzeuge","https://quantum-ki-ultra-pro-v2.onrender.com/"),
+    ("Quantum AI One","KI-Assistent und Chat","https://quantum-ai-renewed.onrender.com/"),
+    ("NeuroForge","Innovations- und KI-Systeme","https://neuroforge-2035.onrender.com/"),
+    ("IONOS-KI","KI-Plattform","https://ionos-ki.onrender.com/"),
+    ("AI Quantumlight","Quantumlight-Projekt","https://ai-quantumlight.onrender.com/"),
+    ("Aurealis Shopping AI","Shopping-Assistent","https://aurealis-shopping-ai.onrender.com/"),
+    ("Ate Rea CharacterVerse","Charakter-KI und Avatar-Studio","https://ate-rea-characterverse.onrender.com/")
+   ],role)
+  elif chat_id and command=="/sites":
+   _directory(chat_id,"WEBSITES & PROGRAMME",SITES,role)
+  elif chat_id and command=="/shops":
+   _directory(chat_id,"WEBSHOPS",[
+    ("DropShift Store","Produkte und Dropshipping-Shop","https://dropshift-store.onrender.com/"),
+    ("Aktiv Lyca","SIM- und Mobilfunkprodukte","https://aktiv-lyca-rnmc.onrender.com/"),
+    ("ATG Parfum","Parfumkollektion","https://webshop-parfum-90dl.onrender.com/"),
+    ("BullRun Apparel","Streetwear und Apparel","https://bullrun-apparel.onrender.com/"),
+    ("Sneaker Store","Sneaker-Kollektion","https://sneaker-store-bow5.onrender.com/"),
+    ("Rothshild Royal Palace","Royal Shop und Mitgliedschaft","https://royal-palace-4r57.onrender.com/"),
+    ("Rothshild Business Real Estate","Business- und Immobilienportal","https://business-real-estate-membership-wswk.onrender.com/")
+   ],role)
+  elif chat_id and command=="/games":
+   _directory(chat_id,"GAMES & GAME-ENGINES",[
+    ("Astralis Game Engine","Game-Engine und Spielprojekte","https://astralis-game-engine.onrender.com/"),
+    ("Quantum Mirror Wonderland","Spielwelt und interaktive Erlebnisse","https://quantum-mirror-wonderland.onrender.com/"),
+    ("Lichtkrieger Cloud Gaming","Cloud-Gaming-Projekt","https://lichtkrieger-cloud-gaming.onrender.com/"),
+    ("The Lord Agent Network","Agenten- und Spielnetzwerk","https://the-lord-agent-network.onrender.com/")
+   ],role)
+  elif chat_id and command=="/register":
+   _send(chat_id,"Zentralen Website-Zugang beantragen:",{"inline_keyboard":[[{"text":"Zugang beantragen ↗","url":PORTAL.rstrip("/")+"/register"}],[{"text":"⬅ Hauptmenü","callback_data":"home"}]]})
+  elif chat_id and command=="/mentor":
+   _send(chat_id,"Mentor-Kontakt: @Arian_Phenex. Der Kontaktlink öffnet Telegram; eine Mentor-Rolle wird separat durch den Superadministrator vergeben.",{"inline_keyboard":[[{"text":"Mentor-Chat öffnen ↗","url":"https://t.me/Arian_Phenex"}]]})
+  elif chat_id and command=="/donate":
+   _send(chat_id,"Humanitäre Spendenaktion: Informationen und Kontakt. Eine Zahlungsannahme wird erst aktiviert, wenn Empfänger und Zahlungsweg verifiziert sind.",{"inline_keyboard":[[{"text":"Spendenaktion ansehen ↗","url":NETWORK.rstrip("/")+"/#donate"}]]})
+  elif chat_id and command=="/status":
+   _send(chat_id,"ULTIMA Bot\\nRolle: "+role+"\\nMini App: "+NETWORK+"\\nWebhook: "+("aktiv" if _WEBHOOK_REGISTERED else "noch nicht bestätigt"))
+  elif chat_id:
+   _send(chat_id,"Nutze /menu oder /ais, /sites, /shops, /games, /register, /mentor, /donate, /id.",_menu(role))
  elif callback:
   user_id=(callback.get("from") or {}).get("id")
   role=_role(user_id)
@@ -224,16 +289,16 @@ def telegram_webhook():
   data=callback.get("data","")
   if not chat_id: return jsonify(ok=True)
   if data=="ais":
-   _directory(chat_id,"KI-SYSTEME · MIT BESCHREIBUNG",[
-    ("Aurealis OMNIA · kreative KI & Assistent","https://aurealis-omnia.onrender.com/"),
-    ("Aurealis Creative AI Studio · Kreativwerkzeuge","https://aurelis-creative-ai-studio.onrender.com/"),
-    ("Quantum AI Ultra Pro · KI-Plattform","https://quantum-ki-ultra-pro-v2.onrender.com/"),
-    ("Quantum AI One · KI-Assistent","https://quantum-ai-renewed.onrender.com/"),
-    ("NeuroForge · Innovationssysteme","https://neuroforge-2035.onrender.com/"),
-    ("IONOS-KI · KI-Plattform","https://ionos-ki.onrender.com/"),
-    ("AI Quantumlight · Quantumlight-Projekt","https://ai-quantumlight.onrender.com/"),
-    ("Aurealis Shopping AI · Shopping-Assistent","https://aurealis-shopping-ai.onrender.com/"),
-    ("Ate Rea CharacterVerse · Charakter-KI","https://ate-rea-characterverse.onrender.com/"),
+   _directory(chat_id,"KI-SYSTEME · BESCHREIBUNGEN",[
+    ("Aurealis OMNIA","Kreative KI und zentraler Assistent","https://aurealis-omnia.onrender.com/"),
+    ("Aurealis Creative AI Studio","Kreativwerkzeuge und Content-Studio","https://aurelis-creative-ai-studio.onrender.com/"),
+    ("Quantum AI Ultra Pro","KI-Plattform und Werkzeuge","https://quantum-ki-ultra-pro-v2.onrender.com/"),
+    ("Quantum AI One","KI-Assistent und Chat","https://quantum-ai-renewed.onrender.com/"),
+    ("NeuroForge","Innovations- und KI-Systeme","https://neuroforge-2035.onrender.com/"),
+    ("IONOS-KI","KI-Plattform","https://ionos-ki.onrender.com/"),
+    ("AI Quantumlight","Quantumlight-Projekt","https://ai-quantumlight.onrender.com/"),
+    ("Aurealis Shopping AI","Shopping-Assistent","https://aurealis-shopping-ai.onrender.com/"),
+    ("Ate Rea CharacterVerse","Charakter-KI und Avatar-Studio","https://ate-rea-characterverse.onrender.com/")
    ],role)
   elif data=="sites": _directory(chat_id,"WEBSITES & PROGRAMME",SITES,role)
   elif data=="games":
