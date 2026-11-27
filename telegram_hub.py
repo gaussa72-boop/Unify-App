@@ -8,37 +8,7 @@ API_BASE = os.environ.get("ULTIMA_MEMBERSHIP_API_URL", "https://ultima-membershi
 PORTAL = os.environ.get("ULTIMA_PORTAL_URL", "https://ultima-unify-45ne.onrender.com/")
 APPLY = API_BASE + "/membership-apply"
 
-SITES = [
- ("Ate Rea Vermächtnis","https://ate-rea-vermachtnis.onrender.com/"),
- ("Ate Rea CharacterVerse","https://ate-rea-characterverse.onrender.com/"),
- ("Aurealis OMNIA","https://aurealis-omnia.onrender.com/"),
- ("Aurealis Creative AI","https://aurelis-creative-ai-studio.onrender.com/"),
- ("Astralis Omega","https://astralis-omega.onrender.com/"),
- ("Quantum.AI","https://quantum-ai-zeah.onrender.com/"),
- ("Quantum KI Ultra Pro","https://quantum-ki-ultra-pro-v2.onrender.com/"),
- ("Quantum Mirror Wonderland","https://quantum-mirror-wonderland.onrender.com/"),
- ("NeuroForge","https://neuroforge-2035.onrender.com/"),
- ("IONOS-KI","https://ionos-ki.onrender.com/"),
- ("IONOS-7","https://ionos-7.onrender.com/"),
- ("NovaTube","https://novatube-a10l.onrender.com/"),
- ("Quantenformel","https://quantenformel.onrender.com/"),
- ("LICHTKRIEGER Cloud Gaming","https://lichtkrieger-cloud-gaming.onrender.com/"),
- ("Quantum Super Intelligence","https://quantum-super-intelligence.onrender.com/"),
- ("Galactic AI","https://galactic-ai-v3-app.onrender.com/"),
- ("QuantumAI Chat","https://quantumai-chat.onrender.com/"),
- ("Trinity Trading","https://trinity-trading-k03l.onrender.com/"),
- ("Note-KI","https://note-ki.onrender.com/"),
-]
-SHOPS = [
- ("Lyca","https://aktiv-lyca-rgds.onrender.com/"),
- ("Parfum","https://webshop-parfum-90dl.onrender.com/"),
- ("Rothshild · Royal Palace","https://royal-palace-4r57.onrender.com/"),
- ("Rothshild · Business Real Estate","https://business-real-estate-membership-wswk.onrender.com/"),
- ("BullRun Apparel","https://bullrun-apparel.onrender.com/"),
- ("Sneaker Store","https://sneaker-store-bow5.onrender.com/"),
-]
-
-def _token():
+SITES = [\n ("Astralis Omega", "https://astralis-omega.onrender.com/"),\n ("NovaTube", "https://novatube-a10l.onrender.com/"),\n ("Ate Rea Vermächtnis", "https://ate-rea-vermachtnis.onrender.com/"),\n ("Quantum.AI", "https://quantum-ai-zeah.onrender.com/"),\n ("KI Game Mod", "https://ki-game-mod.onrender.com/"),\n ("Note-KI", "https://note-ki.onrender.com/"),\n ("iPad App IONOS-7", "https://ipad-app-ionos-7.onrender.com/"),\n ("Galactic AI V3", "https://galactic-ai-v3.onrender.com/"),\n ("Quantum Super Intelligence", "https://quantum-super-intelligence.onrender.com/"),\n ("IONOS-8", "https://ionos-8.onrender.com/"),\n ("Quantum KI CAT Chat", "https://quantum-ki-cat-chat.onrender.com/"),\n ("AI Quantumlight", "https://ai-quantumlight.onrender.com/"),\n ("Quantenformel", "https://quantenformel.onrender.com/"),\n ("Quantum Singularity", "https://quantum-singularity.onrender.com/"),\n ("IONOS AI", "https://ionos-ai.onrender.com/"),\n ("Rea Signature", "https://rea-signature.onrender.com/"),\n ("Quantum AI-One", "https://quantum-ai-renewed.onrender.com/"),\n ("Quantum KI Ultra Pro V2 (Renewed)", "https://quantum-ki-ultra-pro-v2-renewed.onrender.com/"),\n ("Quantum Mirror Wonderland", "https://quantum-mirror-wonderland.onrender.com/"),\n ("IONOS-KI", "https://ionos-ki.onrender.com/"),\n ("IONOS-7", "https://ionos-7.onrender.com/"),\n ("UltraKI.AI", "https://ultraki-ai.onrender.com/"),\n ("Ultra KI V2", "https://ultra-ki-v2.onrender.com/"),\n ("Quantum KI Ultra Pro V2", "https://quantum-ki-ultra-pro-v2.onrender.com/"),\n ("QuantumAI Chat", "https://quantumai-chat.onrender.com/"),\n ("Trinity Trading", "https://trinity-trading-k03l.onrender.com/"),\n ("LICHTKRIEGER Cloud Gaming", "https://lichtkrieger-cloud-gaming.onrender.com/"),\n ("NeuroForge Systems", "https://neuroforge-2035.onrender.com/"),\n ("Aurelis Creative AI Studio", "https://aurelis-creative-ai-studio.onrender.com/"),\n ("Ate Rea CharacterVerse", "https://ate-rea-characterverse.onrender.com/"),\n ("IONOS-7 MasterCat Portal", "https://ionos-7-gauss-portal.onrender.com/"),\n ("NeuroForge Systems", "https://neuroforge-gaussa-2035.onrender.com/"),\n ("Galactic AI", "https://galactic-ai-v3-app.onrender.com/"),\n]\nSHOPS = [\n ("BullRun Apparel", "https://bullrun-apparel.onrender.com/"),\n ("Aktiv Lyca", "https://aktiv-lyca-rgds.onrender.com/"),\n ("Sneaker Store", "https://sneaker-store-bow5.onrender.com/"),\n ("Webshop Parfum", "https://webshop-parfum-90dl.onrender.com/"),\n ("Aktiv Lyca", "https://aktiv-lyca-rnmc.onrender.com/"),\n ("Rothshild · Royal Palace", "https://royal-palace-4r57.onrender.com/"),\n ("Rothshild · Business Real Estate", "https://business-real-estate-membership-wswk.onrender.com/"),\n]\n\ndef _token():
  return os.environ.get("TELEGRAM_BOT_TOKEN","").strip()
 
 def _api(method,payload):
