@@ -195,12 +195,12 @@ def _directory(chat_id,title,entries,role):
    name,description,url=entry
   else:
    name,url=entry
-   description="Website öffnen"
+   description=""
   safe_name=html.escape(str(name))
   safe_desc=html.escape(str(description))
   safe_url=html.escape(str(url),quote=True)
   rows.append([{"text":str(name)[:48]+" ↗","url":url}])
-  lines.append('• <a href="'+safe_url+'">'+safe_name+'</a> — '+safe_desc)
+  lines.append('• <a href="'+safe_url+'">'+safe_name+'</a>'+ ((" — "+safe_desc) if safe_desc else ""))
  rows.append([{"text":"⬅ Hauptmenü","callback_data":"home"}])
  _api("sendMessage",{"chat_id":chat_id,"text":title+"\n\n"+"\n".join(lines),"parse_mode":"HTML","disable_web_page_preview":True,"reply_markup":{"inline_keyboard":rows}})
 
