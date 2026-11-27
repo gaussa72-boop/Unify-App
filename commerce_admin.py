@@ -76,7 +76,7 @@ def register_commerce_admin(app, db, require_superadmin):
         paid_total = sum((Decimal(str(x.amount)) for x in paid), Decimal("0"))
         rows = db.session.query(CommerceEvent.site, CommerceEvent.currency,
             func.sum(case((CommerceEvent.event_type=="checkout_started",1),else_=0)),
-            func.sum(db.case((CommerceEvent.event_type.in_(["order_created","order_paid"]),1),else_=0)),
+            func.sum(case((CommerceEvent.event_type.in_(["order_created","order_paid"]),1),else_=0)),
             func.sum(CommerceEvent.amount)).group_by(CommerceEvent.site,CommerceEvent.currency).all()
         sites=[{"site":r[0],"currency":r[1],"checkouts":int(r[2] or 0),"orders":int(r[3] or 0),"revenue":float(r[4] or 0)} for r in rows]
         return jsonify(checkouts=checkouts,orders=orders,conversion=round(orders/checkouts*100,1) if checkouts else 0,open_count=len(opened),open_total=float(open_total),paid_total=float(paid_total),sites=sites)
