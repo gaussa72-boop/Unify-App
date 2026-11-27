@@ -4,6 +4,7 @@ from flask import Blueprint, request, jsonify
 
 bp = Blueprint("ultima_telegram", __name__)
 _WEBHOOK_REGISTERED = False
+_WEBHOOK_ERROR = ""
 API_BASE = os.environ.get("ULTIMA_MEMBERSHIP_API_URL", "https://ultima-membership-api.onrender.com").rstrip("/")
 PORTAL = os.environ.get("ULTIMA_PORTAL_URL", "https://ultima-unify-45ne.onrender.com/")
 APPLY = API_BASE + "/membership-apply"
@@ -131,7 +132,10 @@ def _api(method,payload):
  token=_token()
  if not token: raise RuntimeError("TELEGRAM_BOT_TOKEN fehlt")
  req=urllib.request.Request("https://api.telegram.org/bot"+token+"/"+method,data=json.dumps(payload).encode(),headers={"Content-Type":"application/json"},method="POST")
- with urllib.request.urlopen(req,timeout=12) as response: return json.loads(response.read().decode())
+ with urllib.request.urlopen(req,timeout=12) as response:
+  result=json.loads(response.read().decode())
+  if not result.get("ok"): raise RuntimeError(result.get("description","Telegram API error"))
+  return result
 
 def _ids(key):
  return {x.strip() for x in os.environ.get(key,"").split(",") if x.strip()}
@@ -200,6 +204,8 @@ def _register_webhook_once():
  if not base or not secret: return
  try:
   _api("setWebhook",{"url":base+"/telegram/webhook","secret_token":secret,"allowed_updates":["message","callback_query"],"drop_pending_updates":False})
+  _api("setMyDescription",{"description":"ULTIMA Central verbindet deine KI-Systeme, digitalen Projekte, Websites, Game-Engines und Webshops. Entdecke Aurealis, Quantum AI, NeuroForge, IONOS-KI, Ate Rea und weitere Anwendungen. Nutze Testzugänge, beantrage Mitgliedschaft, kontaktiere Mentoren und verwalte dein Profil. Shops bieten Produktübersichten und führen zum jeweiligen Checkout. Humanitäre Hilfe und Community findest du ebenfalls im Menü."})
+  _api("setMyShortDescription",{"short_description":"ULTIMA: KI-Systeme, Websites, Games, Shops, Community, Testzugänge und Mitgliedschaft."})
   _api("setMyCommands",{"commands":[
    {"command":"start","description":"ULTIMA Hauptmenü öffnen"},
    {"command":"menu","description":"Hauptmenü anzeigen"},
@@ -216,7 +222,9 @@ def _register_webhook_once():
   ]})
   _api("setChatMenuButton",{"menu_button":{"type":"web_app","text":"Aurealis Network","web_app":{"url":NETWORK}}})
   _WEBHOOK_REGISTERED=True
- except Exception: return
+ except Exception as exc:
+  _WEBHOOK_ERROR=type(exc).__name__+": "+str(exc)[:240]
+  return
 
 @bp.before_app_request
 def register_webhook_on_first_request(): _register_webhook_once()
@@ -316,4 +324,4 @@ def telegram_webhook():
 @bp.get("/telegram/status")
 def telegram_status():
  configured=bool(_token() and os.environ.get("TELEGRAM_WEBHOOK_SECRET") and os.environ.get("TELEGRAM_PUBLIC_URL"))
- return jsonify(bot="ULTIMA Central",username="Ultima_Unify_Bot",token_configured=bool(_token()),webhook_configured=_WEBHOOK_REGISTERED,ready=configured and _WEBHOOK_REGISTERED,configured_roles={"superadmin":bool(_ids("ULTIMA_TELEGRAM_SUPERADMIN_IDS")),"admin":bool(_ids("ULTIMA_TELEGRAM_ADMIN_IDS")),"mentor":bool(_ids("ULTIMA_TELEGRAM_MENTOR_IDS"))},membership_application=APPLY,network=NETWORK,mentor_contact="https://t.me/Arian_Phenex"),200
+ return jsonify(bot="ULTIMA Central",username="Ultima_Unify_Bot",token_configured=bool(_token()),webhook_configured=_WEBHOOK_REGISTERED,webhook_error=_WEBHOOK_ERROR,ready=configured and _WEBHOOK_REGISTERED,configured_roles={"superadmin":bool(_ids("ULTIMA_TELEGRAM_SUPERADMIN_IDS")),"admin":bool(_ids("ULTIMA_TELEGRAM_ADMIN_IDS")),"mentor":bool(_ids("ULTIMA_TELEGRAM_MENTOR_IDS"))},membership_application=APPLY,network=NETWORK,mentor_contact="https://t.me/Arian_Phenex"),200
