@@ -205,7 +205,12 @@ def _register_webhook_once():
  if _WEBHOOK_REGISTERED or not _token(): return
  base=os.environ.get("TELEGRAM_PUBLIC_URL","").strip().rstrip("/")
  secret=os.environ.get("TELEGRAM_WEBHOOK_SECRET","").strip()
- if not base or not secret: return
+ if not _token():
+  print("ULTIMA Telegram setup blocked: TELEGRAM_BOT_TOKEN is missing")
+  return
+ if not base or not secret:
+  print("ULTIMA Telegram setup incomplete: TELEGRAM_PUBLIC_URL="+str(bool(base))+", TELEGRAM_WEBHOOK_SECRET="+str(bool(secret)))
+  return
  try:
   _api("setWebhook",{"url":base+"/telegram/webhook","secret_token":secret,"allowed_updates":["message","callback_query"],"drop_pending_updates":False})
   _api("setMyDescription",{"description":"ULTIMA Central verbindet deine KI-Systeme, digitalen Projekte, Websites, Game-Engines und Webshops. Entdecke Aurealis, Quantum AI, NeuroForge, IONOS-KI, Ate Rea und weitere Anwendungen. Nutze Testzugänge, beantrage Mitgliedschaft, kontaktiere Mentoren und verwalte dein Profil. Shops bieten Produktübersichten und führen zum jeweiligen Checkout. Humanitäre Hilfe und Community findest du ebenfalls im Menü."})
@@ -227,8 +232,10 @@ def _register_webhook_once():
   ]})
   _api("setChatMenuButton",{"menu_button":{"type":"web_app","text":"Aurealis Network","web_app":{"url":NETWORK}}})
   _WEBHOOK_REGISTERED=True
+  print("ULTIMA Telegram setup successful: webhook, bot description, commands and Mini App menu configured")
  except Exception as exc:
   _WEBHOOK_ERROR=type(exc).__name__+": "+str(exc)[:240]
+  print("ULTIMA Telegram setup failed: "+_WEBHOOK_ERROR)
   return
 
 @bp.before_app_request
