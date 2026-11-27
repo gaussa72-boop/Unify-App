@@ -182,6 +182,22 @@ def home():
     trial_expired = bool(user and trial and not trial_active)
     return render_template_string(PAGE, user=user, profiles=profiles, trial=trial, trial_active=trial_active, trial_expired=trial_expired, payment_pending=payment_pending)
 
+@app.get("/register")
+def registration_page():
+    return render_template_string("""<!doctype html><html lang="de"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ULTIMA · Zugang beantragen</title><style>
+    *{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 50% 0,#273d5a,#080d18 65%);color:#f4ead8;font:16px system-ui;display:grid;place-items:center;padding:20px}.card{width:min(680px,100%);background:#111b2d;border:1px solid #a27c4d;border-radius:18px;padding:clamp(20px,5vw,38px);box-shadow:0 24px 90px #0009}h1{color:#e7c879}p{color:#a8b5c9}label{display:block;margin-top:14px}input,textarea{width:100%;padding:13px;margin-top:6px;background:#091321;color:white;border:1px solid #40506b;border-radius:8px}button{margin-top:18px;padding:13px 20px;background:linear-gradient(100deg,#9b6b3c,#ead09a);border:0;border-radius:8px;font-weight:800}a{color:#5ce1e6}.hint{font-size:12px;line-height:1.6}
+    </style><main class="card"><div style="letter-spacing:.2em;color:#e7c879">ULTIMA · CENTRAL ACCESS</div><h1>Persönlichen Zugang beantragen</h1><p>Ein Antrag für die verbundenen Websites und zukünftige Projekte. Die Freigabe erfolgt ausschließlich durch den Superadministrator.</p>
+    <form method="post" action="/register"><input type="hidden" name="csrf_token" value="{{csrf_token()}}">
+    <label>Vor- und Nachname<input name="full_name" required maxlength="160" autocomplete="name"></label>
+    <label>E-Mail-Adresse<input name="email" type="email" required maxlength="254" autocomplete="email"></label>
+    <label>Telefonnummer<input name="phone" type="tel" required maxlength="40" autocomplete="tel"></label>
+    <label>Vollständige Anschrift<input name="postal_address" required maxlength="500" autocomplete="street-address"></label>
+    <label>Passwort (mindestens 12 Zeichen)<input name="password" type="password" minlength="12" required autocomplete="new-password"></label>
+    <label>Profilangaben: Interessen, Träume, Ziele und gewünschte Profileigenschaften<textarea name="profile_data" rows="5" maxlength="5000" placeholder="Beschreibe, welche Interessen, Träume, Ziele und Profileigenschaften du hinterlegen möchtest."></textarea></label>
+    <label><input type="checkbox" name="privacy_consent" value="yes" required style="width:auto"> Ich stimme der Verarbeitung meiner Angaben zur Prüfung des Zugangs zu.</label>
+    <button type="submit">Antrag zur persönlichen Freigabe senden</button></form>
+    <p class="hint">Dein Konto wird erst nach deiner Freigabe durch den Superadministrator erstellt. Antragsdaten werden nicht öffentlich angezeigt. Weitere Informationen: <a href="/">Anmeldung und ULTIMA-Portal</a>.</p></main></html>""")
+
 @app.post("/register")
 def register():
     email = request.form.get("email", "").strip().lower()
