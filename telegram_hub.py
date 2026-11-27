@@ -7,6 +7,7 @@ _WEBHOOK_REGISTERED = False
 API_BASE = os.environ.get("ULTIMA_MEMBERSHIP_API_URL", "https://ultima-membership-api.onrender.com").rstrip("/")
 PORTAL = os.environ.get("ULTIMA_PORTAL_URL", "https://ultima-unify-45ne.onrender.com/")
 APPLY = API_BASE + "/membership-apply"
+NETWORK = os.environ.get("ULTIMA_NETWORK_URL", "https://ultima-unify-45ne.onrender.com/network/")
 
 SITES = [
  ("Astralis Omega", "https://astralis-omega.onrender.com/"),
@@ -134,8 +135,11 @@ def _menu(role):
   [{"text":"🌐 Websites & Programme","callback_data":"sites"}],
   [{"text":"🎮 Games & Game-Engines","callback_data":"games"}],
   [{"text":"🛍 Webshops","callback_data":"shops"}],
+  [{"text":"🌌 Aurealis Network · Mini App","web_app":{"url":NETWORK}}],
+  [{"text":"♡ Humanitäre Spendenaktion","url":NETWORK.rstrip("/")+"/#donate"}],
+  [{"text":"💬 Mentor kontaktieren · Arian_Phenex","url":"https://t.me/Arian_Phenex"}],
   [{"text":"📝 Mitgliedschaft beantragen","url":APPLY}],
-  [{"text":"⏱ 24-Stunden-KI-Test","url":PORTAL}],
+  [{"text":"⏱ 1 Tag KI & Programme testen","url":PORTAL}],
   [{"text":"👤 ULTIMA Profil & Konto","url":PORTAL}],
   [{"text":"🔄 Update Matrix","url":PORTAL.rstrip("/")+"/update-matrix/"}],
  ]
@@ -221,4 +225,4 @@ def telegram_webhook():
 @bp.get("/telegram/status")
 def telegram_status():
  configured=bool(_token() and os.environ.get("TELEGRAM_WEBHOOK_SECRET") and os.environ.get("TELEGRAM_PUBLIC_URL"))
- return jsonify(bot="ULTIMA Central",username="Ultima_Unify_Bot",token_configured=bool(_token()),webhook_configured=_WEBHOOK_REGISTERED,ready=configured and _WEBHOOK_REGISTERED,configured_roles={"superadmin":bool(_ids("ULTIMA_TELEGRAM_SUPERADMIN_IDS")),"admin":bool(_ids("ULTIMA_TELEGRAM_ADMIN_IDS")),"mentor":bool(_ids("ULTIMA_TELEGRAM_MENTOR_IDS"))},membership_application=APPLY),200
+ return jsonify(bot="ULTIMA Central",username="Ultima_Unify_Bot",token_configured=bool(_token()),webhook_configured=_WEBHOOK_REGISTERED,ready=configured and _WEBHOOK_REGISTERED,configured_roles={"superadmin":bool(_ids("ULTIMA_TELEGRAM_SUPERADMIN_IDS")),"admin":bool(_ids("ULTIMA_TELEGRAM_ADMIN_IDS")),"mentor":bool(_ids("ULTIMA_TELEGRAM_MENTOR_IDS"))},membership_application=APPLY,network=NETWORK,mentor_contact="https://t.me/Arian_Phenex"),200
