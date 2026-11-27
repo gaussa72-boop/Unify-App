@@ -12,6 +12,18 @@ from update_matrix import bp as update_matrix_bp
 app.register_blueprint(update_matrix_bp)
 
 @app.after_request
+def inject_aurealis_vision(response):
+    if response.mimetype == "text/html" and response.direct_passthrough is False:
+        try:
+            html = response.get_data(as_text=True)
+            if "aurealis-vision.js" not in html and "</body>" in html:
+                html = html.replace("</body>", '<script defer src="https://astralis-game-engine.onrender.com/aurealis-vision.js"></script></body>', 1)
+                response.set_data(html)
+        except (UnicodeDecodeError, RuntimeError):
+            pass
+    return response
+
+@app.after_request
 def security_headers(response):
     response.headers.setdefault("X-Content-Type-Options", "nosniff")
     response.headers.setdefault("Referrer-Policy", "strict-origin-when-cross-origin")
