@@ -173,6 +173,7 @@ def _menu(role):
   rows.append([{"text":"🧩 Einzelne Websites verwalten","callback_data":"site_admins"}])
   rows.append([{"text":"🛍 Einzelne Webshops verwalten","callback_data":"shop_admins"}])
  if role=="superadmin":
+  rows.append([{"text":"🧾 Commerce · Bestellungen & Rechnungen","url":PORTAL.rstrip("/")+"/admin/commerce/"}])
   rows.extend([
    [{"text":"🛡 Cyber Shield","url":API_BASE+"/cyber-shield"}],
    [{"text":"📋 Mitgliedschaftsanträge","url":API_BASE+"/admin/memberships"}],
@@ -201,7 +202,7 @@ def _directory(chat_id,title,entries,role):
   rows.append([{"text":str(name)[:48]+" ↗","url":url}])
   lines.append('• <a href="'+safe_url+'">'+safe_name+'</a> — '+safe_desc)
  rows.append([{"text":"⬅ Hauptmenü","callback_data":"home"}])
- _api("sendMessage",{"chat_id":chat_id,"text":title+"\\n\\n"+"\\n".join(lines),"parse_mode":"HTML","disable_web_page_preview":True,"reply_markup":{"inline_keyboard":rows}})
+ _api("sendMessage",{"chat_id":chat_id,"text":title+"\n\n"+"\n".join(lines),"parse_mode":"HTML","disable_web_page_preview":True,"reply_markup":{"inline_keyboard":rows}})
 
 def _register_webhook_once():
  global _WEBHOOK_REGISTERED
@@ -305,6 +306,15 @@ def telegram_webhook():
    _send(chat_id,"Humanitäre Spendenaktion: Informationen und Kontakt. Eine Zahlungsannahme wird erst aktiviert, wenn Empfänger und Zahlungsweg verifiziert sind.",{"inline_keyboard":[[{"text":"Spendenaktion ansehen ↗","url":NETWORK.rstrip("/")+"/#donate"}]]})
   elif chat_id and command=="/status":
    _send(chat_id,"ULTIMA Bot\nRolle: "+role+"\nMini App: "+NETWORK+"\nWebhook: "+("aktiv" if _WEBHOOK_REGISTERED else "noch nicht bestätigt"))
+  elif chat_id and command=="/commerce" and role=="superadmin":
+   _send(chat_id,"🧾 ULTIMA Commerce Control\nBestellungen, Checkout-Statistik und Rechnungen zentral verwalten:",{"inline_keyboard":[[{"text":"Commerce & Rechnungen öffnen ↗","url":PORTAL.rstrip("/")+"/admin/commerce/"}],[{"text":"⬅ Hauptmenü","callback_data":"home"}]]})
+  elif chat_id and command=="/publicbot" and role in {"admin","superadmin"}:
+   try:
+    me=_public_api("getMe",{}).get("result",{})
+    wh=_public_api("getWebhookInfo",{}).get("result",{})
+    _send(chat_id,"Besucherbot: @"+str(me.get("username","unbekannt"))+"\nWebhook: "+str(wh.get("url","nicht gesetzt"))+"\nWartende Updates: "+str(wh.get("pending_update_count",0)))
+   except Exception as exc:
+    _send(chat_id,"Besucherbot noch nicht betriebsbereit: "+str(exc)[:180])
   elif chat_id:
    _send(chat_id,"Nutze /menu, /ais, /sites, /shops, /games, /register, /mentor, /support, /donate, /id oder /status.",_menu(role))
  elif callback:
@@ -399,7 +409,7 @@ def _public_directory(chat_id, title, entries):
   rows.append([{"text":str(name)[:48]+" ↗","url":url}])
   lines.append('• <a href="'+safe_url+'">'+safe_name+'</a> — '+safe_desc)
  rows.append([{"text":"⬅ Hauptmenü","callback_data":"pub_home"}])
- _public_api("sendMessage",{"chat_id":chat_id,"text":title+"\\n\\n"+"\\n".join(lines),"parse_mode":"HTML","disable_web_page_preview":True,"reply_markup":{"inline_keyboard":rows}})
+ _public_api("sendMessage",{"chat_id":chat_id,"text":title+"\n\n"+"\n".join(lines),"parse_mode":"HTML","disable_web_page_preview":True,"reply_markup":{"inline_keyboard":rows}})
 
 def _register_public_webhook_once():
  global _PUBLIC_BOT_REGISTERED, _PUBLIC_BOT_ERROR
