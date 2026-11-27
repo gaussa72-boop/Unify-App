@@ -244,7 +244,7 @@ def telegram_webhook():
   role=_role(user_id)
   command=(text.split()[0].split("@")[0].lower() if text.startswith("/") else "")
   if chat_id and command in ("/start","/menu","/help"):
-   _send(chat_id,"Willkommen bei ULTIMA Central.\\nDeine erkannte Rolle: "+role+".\\nWähle einen Bereich oder öffne Aurealis Network über das Menü unten.",_menu(role))
+   _send(chat_id,"✨ WILLKOMMEN BEI ULTIMA CENTRAL ✨\n\nDein Zugang zu einem vernetzten Universum aus künstlicher Intelligenz, digitalen Diensten, kreativen Welten und Handel.\n\n🧠 KI-LABORE\nAurealis OMNIA · Creative AI Studio · Quantum AI Ultra Pro · Quantum AI One · NeuroForge · IONOS-KI · AI Quantumlight · Ate Rea CharacterVerse und weitere KI-Projekte.\n\n🌐 WEBSITES & PROGRAMME\nEntdecke unsere Plattformen, Forschungsprojekte, digitalen Werkzeuge und das Aurealis Network.\n\n🎮 GAMES & GAME-ENGINES\nInteraktive Spielwelten, Game-Projekte und Entwicklungsumgebungen.\n\n🛍 WEBSHOPS\nLyca · ATG Parfum · BullRun Apparel · Sneaker · DropShift und weitere Shops. Produktkataloge und Bestellungen werden im jeweiligen Shop abgewickelt.\n\n⭐ MITGLIEDSCHAFT & TESTZUGANG\nBeantrage deinen zentralen Zugang. Testmöglichkeiten und Freischaltungen richten sich nach deiner Berechtigung.\n\n💬 COMMUNITY & MENTOREN\nEntdecke das Netzwerk, kontaktiere Mentoren und finde die humanitäre Spendeninitiative.\n\nDeine erkannte Rolle: "+role+". Wähle jetzt einen Bereich:",_menu(role))
   elif chat_id and command=="/id":
    _send(chat_id,"Deine Telegram-ID: "+str(user_id)+"\\nSende diese Nummer nur direkt an den Superadministrator, wenn du eine Rolle beantragst.")
   elif chat_id and command=="/ais":
