@@ -142,9 +142,10 @@ def _api(method,payload):
 def _ids(key):
  return {x.strip() for x in os.environ.get(key,"").split(",") if x.strip()}
 
-def _role(user_id):
+def _role(user_id, username=None):
  value=str(user_id or "")
- if value in _ids("ULTIMA_TELEGRAM_SUPERADMIN_IDS"): return "superadmin"
+ usernames={x.strip().lstrip("@").casefold() for x in os.environ.get("ULTIMA_TELEGRAM_SUPERADMIN_USERNAMES","ari_phenex").split(",") if x.strip()}
+ if value in _ids("ULTIMA_TELEGRAM_SUPERADMIN_IDS") or (username or "").lstrip("@").casefold() in usernames: return "superadmin"
  if value in _ids("ULTIMA_TELEGRAM_ADMIN_IDS"): return "admin"
  if value in _ids("ULTIMA_TELEGRAM_MENTOR_IDS"): return "mentor"
  return "member"
@@ -195,9 +196,9 @@ def _directory(chat_id,title,entries,role):
    name,url=entry
    description="Anwendung öffnen"
   rows.append([{"text":name[:48]+" ↗","url":url}])
-  lines.append("• "+name+"\\n  "+description)
+  lines.append("• "+name+"\n  "+description)
  rows.append([{"text":"⬅ Hauptmenü","callback_data":"home"}])
- _send(chat_id,title+"\\n\\n"+"\\n".join(lines),{"inline_keyboard":rows})
+ _send(chat_id,title+"\n\n"+"\n".join(lines),{"inline_keyboard":rows})
 
 def _register_webhook_once():
  global _WEBHOOK_REGISTERED
@@ -245,12 +246,12 @@ def telegram_webhook():
   chat_id=(message.get("chat") or {}).get("id")
   user_id=(message.get("from") or {}).get("id")
   text=(message.get("text") or "").strip()
-  role=_role(user_id)
+  role=_role(user_id,(message.get("from") or {}).get("username"))
   command=(text.split()[0].split("@")[0].lower() if text.startswith("/") else "")
   if chat_id and command in ("/start","/menu","/help"):
    _send(chat_id,"✨ WILLKOMMEN BEI ULTIMA CENTRAL ✨\n\nDein Zugang zu einem vernetzten Universum aus künstlicher Intelligenz, digitalen Diensten, kreativen Welten und Handel.\n\n🧠 KI-LABORE\nAurealis OMNIA · Creative AI Studio · Quantum AI Ultra Pro · Quantum AI One · NeuroForge · IONOS-KI · AI Quantumlight · Ate Rea CharacterVerse und weitere KI-Projekte.\n\n🌐 WEBSITES & PROGRAMME\nEntdecke unsere Plattformen, Forschungsprojekte, digitalen Werkzeuge und das Aurealis Network.\n\n🎮 GAMES & GAME-ENGINES\nInteraktive Spielwelten, Game-Projekte und Entwicklungsumgebungen.\n\n🛍 WEBSHOPS\nLyca · ATG Parfum · BullRun Apparel · Sneaker · DropShift und weitere Shops. Produktkataloge und Bestellungen werden im jeweiligen Shop abgewickelt.\n\n⭐ MITGLIEDSCHAFT & TESTZUGANG\nBeantrage deinen zentralen Zugang. Testmöglichkeiten und Freischaltungen richten sich nach deiner Berechtigung.\n\n💬 COMMUNITY & MENTOREN\nEntdecke das Netzwerk, kontaktiere Mentoren und finde die humanitäre Spendeninitiative.\n\nDeine erkannte Rolle: "+role+". Wähle jetzt einen Bereich:",_menu(role))
   elif chat_id and command=="/id":
-   _send(chat_id,"Deine Telegram-ID: "+str(user_id)+"\\nSende diese Nummer nur direkt an den Superadministrator, wenn du eine Rolle beantragst.")
+   _send(chat_id,"Deine Telegram-ID: "+str(user_id)+"\nSende diese Nummer nur direkt an den Superadministrator, wenn du eine Rolle beantragst.")
   elif chat_id and command=="/ais":
    _directory(chat_id,"KI-SYSTEME",[
     ("Aurealis OMNIA","Kreative KI und zentraler Assistent","https://aurealis-omnia.onrender.com/"),
@@ -263,6 +264,8 @@ def telegram_webhook():
     ("Aurealis Shopping AI","Shopping-Assistent","https://aurealis-shopping-ai.onrender.com/"),
     ("Ate Rea CharacterVerse","Charakter-KI und Avatar-Studio","https://ate-rea-characterverse.onrender.com/")
    ],role)
+  elif chat_id and command=="/games":
+   _directory(chat_id,"GAMES & GAME-ENGINES",[("Astralis Game Engine","Game-Engine und Spielprojekte","https://astralis-game-engine.onrender.com/"),("Quantum Mirror Wonderland","Interaktive Spielwelt","https://quantum-mirror-wonderland.onrender.com/"),("Lichtkrieger Cloud Gaming","Cloud-Gaming-Projekt","https://lichtkrieger-cloud-gaming.onrender.com/"),("The Lord Agent Network","Agenten- und Spielnetzwerk","https://the-lord-agent-network.onrender.com/")],role)
   elif chat_id and command=="/sites":
    _directory(chat_id,"WEBSITES & PROGRAMME",SITES,role)
   elif chat_id and command=="/shops":
@@ -285,16 +288,16 @@ def telegram_webhook():
   elif chat_id and command=="/register":
    _send(chat_id,"Zentralen Website-Zugang beantragen:",{"inline_keyboard":[[{"text":"Zugang beantragen ↗","url":PORTAL.rstrip("/")+"/register"}],[{"text":"⬅ Hauptmenü","callback_data":"home"}]]})
   elif chat_id and command in ("/mentor","/support"):
-   _send(chat_id,"🛟 ULTIMA SUPPORT\\n\\nDein Supportkontakt: "+SUPPORT_NAME+". Tippe auf den Button, um den Telegram-Chat zu öffnen. Teile dort keine Passwörter, Bot-Tokens oder privaten Wallet-Schlüssel.",{"inline_keyboard":[[{"text":"Support-Chat öffnen ↗","url":SUPPORT_URL}],[{"text":"⬅ Hauptmenü","callback_data":"home"}]]})
+   _send(chat_id,"🛟 ULTIMA SUPPORT\n\nDein Supportkontakt: "+SUPPORT_NAME+". Tippe auf den Button, um den Telegram-Chat zu öffnen. Teile dort keine Passwörter, Bot-Tokens oder privaten Wallet-Schlüssel.",{"inline_keyboard":[[{"text":"Support-Chat öffnen ↗","url":SUPPORT_URL}],[{"text":"⬅ Hauptmenü","callback_data":"home"}]]})
   elif chat_id and command=="/donate":
    _send(chat_id,"Humanitäre Spendenaktion: Informationen und Kontakt. Eine Zahlungsannahme wird erst aktiviert, wenn Empfänger und Zahlungsweg verifiziert sind.",{"inline_keyboard":[[{"text":"Spendenaktion ansehen ↗","url":NETWORK.rstrip("/")+"/#donate"}]]})
   elif chat_id and command=="/status":
-   _send(chat_id,"ULTIMA Bot\\nRolle: "+role+"\\nMini App: "+NETWORK+"\\nWebhook: "+("aktiv" if _WEBHOOK_REGISTERED else "noch nicht bestätigt"))
+   _send(chat_id,"ULTIMA Bot\nRolle: "+role+"\nMini App: "+NETWORK+"\nWebhook: "+("aktiv" if _WEBHOOK_REGISTERED else "noch nicht bestätigt"))
   elif chat_id:
-   _send(chat_id,"Nutze /menu oder /ais, /sites, /shops, /games, /register, /mentor, /donate, /id.",_menu(role))
+   _send(chat_id,"Nutze /menu, /ais, /sites, /shops, /games, /register, /mentor, /support, /donate, /id oder /status.",_menu(role))
  elif callback:
   user_id=(callback.get("from") or {}).get("id")
-  role=_role(user_id)
+  role=_role(user_id,(callback.get("from") or {}).get("username"))
   try: _api("answerCallbackQuery",{"callback_query_id":callback.get("id","")})
   except Exception: pass
   chat_id=(callback.get("message") or {}).get("chat",{}).get("id")
@@ -323,11 +326,28 @@ def telegram_webhook():
    entries=[(name,API_BASE+"/admin/site/"+slug) for name,slug in SHOP_ADMIN_LINKS]
    _directory(chat_id,"WEBSHOP-VERWALTUNG · ADMIN LOGIN ERFORDERLICH",entries,role)
   elif data=="support":
-   _send(chat_id,"🛟 ULTIMA SUPPORT\\n\\nDirekter Kontakt: "+SUPPORT_NAME+". Öffne den Chat über den Button. Bitte sende niemals Passwörter, Bot-Tokens oder private Wallet-Schlüssel.",{"inline_keyboard":[[{"text":"Support-Chat öffnen ↗","url":SUPPORT_URL}],[{"text":"⬅ Hauptmenü","callback_data":"home"}]]})
+   _send(chat_id,"🛟 ULTIMA SUPPORT\n\nDirekter Kontakt: "+SUPPORT_NAME+". Öffne den Chat über den Button. Bitte sende niemals Passwörter, Bot-Tokens oder private Wallet-Schlüssel.",{"inline_keyboard":[[{"text":"Support-Chat öffnen ↗","url":SUPPORT_URL}],[{"text":"⬅ Hauptmenü","callback_data":"home"}]]})
   elif data=="home": _send(chat_id,"ULTIMA Central · Hauptmenü",_menu(role))
  return jsonify(ok=True)
 
 @bp.get("/telegram/status")
 def telegram_status():
+ _register_webhook_once()
  configured=bool(_token() and os.environ.get("TELEGRAM_WEBHOOK_SECRET") and os.environ.get("TELEGRAM_PUBLIC_URL"))
- return jsonify(bot="ULTIMA Central",username="Ultima_Unify_Bot",token_configured=bool(_token()),webhook_configured=_WEBHOOK_REGISTERED,webhook_error=_WEBHOOK_ERROR,ready=configured and _WEBHOOK_REGISTERED,configured_roles={"superadmin":bool(_ids("ULTIMA_TELEGRAM_SUPERADMIN_IDS")),"admin":bool(_ids("ULTIMA_TELEGRAM_ADMIN_IDS")),"mentor":bool(_ids("ULTIMA_TELEGRAM_MENTOR_IDS"))},membership_application=APPLY,network=NETWORK,mentor_contact=SUPPORT_URL,support_contact=SUPPORT_URL),200
+ api_ok=False
+ remote_username=""
+ remote_webhook=""
+ pending_updates=None
+ remote_error=""
+ if _token():
+  try:
+   me=_api("getMe",{}).get("result",{})
+   wh=_api("getWebhookInfo",{}).get("result",{})
+   api_ok=bool(me.get("id"))
+   remote_username=me.get("username","")
+   remote_webhook=wh.get("url","")
+   pending_updates=wh.get("pending_update_count",0)
+   if wh.get("last_error_message"): remote_error=wh.get("last_error_message")
+  except Exception as exc:
+   remote_error=type(exc).__name__+": "+str(exc)[:200]
+ return jsonify(bot="ULTIMA Central",username=remote_username or "Ultima_Unify_Bot",token_configured=bool(_token()),telegram_api_ok=api_ok,webhook_configured=bool(remote_webhook),webhook_url=remote_webhook,pending_updates=pending_updates,remote_error=remote_error,webhook_error=_WEBHOOK_ERROR,ready=configured and api_ok and bool(remote_webhook) and remote_webhook.endswith("/telegram/webhook"),configured_roles={"superadmin":bool(_ids("ULTIMA_TELEGRAM_SUPERADMIN_IDS")) or bool(os.environ.get("ULTIMA_TELEGRAM_SUPERADMIN_USERNAMES","ari_phenex")),"admin":bool(_ids("ULTIMA_TELEGRAM_ADMIN_IDS")),"mentor":bool(_ids("ULTIMA_TELEGRAM_MENTOR_IDS"))},membership_application=APPLY,network=NETWORK,mentor_contact=SUPPORT_URL,support_contact=SUPPORT_URL),200
