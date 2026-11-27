@@ -3,7 +3,7 @@ import os, hmac
 from datetime import datetime, timezone
 from decimal import Decimal, InvalidOperation
 from flask import request, jsonify, Response, redirect
-from sqlalchemy import func
+from sqlalchemy import func, case
 
 PAGE = r"""<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ULTIMA · Commerce & Rechnungen</title>
 <style>
@@ -75,7 +75,7 @@ def register_commerce_admin(app, db, require_superadmin):
         open_total = sum((Decimal(str(x.amount)) for x in opened), Decimal("0"))
         paid_total = sum((Decimal(str(x.amount)) for x in paid), Decimal("0"))
         rows = db.session.query(CommerceEvent.site, CommerceEvent.currency,
-            func.sum(db.case((CommerceEvent.event_type=="checkout_started",1),else_=0)),
+            func.sum(case((CommerceEvent.event_type=="checkout_started",1),else_=0)),
             func.sum(db.case((CommerceEvent.event_type.in_(["order_created","order_paid"]),1),else_=0)),
             func.sum(CommerceEvent.amount)).group_by(CommerceEvent.site,CommerceEvent.currency).all()
         sites=[{"site":r[0],"currency":r[1],"checkouts":int(r[2] or 0),"orders":int(r[3] or 0),"revenue":float(r[4] or 0)} for r in rows]
