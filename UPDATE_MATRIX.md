@@ -28,3 +28,14 @@ All endpoints require `Authorization: Bearer <ULTIMA_UPDATE_MATRIX_TOKEN>`.
 - Before enabling scheduled generation, configure the model API and token in Render environment settings. Do not put secrets in source control.
 - The current SQLite location is temporary. Connect a persistent database before relying on proposal history.
 - The ULTIMA Render deployment must be verified after the commit before this service can be called live.
+
+## Global GAUSS72 operating standard (2026-11-27)
+- The canonical cross-project policy is `GAUSS72_GLOBAL_OPERATING_RULES.md`.
+- Every Update Matrix proposal agent receives this policy in its system context before generating a proposal.
+- Scope: all compatible, owner-controlled or explicitly approved projects in both connected GitHub accounts and Render Primary, after per-target inventory and compatibility review.
+- Distribution is staged and target-specific: inspect → propose/version → isolated tests/security review → owner approval where required → deploy → verify commit, deploy, logs, health and key functions → record status/rollback.
+- No blind mass writes or deployments. Excluded integrations remain excluded unless a later instruction explicitly changes that specific integration. Update Matrix may track maintenance status without connecting excluded sites to shared identity, shared AI context or network data.
+- Preserve each AI's personality, system prompt, design and product behavior. Shared Aurealis character profiles are optional and must not override target security/system rules.
+- Copilot actions require server-side authorization and confirmation for sending, publishing, deleting, payments, role changes or external side effects. Private messages are not globally exposed; sharing requires an explicit user action.
+- Cyber Shield follows layered defense; no absolute-security claim is permitted. Secrets remain in secret stores/Render environment settings and never enter Git, prompts, logs or cross-agent messages.
+- Financial actions, mining payouts, wallet signing, transfers, trading, paid-resource changes and destructive operations are not executed by generated proposals.
