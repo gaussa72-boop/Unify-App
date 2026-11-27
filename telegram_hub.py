@@ -202,12 +202,12 @@ def _directory(chat_id,title,entries,role):
 
 def _register_webhook_once():
  global _WEBHOOK_REGISTERED
- if _WEBHOOK_REGISTERED or not _token(): return
- base=os.environ.get("TELEGRAM_PUBLIC_URL","").strip().rstrip("/")
- secret=os.environ.get("TELEGRAM_WEBHOOK_SECRET","").strip()
+ if _WEBHOOK_REGISTERED: return
  if not _token():
   print("ULTIMA Telegram setup blocked: TELEGRAM_BOT_TOKEN is missing")
   return
+ base=os.environ.get("TELEGRAM_PUBLIC_URL","").strip().rstrip("/")
+ secret=os.environ.get("TELEGRAM_WEBHOOK_SECRET","").strip()
  if not base or not secret:
   print("ULTIMA Telegram setup incomplete: TELEGRAM_PUBLIC_URL="+str(bool(base))+", TELEGRAM_WEBHOOK_SECRET="+str(bool(secret)))
   return
