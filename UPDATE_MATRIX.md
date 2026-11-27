@@ -39,3 +39,11 @@ All endpoints require `Authorization: Bearer <ULTIMA_UPDATE_MATRIX_TOKEN>`.
 - Copilot actions require server-side authorization and confirmation for sending, publishing, deleting, payments, role changes or external side effects. Private messages are not globally exposed; sharing requires an explicit user action.
 - Cyber Shield follows layered defense; no absolute-security claim is permitted. Secrets remain in secret stores/Render environment settings and never enter Git, prompts, logs or cross-agent messages.
 - Financial actions, mining payouts, wallet signing, transfers, trading, paid-resource changes and destructive operations are not executed by generated proposals.
+
+## Membership / Telegram rollout (2026-11-27)
+- Central membership API now has membership application submission, superadmin approval/rejection, and an application gate before new global/site account creation.
+- One-time 24-hour AI trial is tied to an approved global member and enforced in the central database.
+- Holiday full-access test days are controlled by the superadmin in `/admin/holiday-access`, using Baden-Württemberg holiday dates; the switch is off by default and expires by date/time-zone evaluation.
+- Telegram hub directory has been expanded to the registered active websites/programs and all registered shop entries; menu includes application, profile, 24-hour trial entry, Update Matrix, and role-gated mentor/admin/superadmin links.
+- Telegram superadmin/admin/mentor numeric ID allowlists must be configured in Render before privileged Telegram menus become available. Do not infer or guess IDs.
+- Rollout scope so far: central membership API and ULTIMA Telegram hub only. Each downstream frontend must still be checked for membership-widget embed, SSO flow and route-level access enforcement; do not assume every website has been integrated merely because it appears in the central registry.
