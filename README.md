@@ -10,7 +10,8 @@ https://ultima-central-bt56.onrender.com
 - Search and category filters for the connected project portfolio
 - GitHub source links and confirmed Render live-service links
 - Installable PWA manifest, service worker and icon
-- Native Expo / React Native WebView app shell in `mobile/`
+- Native Expo / React Native iOS hub in `mobile/` with project search, category filters, quick access, embedded portal view and native navigation
+- EAS iOS build profiles and App Store release checklist in `mobile/IOS_RELEASE.md`
 
 ## Native iOS / Android app
 1. Install a compatible Node.js and npm.
