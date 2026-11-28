@@ -2,14 +2,14 @@
   "expo": {
     "name": "ULTIMA ONE",
     "slug": "ultima-one",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "orientation": "portrait",
     "userInterfaceStyle": "dark",
     "scheme": "ultimaone",
     "ios": {
       "bundleIdentifier": "com.gauss.ultimaone",
       "supportsTablet": true,
-      "buildNumber": "1",
+      "buildNumber": "2",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
       }
@@ -17,6 +17,8 @@
     "android": {
       "package": "com.gauss.ultimaone"
     },
-    "plugins": ["expo-web-browser"]
+    "plugins": [
+      "expo-web-browser"
+    ]
   }
 }
