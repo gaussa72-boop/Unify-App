@@ -1,8 +1,33 @@
 {
-  "cli": { "version": ">= 16.0.0", "appVersionSource": "local" },
-  "build": {
-    "preview": { "distribution": "internal", "ios": { "simulator": false } },
-    "production": { "autoIncrement": true, "ios": { "simulator": false } }
+  "cli": {
+    "version": ">= 16.0.0",
+    "appVersionSource": "local"
   },
-  "submit": { "production": {} }
+  "build": {
+    "preview": {
+      "distribution": "internal",
+      "ios": {
+        "simulator": false
+      }
+    },
+    "production": {
+      "autoIncrement": true,
+      "ios": {
+        "simulator": false
+      }
+    },
+    "superadmin": {
+      "distribution": "internal",
+      "android": {
+        "buildType": "apk"
+      },
+      "ios": {
+        "distribution": "internal",
+        "simulator": false
+      }
+    }
+  },
+  "submit": {
+    "production": {}
+  }
 }
