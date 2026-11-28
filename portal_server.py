@@ -39,6 +39,7 @@ def home():
     <a href="/ultima-ai/" style="display:inline-block;margin-left:10px;padding:8px 12px;border:1px solid #e4c477;border-radius:9px;color:#e4c477;text-decoration:none;letter-spacing:.04em;font-size:12px">ULTIMA AI ↗</a>\n    <a href="/ideas/" style="display:inline-block;margin-left:10px;padding:8px 12px;border:1px solid #65dce0;border-radius:9px;color:#65dce0;text-decoration:none;letter-spacing:.04em;font-size:12px">IDEENBIBLIOTHEK ↗</a>\n    <a href="https://ate-rea-characterverse.onrender.com/creator.html" style="display:inline-block;margin-left:10px;padding:8px 12px;border:1px solid #65dce0;border-radius:9px;color:#65dce0;text-decoration:none;letter-spacing:.04em;font-size:12px">AI CHARACTER CREATOR ↗</a>\n    <a href="https://aurealis-omnia.onrender.com/" style="display:inline-block;margin-left:10px;padding:8px 12px;border:1px solid #e4c477;border-radius:9px;color:#e4c477;text-decoration:none;letter-spacing:.04em;font-size:12px">AUREALIS OMNIA ↗</a>
     <a href="/cosmican/" style="display:inline-block;margin-left:18px;padding:8px 12px;border:1px solid #65dce0;border-radius:9px;color:#65dce0;text-decoration:none;letter-spacing:.04em;font-size:12px">COSMICAN LUX SYNDICATE ↗</a>
     <a href="https://ultima-membership-api.onrender.com/portal" style="display:inline-block;margin-left:10px;padding:8px 12px;border:1px solid #e4c477;border-radius:9px;color:#e4c477;text-decoration:none;letter-spacing:.04em;font-size:12px">ULTIMA KONTO & WEBSITE-STUDIO ↗</a>
+    <a href="/unify/" style="display:inline-block;margin-left:10px;padding:8px 12px;border:1px solid #65dce0;border-radius:9px;color:#65dce0;text-decoration:none;letter-spacing:.04em;font-size:12px">ULTIMA UNIFY · APP ↗</a>
     """
     html = html.replace("</header>", nav + "</header>", 1)
     section = """
@@ -55,6 +56,14 @@ def home():
 (async()=>{const root=document.getElementById('ultima-community-projects');if(!root)return;try{const r=await fetch('https://ultima-membership-api.onrender.com/api/global/public-projects');const d=await r.json();root.innerHTML=(d.projects||[]).map(p=>'<article style="padding:14px;border:1px solid #334761;border-radius:12px;background:#0b1524"><b>'+String(p.name).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))+'</b><p style="color:#9caac0">'+String(p.description||'').replace(/[&<>"']/g,'')+'</p><small>'+String(p.category||'Website')+'</small><p><a rel="noopener noreferrer" target="_blank" href="'+p.url+'">Website öffnen ↗</a></p></article>').join('')||'<p style="color:#9caac0">Noch keine öffentlichen Websites.</p>'}catch(e){root.textContent='Das öffentliche Verzeichnis ist gerade nicht erreichbar.'}})();
 </script></body>""", 1)
     return Response(html, mimetype="text/html")
+
+@app.get("/unify/")
+def unify_home():
+    return send_from_directory(ROOT / "unify", "index.html")
+
+@app.get("/unify/<path:filename>")
+def unify_assets(filename):
+    return send_from_directory(ROOT / "unify", filename)
 
 @app.get("/account/")
 def account_home():
