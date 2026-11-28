@@ -56,7 +56,7 @@ export default function App() {
           <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={s.chips}>{CATS.map(c => <Pressable key={c} onPress={() => setCategory(c)} style={[s.chip, category === c && s.chipActive]}><Text style={[s.chipText, category === c && s.chipTextActive]}>{c}</Text></Pressable>)}</ScrollView>
           {projects.map(p => <View key={p.url} style={s.projectRow}><Pressable onPress={() => openProject(p)} style={s.projectMain}><View style={s.projectGlyph}><Text style={s.projectGlyphText}>{p.type === "repository" ? "⌘" : "✧"}</Text></View><View style={s.projectInfo}><Text style={s.projectName}>{p.title}</Text><Text style={s.projectDesc}>{p.subtitle}</Text></View></Pressable><Pressable onPress={() => toggleFavorite(p.url)} style={s.favoriteButton}><Text style={favorites.includes(p.url) ? s.favoriteOn : s.favoriteOff}>{favorites.includes(p.url) ? "★" : "☆"}</Text></Pressable></View>)}
           <View style={s.notice}><Text style={s.noticeTitle}>Sicherer Zugang</Text><Text style={s.noticeCopy}>Die App öffnet die bestehenden Dienste über ihre jeweiligen sicheren Anmeldungen. Shop-Systeme und Rothshild bleiben getrennt. Zahlungen, Wallet-Transaktionen und administrative Änderungen werden nicht ohne Bestätigung ausgeführt.</Text></View>
-          <Text style={s.footer}>ULTIMA ONE · iOS COMMAND CENTER · v1.1</Text>
+          <Text style={s.footer}>ULTIMA ONE · iOS COMMAND CENTER · v1.2</Text>
         </ScrollView>
       )}
       <View style={s.tabbar}>
