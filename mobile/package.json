@@ -9,7 +9,10 @@
     "ios": "expo start --ios",
     "prebuild": "expo prebuild",
     "build:ios": "eas build --platform ios --profile production",
-    "build:ios:preview": "eas build --platform ios --profile preview"
+    "build:ios:preview": "eas build --platform ios --profile preview",
+    "build:android:superadmin": "eas build --platform android --profile superadmin",
+    "build:ios:superadmin": "eas build --platform ios --profile superadmin",
+    "build:all:superadmin": "eas build --platform all --profile superadmin"
   },
   "dependencies": {
     "expo": "~54.0.0",
