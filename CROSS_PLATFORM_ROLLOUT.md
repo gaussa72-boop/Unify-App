@@ -92,3 +92,33 @@ Rothshild, Lyca, BullRun and Sneaker remain separate from the shared ULTIMA/Aure
 ## Evidence discipline
 
 A repository specification is not a native app, installer, signed build, successful deployment or store approval. Mark each platform complete only after the actual build artifact and test evidence exist.
+
+
+## Browser-App / PWA status (2026-11-28)
+The following repositories received a project-specific web manifest and an install / ULTIMA Unify button in their primary HTML entry point:
+- ariandomimate-blip/Aktiv-Lyca
+- ariandomimate-blip/Webshop.Parfum
+- ariandomimate-blip/sneaker
+- ariandomimate-blip/Autokrypt-B-rse
+- ariandomimate-blip/Drop-shipping (public/index.html)
+- gaussa72-boop/IONOS-7
+- gaussa72-boop/IONOS-KI
+- gaussa72-boop/IPad-App.IONOS-7
+- gaussa72-boop/Quantum.MIrror.Wonderland
+- gaussa72-boop/Quantum-KI-CAT.CHAT.
+- gaussa72-boop/Rea.Signature
+- gaussa72-boop/Ate-Rea-Verm-chtnis
+- gaussa72-boop/Novatube
+- gaussa72-boop/Omega.Aurealis
+- gaussa72-boop/Lichtkrieger
+- gaussa72-boop/The-Lord
+- gaussa72-boop/Aurealis-Creative-AI
+- gaussa72-boop/Aurelis-Creative-AI-Studio
+- gaussa72-boop/Neuroforge
+- gaussa72-boop/Quantum.AI. (frontend/index.html)
+
+Existing PWA implementation retained:
+- gaussa72-boop/Unify-App (existing central manifest and service worker)
+- ariandomimate-blip/rothshild-order (existing manifest/service worker and pre-existing install button)
+
+This is a source-code integration record, not proof of a successful production deployment or browser installation. Some repositories in the 45-repository inventory are backend-only, API/library projects, or have no confirmed browser entry point; they are not represented as installable websites until their actual user-facing frontend and serving path are identified. All added PWA changes still require a compatible production deploy and browser/device verification.
