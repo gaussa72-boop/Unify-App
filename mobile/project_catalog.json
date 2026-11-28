@@ -1,47 +1,5 @@
 [
   {
-    "title": "ultima-central-45ne",
-    "subtitle": "Workspace One · gaussa72-boop/Unify-App",
-    "url": "https://ultima-central-45ne.onrender.com",
-    "group": "ZENTRAL",
-    "type": "service"
-  },
-  {
-    "title": "ultima-unify-45ne",
-    "subtitle": "Workspace One · gaussa72-boop/Unify-App",
-    "url": "https://ultima-unify-45ne.onrender.com",
-    "group": "ZENTRAL",
-    "type": "service"
-  },
-  {
-    "title": "astralis-app-center",
-    "subtitle": "Adriano's workspace · gaussa72-boop/Unify-App",
-    "url": "https://astralis-app-center.onrender.com",
-    "group": "ZENTRAL",
-    "type": "service"
-  },
-  {
-    "title": "ultima-central-bt56",
-    "subtitle": "Adriano's workspace · gaussa72-boop/Unify-App",
-    "url": "https://ultima-central-bt56.onrender.com",
-    "group": "ZENTRAL",
-    "type": "service"
-  },
-  {
-    "title": "ultima-central-5zeh",
-    "subtitle": "Adriano's workspace · gaussa72-boop/Unify-App",
-    "url": "https://ultima-central-5zeh.onrender.com",
-    "group": "ZENTRAL",
-    "type": "service"
-  },
-  {
-    "title": "ultima-central-r88g",
-    "subtitle": "Adriano's workspace · gaussa72-boop/Unify-App",
-    "url": "https://ultima-central-r88g.onrender.com",
-    "group": "ZENTRAL",
-    "type": "service"
-  },
-  {
     "title": "ionos-7-gauss-portal",
     "subtitle": "Workspace One · gaussa72-boop/IONOS-7",
     "url": "https://ionos-7-gauss-portal.onrender.com",
@@ -105,6 +63,13 @@
     "type": "service"
   },
   {
+    "title": "Quantum.Super-Intelligence",
+    "subtitle": "Workspace One · gaussa72-boop/Quantum.K",
+    "url": "https://quantum-super-intelligence.onrender.com",
+    "group": "KI",
+    "type": "service"
+  },
+  {
     "title": "IONOS-8",
     "subtitle": "Workspace One · gaussa72-boop/IONOS-8",
     "url": "https://ionos-8.onrender.com",
@@ -122,6 +87,13 @@
     "title": "AI-Quantumlight",
     "subtitle": "Workspace One · gaussa72-boop/AI-Quantumlight",
     "url": "https://ai-quantumlight.onrender.com",
+    "group": "KI",
+    "type": "service"
+  },
+  {
+    "title": "Quantum_Singularity",
+    "subtitle": "Workspace One · gaussa72-boop/Quantum_Singularity",
+    "url": "https://quantum-singularity.onrender.com",
     "group": "KI",
     "type": "service"
   },
@@ -189,93 +161,114 @@
     "type": "service"
   },
   {
-    "title": "aurealis-shopping-ai",
-    "subtitle": "Workspace One · gaussa72-boop/Aurealis-Shopping-AI",
-    "url": "https://aurealis-shopping-ai.onrender.com",
-    "group": "KI",
-    "type": "service"
-  },
-  {
-    "title": "aurealis-omnia",
-    "subtitle": "Workspace One · gaussa72-boop/Aurealis-Creative-AI",
-    "url": "https://aurealis-omnia.onrender.com",
-    "group": "KI",
-    "type": "service"
-  },
-  {
     "title": "galactic-ai-v3-app",
-    "subtitle": "Adriano's workspace · gaussa72-boop/galactic-ai-v3",
+    "subtitle": "Workspace 30 · gaussa72-boop/galactic-ai-v3",
     "url": "https://galactic-ai-v3-app.onrender.com",
     "group": "KI",
     "type": "service"
   },
   {
+    "title": "quantum-singularity",
+    "subtitle": "Workspace 30 · gaussa72-boop/Quantum_Singularity",
+    "url": "https://quantum-singularity-8liw.onrender.com",
+    "group": "KI",
+    "type": "service"
+  },
+  {
     "title": "quantum-ki-cat-chat",
-    "subtitle": "Adriano's workspace · gaussa72-boop/Quantum-KI-CAT.CHAT.",
+    "subtitle": "Workspace 30 · gaussa72-boop/Quantum-KI-CAT.CHAT.",
     "url": "https://quantum-ki-cat-chat-2t79.onrender.com",
     "group": "KI",
     "type": "service"
   },
   {
     "title": "ai-quantumlight",
-    "subtitle": "Adriano's workspace · gaussa72-boop/AI-Quantumlight",
+    "subtitle": "Workspace 30 · gaussa72-boop/AI-Quantumlight",
     "url": "https://ai-quantumlight-k84q.onrender.com",
     "group": "KI",
     "type": "service"
   },
   {
     "title": "ionos-8-platform",
-    "subtitle": "Adriano's workspace · gaussa72-boop/IONOS-8",
+    "subtitle": "Workspace 30 · gaussa72-boop/IONOS-8",
     "url": "https://ionos-8-platform.onrender.com",
     "group": "KI",
     "type": "service"
   },
   {
     "title": "ultraki-ai-app",
-    "subtitle": "Adriano's workspace · gaussa72-boop/UltraKI.AI",
+    "subtitle": "Workspace 30 · gaussa72-boop/UltraKI.AI",
     "url": "https://ultraki-ai-app.onrender.com",
     "group": "KI",
     "type": "service"
   },
   {
     "title": "ultra-ki-v2-app",
-    "subtitle": "Adriano's workspace · gaussa72-boop/ultra-ki-v2",
+    "subtitle": "Workspace 30 · gaussa72-boop/ultra-ki-v2",
     "url": "https://ultra-ki-v2-app.onrender.com",
     "group": "KI",
     "type": "service"
   },
   {
     "title": "quantum-ki-ultra-pro-v2",
-    "subtitle": "Adriano's workspace · gaussa72-boop/Quantum.KI.Ultra.Pro.V2",
+    "subtitle": "Workspace 30 · gaussa72-boop/Quantum.KI.Ultra.Pro.V2",
     "url": "https://quantum-ki-ultra-pro-v2-9pvf.onrender.com",
     "group": "KI",
     "type": "service"
   },
   {
     "title": "quantum-ai-app",
-    "subtitle": "Adriano's workspace · gaussa72-boop/Quantum.AI.",
+    "subtitle": "Workspace 30 · gaussa72-boop/Quantum.AI.",
     "url": "https://quantum-ai-app.onrender.com",
     "group": "KI",
     "type": "service"
   },
   {
+    "title": "quantum-k-app",
+    "subtitle": "Workspace 30 · gaussa72-boop/Quantum.K",
+    "url": "https://quantum-k-app.onrender.com",
+    "group": "KI",
+    "type": "service"
+  },
+  {
     "title": "ionos-ki-v2-1oki",
-    "subtitle": "Adriano's workspace · gaussa72-boop/IONOS-KI",
+    "subtitle": "Workspace 30 · gaussa72-boop/IONOS-KI",
     "url": "https://ionos-ki-v2-1oki.onrender.com",
     "group": "KI",
     "type": "service"
   },
   {
-    "title": "aurealis-cyber-shield",
-    "subtitle": "Workspace One · gaussa72-boop/Aurealis-Creative-AI",
-    "url": "https://aurealis-cyber-shield.onrender.com",
+    "title": "ultima-membership-api",
+    "subtitle": "Workspace One · gaussa72-boop/Quantum-Shield",
+    "url": "https://ultima-membership-api.onrender.com",
     "group": "SICHERHEIT",
+    "type": "service"
+  },
+  {
+    "title": "meta-wissenschaftsforum",
+    "subtitle": "Workspace One · gaussa72-boop/ate-rea-characterverse",
+    "url": "https://meta-wissenschaftsforum.onrender.com",
+    "group": "KREATIV",
+    "type": "service"
+  },
+  {
+    "title": "ultima-media-impact-hub",
+    "subtitle": "Workspace One · gaussa72-boop/Unify-App",
+    "url": "https://ultima-media-impact-hub.onrender.com",
+    "group": "KREATIV",
     "type": "service"
   },
   {
     "title": "ate-rea-characterverse",
     "subtitle": "Workspace One · gaussa72-boop/ate-rea-characterverse",
     "url": "https://ate-rea-characterverse.onrender.com",
+    "group": "KREATIV",
+    "type": "service"
+  },
+  {
+    "title": "novatube",
+    "subtitle": "Workspace One · gaussa72-boop/Novatube",
+    "url": "https://novatube-a10l.onrender.com",
     "group": "KREATIV",
     "type": "service"
   },
@@ -294,51 +287,79 @@
     "type": "service"
   },
   {
-    "title": "rea-signature",
-    "subtitle": "Workspace One · gaussa72-boop/Rea.Signature",
-    "url": "https://rea-signature.onrender.com",
-    "group": "KREATIV",
-    "type": "service"
-  },
-  {
     "title": "ate-rea-library",
-    "subtitle": "Adriano's workspace · gaussa72-boop/Ate-Rea-Verm-chtnis",
+    "subtitle": "Workspace 30 · gaussa72-boop/Ate-Rea-Verm-chtnis",
     "url": "https://ate-rea-library.onrender.com",
     "group": "KREATIV",
     "type": "service"
   },
   {
-    "title": "novatube",
-    "subtitle": "Workspace One · gaussa72-boop/Novatube",
-    "url": "https://novatube-a10l.onrender.com",
-    "group": "MEDIA",
-    "type": "service"
-  },
-  {
-    "title": "ultima-media-impact-hub",
-    "subtitle": "Workspace One · gaussa72-boop/Unify-App",
-    "url": "https://ultima-media-impact-hub.onrender.com",
-    "group": "MEDIA",
-    "type": "service"
-  },
-  {
     "title": "novatube-studio-vli0",
-    "subtitle": "Adriano's workspace · gaussa72-boop/Novatube",
+    "subtitle": "Workspace 30 · gaussa72-boop/Novatube",
     "url": "https://novatube-studio-vli0.onrender.com",
-    "group": "MEDIA",
+    "group": "KREATIV",
     "type": "service"
   },
   {
-    "title": "Novatube",
-    "subtitle": "GitHub-Repository · gaussa72-boop/Novatube",
-    "url": "https://github.com/gaussa72-boop/Novatube",
-    "group": "MEDIA",
-    "type": "repository"
+    "title": "aurealis-network",
+    "subtitle": "Workspace One · gaussa72-boop/Unify-App",
+    "url": "https://aurealis-network.onrender.com",
+    "group": "FINANZEN",
+    "type": "service"
+  },
+  {
+    "title": "aurealis-omnia-alliance-ai",
+    "subtitle": "Workspace One · gaussa72-boop/Ultra_KI_Merge",
+    "url": "https://aurealis-omnia-alliance-ai.onrender.com",
+    "group": "FINANZEN",
+    "type": "service"
+  },
+  {
+    "title": "aurealis-infinity",
+    "subtitle": "Workspace One · gaussa72-boop/Quantum.KI.Ultra.Pro.V2",
+    "url": "https://aurealis-infinity.onrender.com",
+    "group": "FINANZEN",
+    "type": "service"
+  },
+  {
+    "title": "ate-rea-exchange",
+    "subtitle": "Workspace One · gaussa72-boop/Kryptoaurora",
+    "url": "https://ate-rea-exchange.onrender.com",
+    "group": "FINANZEN",
+    "type": "service"
+  },
+  {
+    "title": "aurealis-omnia",
+    "subtitle": "Workspace One · gaussa72-boop/Aurealis-Creative-AI",
+    "url": "https://aurealis-omnia.onrender.com",
+    "group": "FINANZEN",
+    "type": "service"
+  },
+  {
+    "title": "aurealis-shopping-ai",
+    "subtitle": "Workspace One · gaussa72-boop/Aurealis-Shopping-AI",
+    "url": "https://aurealis-shopping-ai.onrender.com",
+    "group": "FINANZEN",
+    "type": "service"
   },
   {
     "title": "aurelis-investment",
     "subtitle": "Workspace One · gaussa72-boop/Unify-App",
     "url": "https://aurelis-investment.onrender.com",
+    "group": "FINANZEN",
+    "type": "service"
+  },
+  {
+    "title": "aurealis-cyber-shield",
+    "subtitle": "Workspace One · gaussa72-boop/Aurealis-Creative-AI",
+    "url": "https://aurealis-cyber-shield.onrender.com",
+    "group": "FINANZEN",
+    "type": "service"
+  },
+  {
+    "title": "technologisierte-einheit",
+    "subtitle": "Workspace One · gaussa72-boop/Aurealis-Creative-AI",
+    "url": "https://technologisierte-einheit.onrender.com",
     "group": "FINANZEN",
     "type": "service"
   },
@@ -351,23 +372,44 @@
   },
   {
     "title": "trinity-trading",
-    "subtitle": "Adriano's workspace · ariandomimate-blip/Autokrypt-B-rse",
+    "subtitle": "Phenex · ariandomimate-blip/Autokrypt-B-rse",
     "url": "https://trinity-trading-k03l.onrender.com",
     "group": "FINANZEN",
     "type": "service"
   },
   {
     "title": "autokrypt-boerse",
-    "subtitle": "Adriano's workspace · ariandomimate-blip/Autokrypt-B-rse",
+    "subtitle": "Workspace 30 · ariandomimate-blip/Autokrypt-B-rse",
     "url": "https://autokrypt-boerse.onrender.com",
     "group": "FINANZEN",
     "type": "service"
   },
   {
     "title": "omega-aurealis",
-    "subtitle": "Adriano's workspace · gaussa72-boop/Omega.Aurealis",
+    "subtitle": "Workspace 30 · gaussa72-boop/Omega.Aurealis",
     "url": "https://omega-aurealis.onrender.com",
     "group": "FINANZEN",
+    "type": "service"
+  },
+  {
+    "title": "astralis-game-engine",
+    "subtitle": "Workspace One · gaussa72-boop/Quantum.MIrror.Wonderland",
+    "url": "https://astralis-game-engine.onrender.com",
+    "group": "GAMES",
+    "type": "service"
+  },
+  {
+    "title": "the-lord-agent-network",
+    "subtitle": "Workspace One · gaussa72-boop/The-Lord",
+    "url": "https://the-lord-agent-network.onrender.com",
+    "group": "GAMES",
+    "type": "service"
+  },
+  {
+    "title": "quantum-mirror-dark-wonderland",
+    "subtitle": "Workspace One · gaussa72-boop/QUANTUM-MIRROR-DARK-WONDERLAND",
+    "url": "https://quantum-mirror-dark-wonderland-ejc3.onrender.com",
+    "group": "GAMES",
     "type": "service"
   },
   {
@@ -392,10 +434,38 @@
     "type": "service"
   },
   {
+    "title": "Quantum.MIrror.Wonderland",
+    "subtitle": "Workspace One · gaussa72-boop/Quantum.MIrror.Wonderland",
+    "url": "https://quantum-mirror-wonderland.onrender.com",
+    "group": "GAMES",
+    "type": "service"
+  },
+  {
     "title": "lichtkrieger-hub",
-    "subtitle": "Adriano's workspace · gaussa72-boop/Lichtkrieger",
+    "subtitle": "Workspace 30 · gaussa72-boop/Lichtkrieger",
     "url": "https://lichtkrieger-hub.onrender.com",
     "group": "GAMES",
+    "type": "service"
+  },
+  {
+    "title": "quantum-mirror-wonderland",
+    "subtitle": "Workspace 30 · gaussa72-boop/Quantum.MIrror.Wonderland",
+    "url": "https://quantum-mirror-wonderland-vibh.onrender.com",
+    "group": "GAMES",
+    "type": "service"
+  },
+  {
+    "title": "dropshift-store",
+    "subtitle": "Workspace One · ariandomimate-blip/Drop-shipping",
+    "url": "https://dropshift-store.onrender.com",
+    "group": "SHOPS",
+    "type": "service"
+  },
+  {
+    "title": "rea-signature",
+    "subtitle": "Workspace One · gaussa72-boop/Rea.Signature",
+    "url": "https://rea-signature.onrender.com",
+    "group": "SHOPS",
     "type": "service"
   },
   {
@@ -406,135 +476,121 @@
     "type": "service"
   },
   {
-    "title": "Aktiv-Lyca",
-    "subtitle": "Adriano's workspace · ariandomimate-blip/Aktiv-Lyca",
-    "url": "https://aktiv-lyca-rgds.onrender.com",
-    "group": "SHOPS",
-    "type": "service"
-  },
-  {
     "title": "royal-palace",
-    "subtitle": "Adriano's workspace · ariandomimate-blip/rothshild-order",
+    "subtitle": "Phenex · ariandomimate-blip/rothshild-order",
     "url": "https://royal-palace-4r57.onrender.com",
     "group": "SHOPS",
     "type": "service"
   },
   {
     "title": "business-real-estate-membership",
-    "subtitle": "Adriano's workspace · ariandomimate-blip/rothshild-order",
+    "subtitle": "Phenex · ariandomimate-blip/rothshild-order",
     "url": "https://business-real-estate-membership-wswk.onrender.com",
     "group": "SHOPS",
     "type": "service"
   },
   {
     "title": "sneaker-store",
-    "subtitle": "Adriano's workspace · ariandomimate-blip/sneaker",
+    "subtitle": "Phenex · ariandomimate-blip/sneaker",
     "url": "https://sneaker-store-bow5.onrender.com",
     "group": "SHOPS",
     "type": "service"
   },
   {
     "title": "webshop-parfum",
-    "subtitle": "Adriano's workspace · ariandomimate-blip/Webshop.Parfum",
+    "subtitle": "Phenex · ariandomimate-blip/Webshop.Parfum",
     "url": "https://webshop-parfum-90dl.onrender.com",
     "group": "SHOPS",
     "type": "service"
   },
   {
     "title": "aktiv-lyca",
-    "subtitle": "Adriano's workspace · ariandomimate-blip/Aktiv-Lyca",
+    "subtitle": "Phenex · ariandomimate-blip/Aktiv-Lyca",
     "url": "https://aktiv-lyca-rnmc.onrender.com",
     "group": "SHOPS",
     "type": "service"
   },
   {
     "title": "sneaker-store",
-    "subtitle": "Adriano's workspace · ariandomimate-blip/sneaker",
+    "subtitle": "Workspace 30 · ariandomimate-blip/sneaker",
     "url": "https://sneaker-store-27cn.onrender.com",
     "group": "SHOPS",
     "type": "service"
   },
   {
     "title": "aktiv-lyca-standalone",
-    "subtitle": "Adriano's workspace · ariandomimate-blip/Aktiv-Lyca",
+    "subtitle": "Workspace 30 · ariandomimate-blip/Aktiv-Lyca",
     "url": "https://aktiv-lyca-standalone.onrender.com",
     "group": "SHOPS",
     "type": "service"
   },
   {
-    "title": "quantum-mirror-dark-wonderland",
-    "subtitle": "Workspace One · gaussa72-boop/QUANTUM-MIRROR-DARK-WONDERLAND",
-    "url": "https://quantum-mirror-dark-wonderland-ejc3.onrender.com",
-    "group": "PROJEKTE",
-    "type": "service"
-  },
-  {
-    "title": "technologisierte-einheit",
-    "subtitle": "Workspace One · gaussa72-boop/Aurealis-Creative-AI",
-    "url": "https://technologisierte-einheit.onrender.com",
-    "group": "PROJEKTE",
-    "type": "service"
-  },
-  {
-    "title": "ultima-membership-api",
-    "subtitle": "Workspace One · gaussa72-boop/Quantum-Shield",
-    "url": "https://ultima-membership-api.onrender.com",
-    "group": "PROJEKTE",
-    "type": "service"
-  },
-  {
-    "title": "dropshift-store",
-    "subtitle": "Workspace One · ariandomimate-blip/Drop-shipping",
-    "url": "https://dropshift-store.onrender.com",
-    "group": "PROJEKTE",
-    "type": "service"
-  },
-  {
-    "title": "Quantum.Super-Intelligence",
-    "subtitle": "Workspace One · gaussa72-boop/Quantum.K",
-    "url": "https://quantum-super-intelligence.onrender.com",
-    "group": "PROJEKTE",
-    "type": "service"
-  },
-  {
-    "title": "Quantum_Singularity",
-    "subtitle": "Workspace One · gaussa72-boop/Quantum_Singularity",
-    "url": "https://quantum-singularity.onrender.com",
-    "group": "PROJEKTE",
-    "type": "service"
-  },
-  {
-    "title": "Quantum.MIrror.Wonderland",
-    "subtitle": "Workspace One · gaussa72-boop/Quantum.MIrror.Wonderland",
-    "url": "https://quantum-mirror-wonderland.onrender.com",
-    "group": "PROJEKTE",
-    "type": "service"
-  },
-  {
     "title": "drop-shipping-store",
-    "subtitle": "Adriano's workspace · ariandomimate-blip/Drop-shipping",
+    "subtitle": "Workspace 30 · ariandomimate-blip/Drop-shipping",
     "url": "https://drop-shipping-store.onrender.com",
+    "group": "SHOPS",
+    "type": "service"
+  },
+  {
+    "title": "ultima-sun-singularity",
+    "subtitle": "Workspace One · gaussa72-boop/Unify-App",
+    "url": "https://ultima-sun-singularity.onrender.com",
     "group": "PROJEKTE",
     "type": "service"
   },
   {
-    "title": "quantum-mirror-wonderland",
-    "subtitle": "Adriano's workspace · gaussa72-boop/Quantum.MIrror.Wonderland",
-    "url": "https://quantum-mirror-wonderland-vibh.onrender.com",
+    "title": "zenmachanik-rea",
+    "subtitle": "Workspace One · gaussa72-boop/Unify-App",
+    "url": "https://zenmachanik-rea.onrender.com",
     "group": "PROJEKTE",
     "type": "service"
   },
   {
-    "title": "quantum-singularity",
-    "subtitle": "Adriano's workspace · gaussa72-boop/Quantum_Singularity",
-    "url": "https://quantum-singularity-8liw.onrender.com",
+    "title": "ultima-os-workspace",
+    "subtitle": "Workspace One · gaussa72-boop/Unify-App",
+    "url": "https://ultima-os-workspace.onrender.com",
     "group": "PROJEKTE",
     "type": "service"
   },
   {
-    "title": "quantum-k-app",
-    "subtitle": "Adriano's workspace · gaussa72-boop/Quantum.K",
-    "url": "https://quantum-k-app.onrender.com",
+    "title": "ultima-central-45ne",
+    "subtitle": "Workspace One · gaussa72-boop/Unify-App",
+    "url": "https://ultima-central-45ne.onrender.com",
+    "group": "PROJEKTE",
+    "type": "service"
+  },
+  {
+    "title": "ultima-unify-45ne",
+    "subtitle": "Workspace One · gaussa72-boop/Unify-App",
+    "url": "https://ultima-unify-45ne.onrender.com",
+    "group": "PROJEKTE",
+    "type": "service"
+  },
+  {
+    "title": "astralis-app-center",
+    "subtitle": "Workspace 30 · gaussa72-boop/Unify-App",
+    "url": "https://astralis-app-center.onrender.com",
+    "group": "PROJEKTE",
+    "type": "service"
+  },
+  {
+    "title": "ultima-central-bt56",
+    "subtitle": "Workspace 30 · gaussa72-boop/Unify-App",
+    "url": "https://ultima-central-bt56.onrender.com",
+    "group": "PROJEKTE",
+    "type": "service"
+  },
+  {
+    "title": "ultima-central-5zeh",
+    "subtitle": "Workspace 30 · gaussa72-boop/Unify-App",
+    "url": "https://ultima-central-5zeh.onrender.com",
+    "group": "PROJEKTE",
+    "type": "service"
+  },
+  {
+    "title": "ultima-central-r88g",
+    "subtitle": "Workspace 30 · gaussa72-boop/Unify-App",
+    "url": "https://ultima-central-r88g.onrender.com",
     "group": "PROJEKTE",
     "type": "service"
   },
@@ -770,6 +826,13 @@
     "type": "repository"
   },
   {
+    "title": "Novatube",
+    "subtitle": "GitHub-Repository · gaussa72-boop/Novatube",
+    "url": "https://github.com/gaussa72-boop/Novatube",
+    "group": "CODE",
+    "type": "repository"
+  },
+  {
     "title": "Omega.Aurealis",
     "subtitle": "GitHub-Repository · gaussa72-boop/Omega.Aurealis",
     "url": "https://github.com/gaussa72-boop/Omega.Aurealis",
@@ -836,6 +899,13 @@
     "title": "Neuroforge",
     "subtitle": "GitHub-Repository · gaussa72-boop/Neuroforge",
     "url": "https://github.com/gaussa72-boop/Neuroforge",
+    "group": "CODE",
+    "type": "repository"
+  },
+  {
+    "title": "Aurealis-Shopping-AI",
+    "subtitle": "GitHub-Repository · gaussa72-boop/Aurealis-Shopping-AI",
+    "url": "https://github.com/gaussa72-boop/Aurealis-Shopping-AI",
     "group": "CODE",
     "type": "repository"
   }
