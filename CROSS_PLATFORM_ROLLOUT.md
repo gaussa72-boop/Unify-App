@@ -73,7 +73,7 @@ Each product is planned for:
 
 ## Deployment / current service status
 
-A read of the three connected Render workspaces on 2026-11-28 returned 74 services: Workspace One 52, Phenex 6, Workspace 30 16. The Render API marked the listed services as suspended in this inventory response. No restart, paid plan change, or deployment was triggered as part of this app-preparation pass. Re-check actual service state before resuming; resuming services may incur charges.
+A read of the three connected Render workspaces on 2026-11-28 returned 85 services: Workspace One 55, Phenex 6, Workspace 30 24. The Render API marked all 85 listed services as suspended in this inventory response. No restart, paid plan change, or deployment was triggered as part of this app-preparation pass. Re-check actual service state before resuming; resuming services may incur charges.
 
 ## Important boundaries
 
