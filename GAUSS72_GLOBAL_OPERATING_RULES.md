@@ -63,3 +63,14 @@ Jede Update-Matrix-Runde muss ausweisen: geprüfte Repositories/Services, ausges
 - Holiday full-access test days are separately controlled in the ULTIMA admin page. Only preconfigured Baden-Württemberg public-holiday dates may be toggled by the superadmin; the override expires automatically at midnight Europe/Berlin and does not bypass membership approval or grant admin roles.
 - Telegram navigation includes all active website/program links and the registered webshop directory. Superadmin/admin/mentor menus require allowlisted numeric Telegram user IDs; a bot username or chat name is never sufficient proof of role.
 - Telegram webhook requires a configured secret token. Bot token, webhook secret, owner Telegram IDs and other credentials remain in Render secret environment variables, never in Git.
+
+
+## Installierbare Browser-Apps / ULTIMA Unify (verbindlich)
+- Jede tatsächlich browserbasierte Website und jeder neue Webservice mit eigener Weboberfläche erhält standardmäßig eine installierbare PWA für unterstützte Browser und Betriebssysteme.
+- Jede Website zeigt einen gut sichtbaren, responsiven Button „Als App installieren“; auf iPhone/iPad zeigt er eine verständliche Anleitung „Zum Home-Bildschirm“, wenn Safari keinen Install-Prompt bereitstellt.
+- Auf jeder Website gibt es zusätzlich einen „ULTIMA Unify“-Einstieg zur zentralen Projektübersicht unter https://ultima-central-bt56.onrender.com. Das ist eine Navigation, keine gemeinsame Anmeldung und keine Daten-/Kontenverschmelzung.
+- Jede PWA erhält ein projektspezifisches Manifest (Name, Kurzname, Start-URL, Scope, Display-Modus, Theme-Farbe und passende Icons), korrekte iOS-Metadaten und einen zur tatsächlichen Hosting-Struktur passenden Asset-Pfad.
+- Bestehende PWA-Manifeste, Service Worker, Offline-Caches, Installationsabläufe, Shop-/Checkout-Flows und individuelle Designs zuerst prüfen und erhalten; niemals bestehende PWA-Dateien blind überschreiben.
+- Bei Backend-only-, API-, SDK-, Bibliotheks- oder Infrastruktur-Repositories keine künstliche Browser-App erzeugen. Stattdessen die tatsächlich zugehörige Weboberfläche ermitteln und nur diese mit Installationsfunktion versehen.
+- PWA nur als fertig melden, wenn Manifest, Icon-Ressourcen, Button, Start-URL, HTTPS-Auslieferung und Installation in den relevanten Browsern geprüft wurden. iOS Add-to-Home-Screen und Desktop-Browserinstallation getrennt testen.
+- Diese Regel gilt automatisch für neue eigene Websites und Webservices und wird in ULTIMA-Projektinventar und Rollout-Matrix dokumentiert.
