@@ -15,42 +15,28 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  android-internal:
-    if: ${{ secrets.EXPO_TOKEN != '' }}
+  internal-builds:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: mobile
+    env:
+      EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: npm
-          cache-dependency-path: mobile/package.json
-      - run: npm install
-      - run: npm install --global eas-cli
+      - name: Install mobile dependencies
+        working-directory: mobile
+        run: npm install
+      - name: Install Expo build CLI
+        run: npm install --global eas-cli
       - name: Build private Android APK
-        env:
-          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
-        run: eas build --platform android --profile superadmin --non-interactive
-
-  ios-internal:
-    if: ${{ secrets.EXPO_TOKEN != '' }}
-    runs-on: ubuntu-latest
-    defaults:
-      run:
+        if: ${{ env.EXPO_TOKEN != '' }}
         working-directory: mobile
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: npm
-          cache-dependency-path: mobile/package.json
-      - run: npm install
-      - run: npm install --global eas-cli
+        run: eas build --platform android --profile superadmin --non-interactive
       - name: Build private iOS IPA
-        env:
-          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+        if: ${{ env.EXPO_TOKEN != '' }}
+        working-directory: mobile
         run: eas build --platform ios --profile superadmin --non-interactive
+      - name: Explain skipped build
+        if: ${{ env.EXPO_TOKEN == '' }}
+        run: echo "Cloud builds skipped. Add EXPO_TOKEN as a repository Actions secret after securing the owner's Expo account."
