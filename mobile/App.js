@@ -2,7 +2,7 @@ import React from "react";
 import { SafeAreaView, StatusBar, StyleSheet, Text, View } from "react-native";
 import { WebView } from "react-native-webview";
 
-const APP_URL = process.env.EXPO_PUBLIC_APP_URL;
+const APP_URL = process.env.EXPO_PUBLIC_APP_URL || "https://ultima-central-bt56.onrender.com/unify/";
 
 export default function App() {
   return (
