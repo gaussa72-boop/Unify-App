@@ -9,11 +9,11 @@ const QUICK = [
   { title: "Wallet Hub", subtitle: "Wallet- und Krypto-Zugang", url: "https://ultima-central-45ne.onrender.com/", group: "FINANZEN" },
   { title: "Media & Impact Hub", subtitle: "Medien, Projekte & Wirkung", url: "https://ultima-media-impact-hub.onrender.com/", group: "MEDIA" },
   { title: "Aurealis Omnia", subtitle: "Zentrale KI-Anwendung", url: "https://aurealis-omnia.onrender.com/", group: "KI" },
-  { title: "QuantumShield", subtitle: "Sicherheitsplattform", url: "https://quantum-shield.onrender.com/", group: "SICHERHEIT" },
+  { title: "QuantumShield", subtitle: "Sicherheitsplattform", url: "https://ultima-membership-api.onrender.com/", group: "SICHERHEIT" },
   { title: "Ate Rea Vermächtnis", subtitle: "Chroniken & Literatur", url: "https://ate-rea-vermachtnis.onrender.com/", group: "KREATIV" },
   { title: "NovaTube", subtitle: "Video- und Medienplattform", url: "https://novatube-a10l.onrender.com/", group: "MEDIA" },
   { title: "Aurelis Investment", subtitle: "Investment-Projekt", url: "https://aurelis-investment.onrender.com/", group: "FINANZEN" },
-  { title: "Krypto-Aurora", subtitle: "Krypto-Projekt", url: "https://krypto-aurora.onrender.com/", group: "FINANZEN" },
+  { title: "Krypto-Aurora", subtitle: "Krypto-Projekt", url: "https://github.com/gaussa72-boop/Kryptoaurora", group: "FINANZEN" },
   { title: "Neuroforge", subtitle: "KI- und Entwicklungsprojekt", url: "https://neuroforge-2035.onrender.com/", group: "KI" },
   { title: "Lichtkrieger", subtitle: "Spiel- und Erlebniswelt", url: "https://lichtkrieger-hub.onrender.com/", group: "GAMES" },
 ];
@@ -49,7 +49,7 @@ export default function App() {
       ) : (
         <ScrollView contentContainerStyle={s.content}>
           <View style={s.hero}><Text style={s.eyebrow}>DEIN DIGITALES KONTROLLZENTRUM</Text><Text style={s.heroTitle}>Was möchtest du{"\n"}heute verwalten?</Text><Text style={s.heroCopy}>Websites, Apps, KI-Systeme und Projekte – zentral erreichbar in einer iOS-App.</Text><Pressable onPress={openPortal} style={s.heroButton}><Text style={s.heroButtonText}>ULTIMA CENTRAL ÖFFNEN  ↗</Text></Pressable></View>
-          <View style={s.stats}><View style={s.stat}><Text style={s.statNumber}>74+</Text><Text style={s.statLabel}>Render-Services laut Inventar</Text></View><View style={s.stat}><Text style={s.statNumber}>47+</Text><Text style={s.statLabel}>GitHub-Projekte & Repositories</Text></View></View>
+          <View style={s.stats}><View style={s.stat}><Text style={s.statNumber}>74+</Text><Text style={s.statLabel}>Render-Services laut Inventar</Text></View><View style={s.stat}><Text style={s.statNumber}>44+</Text><Text style={s.statLabel}>GitHub-Projekte & Repositories</Text></View></View>
           <View style={s.sectionHead}><Text style={s.sectionTitle}>Schnellzugriff</Text><Text style={s.sectionHint}>Ausgewählte zentrale Dienste</Text></View>
           <View style={s.quickGrid}>{QUICK.slice(0,4).map(p => <Pressable key={p.title} onPress={() => openProject(p)} style={s.quickCard}><Text style={s.cardIcon}>{p.group === "KI" ? "✦" : p.group === "FINANZEN" ? "₿" : p.group === "MEDIA" ? "▣" : "◈"}</Text><Text style={s.cardTitle}>{p.title}</Text><Text style={s.cardSub}>{p.subtitle}</Text><Text style={s.cardLink}>ÖFFNEN ↗</Text></Pressable>)}</View>
           <View style={s.sectionHead}><Text style={s.sectionTitle}>Alle Projekte</Text><Text style={s.sectionHint}>Katalog durchsuchen</Text></View>
