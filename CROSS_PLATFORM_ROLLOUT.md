@@ -4,7 +4,7 @@ Updated: 2026-11-28
 
 ## Scope
 
-All 44 unique repositories currently visible in the two connected GitHub accounts are assigned a per-repository `CROSS_PLATFORM_RELEASE.md` rollout specification.
+All 45 unique repositories currently visible in the two connected GitHub accounts are assigned a per-repository `CROSS_PLATFORM_RELEASE.md` rollout specification.
 
 Each product is planned for:
 - Android APK/AAB
