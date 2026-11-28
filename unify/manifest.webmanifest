@@ -1,0 +1,19 @@
+{
+  "name": "ULTIMA Unify",
+  "short_name": "Unify",
+  "description": "Universeller Kommunikationszugang für das ULTIMA-Netzwerk",
+  "start_url": "/unify/",
+  "scope": "/unify/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#0b1220",
+  "theme_color": "#111b2b",
+  "icons": [
+    {
+      "src": "/unify/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
