@@ -4,7 +4,7 @@ Updated: 2026-11-28
 
 ## Scope
 
-All 45 unique repositories currently visible in the two connected GitHub accounts are assigned a per-repository `CROSS_PLATFORM_RELEASE.md` rollout specification.
+All 44 unique repositories currently visible in the two connected GitHub accounts are assigned a per-repository `CROSS_PLATFORM_RELEASE.md` rollout specification.
 
 Each product is planned for:
 - Android APK/AAB
@@ -13,6 +13,14 @@ Each product is planned for:
 - Windows installer/MSIX
 - Linux AppImage/deb/rpm
 - PWA where a browser UI exists
+
+## Private superadmin distribution policy
+
+- Every project is initially prepared for the owner's private superadmin use only. Build outputs must use authenticated/private distribution; do not publish public download URLs or public release assets until the owner explicitly approves marketing/public release.
+- Build each application only after inspecting its actual frontend, framework, backend/API, data model, permissions and platform capabilities. Backend-only or library-only repositories must not receive a fake app wrapper; document SDK/API distribution instead.
+- Use project-specific builds and identities. Preserve each project's branding, data, accounts, AI personality and checkout boundaries.
+- Installable targets where technically supported: Android APK/AAB, iOS/iPadOS IPA, macOS app, Windows installer, Linux package and PWA.
+- Store signing and distribution are separate from internal owner builds and require the relevant developer accounts, signing credentials and store review.
 
 ## Repository inventory
 
@@ -72,6 +80,8 @@ Each product is planned for:
 6. Keep ULTIMA project inventory synchronized for new repositories and new websites. Apply this matrix to every newly added user-owned website/repository by default.
 
 ## Deployment / current service status
+
+Live Render API recheck on 2026-11-28: 85 services across the three connected workspaces; all 85 reported `not_suspended` (55 Workspace One, 6 Phenex, 24 Workspace 30). 84 report Auto Deploy enabled and one reports Auto Deploy disabled. `not_suspended` does not mean latest deployment is healthy. See `DEPLOYMENT_ENVIRONMENT_MATRIX.md` for service-to-repository mapping and environment-variable requirements.
 
 A read of the three connected Render workspaces on 2026-11-28 returned 85 services: Workspace One 55, Phenex 6, Workspace 30 24. The Render API marked all 85 listed services as suspended in this inventory response. No restart, paid plan change, or deployment was triggered as part of this app-preparation pass. Re-check actual service state before resuming; resuming services may incur charges.
 
