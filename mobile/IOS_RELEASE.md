@@ -11,6 +11,14 @@
 
 The catalogue is generated from `data/project_registry.json` (inventory snapshot dated 2026-11-23). It contains service entries, including multiple deployments of some projects; it is not a live health check. Reconcile the inventory against current Render and GitHub before App Store metadata is finalized.
 
+## Superadmin-only internal distribution
+
+- Use the `superadmin` EAS build profile for internal-only test builds. Android output is an installable APK; iOS uses internal Ad Hoc distribution and requires Apple Developer membership plus registered device provisioning.
+- Configure the Expo project as private and restrict project membership to the owner's superadmin account. Do not publish these internal build URLs publicly.
+- GitHub Actions uses the repository secret `EXPO_TOKEN`; add it only after creating and securing the owner's Expo account. Never place Expo tokens or Apple credentials in Render environment variables or Git.
+- The workflow `.github/workflows/ultima-one-superadmin-build.yml` is manual/push-triggered and skips cloud builds until `EXPO_TOKEN` exists.
+- A production App Store build remains a separate profile and requires Apple Developer membership and App Store Connect credentials.
+
 ## Cloud build and submission
 
 1. Enrol in the Apple Developer Program: https://developer.apple.com/programs/enroll/
