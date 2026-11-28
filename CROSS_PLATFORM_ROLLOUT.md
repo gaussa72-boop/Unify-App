@@ -122,3 +122,14 @@ Existing PWA implementation retained:
 - ariandomimate-blip/rothshild-order (existing manifest/service worker and pre-existing install button)
 
 This is a source-code integration record, not proof of a successful production deployment or browser installation. Some repositories in the 45-repository inventory are backend-only, API/library projects, or have no confirmed browser entry point; they are not represented as installable websites until their actual user-facing frontend and serving path are identified. All added PWA changes still require a compatible production deploy and browser/device verification.
+
+
+Additional confirmed browser frontends receiving PWA manifests and install / ULTIMA Unify controls:
+- gaussa72-boop/Quantum.KI.Ultra.Pro.V2 (Flask template: templates/index.html; manifest in static/)
+- gaussa72-boop/ultra-ki-v2 (Flask template: templates/index.html; manifest in static/)
+- gaussa72-boop/UltraKI.AI (Flask template: templates/index.html; manifest in static/)
+- gaussa72-boop/AI-Quantumlight (Flask template: templates/index.html; manifest in static/)
+- gaussa72-boop/Note-KI (Flask template: templates/index.html; manifest in static/)
+- gaussa72-boop/Aurealis-Shopping-AI (public/index.html; manifest in public/)
+
+Total source-level PWA button/manifest integrations in this pass: 26 repositories. Two further repositories (Unify-App and rothshild-order) already had PWA infrastructure and install controls before this pass. This does not imply all 45 repositories are websites: API-only, backend-only, libraries and game-engine repositories need their real frontend identified first.
