@@ -1,5 +1,5 @@
 import React, { useMemo, useRef, useState } from "react";
-import { SafeAreaView, StatusBar, StyleSheet, Text, View, Pressable, TextInput, ScrollView, RefreshControl, Linking, Platform } from "react-native";
+import { SafeAreaView, StatusBar, StyleSheet, Text, View, Pressable, TextInput, ScrollView, Linking } from "react-native";
 import { WebView } from "react-native-webview";
 
 const PORTAL = process.env.EXPO_PUBLIC_APP_URL || "https://ultima-central-45ne.onrender.com/";
@@ -27,7 +27,6 @@ export default function App() {
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("ALLE");
   const [loading, setLoading] = useState(false);
-  const [refreshing, setRefreshing] = useState(false);
   const web = useRef(null);
   const projects = useMemo(() => QUICK.filter(p => (category === "ALLE" || p.group === category) && (p.title + p.subtitle).toLowerCase().includes(query.toLowerCase())), [category, query]);
   const openProject = (p) => { setActiveTitle(p.title); setActiveUrl(p.url); setTab("web"); };
@@ -43,9 +42,9 @@ export default function App() {
       </View>
       {tab === "web" ? (
         <View style={s.webWrap}>
-          <View style={s.webBar}><Pressable onPress={() => setTab("home")} style={s.back}><Text style={s.backText}>‹  HUB</Text></Pressable><Text numberOfLines={1} style={s.webTitle}>{activeTitle}</Text><Pressable onPress={() => openExternal(activeUrl)}><Text style={s.openText}>↗</Text></Pressable></View>
+          <View style={s.webBar}><Pressable onPress={() => setTab("home")} style={s.back}><Text style={s.backText}>‹  HUB</Text></Pressable><Text numberOfLines={1} style={s.webTitle}>{activeTitle}</Text><Pressable onPress={() => web.current?.reload()}><Text style={s.openText}>↻</Text></Pressable><Pressable onPress={() => openExternal(activeUrl)}><Text style={s.openText}>↗</Text></Pressable></View>
           {loading && <View style={s.loading}><Text style={s.loadingText}>ULTIMA wird geladen …</Text></View>}
-          <WebView ref={web} source={{ uri: activeUrl }} style={s.webview} javaScriptEnabled domStorageEnabled sharedCookiesEnabled thirdPartyCookiesEnabled setSupportMultipleWindows={false} onLoadStart={() => setLoading(true)} onLoadEnd={() => {setLoading(false);setRefreshing(false);}} onError={() => setLoading(false)} onShouldStartLoadWithRequest={(request) => { if (request.url.startsWith("https://") || request.url.startsWith("http://")) return true; return false; }} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={() => {setRefreshing(true);web.current?.reload();}} tintColor={COLORS.gold} />} />
+          <WebView ref={web} source={{ uri: activeUrl }} style={s.webview} javaScriptEnabled domStorageEnabled sharedCookiesEnabled thirdPartyCookiesEnabled setSupportMultipleWindows={false} onLoadStart={() => setLoading(true)} onLoadEnd={() => setLoading(false)} onError={() => setLoading(false)} onShouldStartLoadWithRequest={(request) => { if (request.url.startsWith("https://") || request.url.startsWith("http://")) return true; return false; }} pullToRefreshEnabled />
         </View>
       ) : (
         <ScrollView contentContainerStyle={s.content}>
